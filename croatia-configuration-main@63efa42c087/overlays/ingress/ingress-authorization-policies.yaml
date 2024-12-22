@@ -1,0 +1,579 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ,"PUT", "PATCH" ]
+            paths: [ "/v1/customers", "/v1/customers/*",
+                     "/internal/v1/customers", "/internal/v1/customers/*",
+                     "/internal/v1/missingnafath/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-event-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-event-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/events/customer", "/v1/events/case", "/v1/events/notification","/v1/events/evidence-code","/v1/events/customer/id-expiry" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-display-content-service-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-display-content-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-isva-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-isva-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH" ]
+            paths: [ "/v1/customers/users/*", "/v1/customers/users/*", "/v1/customers/auth/*", "/v1/customers/revoke/token", "/v1/customers/get/users",
+                     "/v1/customers/registration", "/v1/customers/verify/*", "/v1/customers/me/password" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/v1/customers/auth/sessions" ]
+
+        - operation:
+            methods: [ "GET", "POST", "PATCH" ]
+            paths: [ "/internal/v1/*" ]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-nafath-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-nafath-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/link", "/v1/customers/verify/nafath" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/cust-info", "/v1/customers/get-transaction-id",
+                     "/v1/customers/get-transaction-id/protected", "/v1/customers/cust-info/protected"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-paymentology-payment-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-paymentology-payment-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST", "GET" ]
+            paths: [ "/v1/payments/card-payment", "/internal/v1/cards/*", "/internal/v1/cards" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-screening-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-screening-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/screening", "/v1/screening/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-otp-service-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-otp-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/protected/v1/otps", "/protected/v1/otps/validations" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-reward-service-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-reward-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customers/rewards", "/protected/v1/rewards/referral" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/protected/v1/rewards/referrals" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tahaqoq-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tahaqoq-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/mobile/check" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customers/mobile/check", "/internal/v1/customers/mobile/check/cache",
+                     "/internal/v2/customers/mobile", "/internal/v2/customers/mobile/protected"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-temenos-banking-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-temenos-banking-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PUT", "PATCH", "DELETE" ]
+            paths: [ "/internal/v1/*", "/protected/v1/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "superior-lifestyle-stub-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "superior-lifestyle-stub-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PUT", "PATCH", "DELETE" ]
+            paths: [ "/protected/v1/rewards", "/protected/v1/rewards/*",
+                     "/internal/v1/customer", "/internal/v1/customer/*",
+                     "/internal/v1/customers","/internal/v1/customers/*",
+                     "/protected/v1/customer", "/protected/v1/customer/*",
+                     "/protected/v1/customers","/protected/v1/customers/*",
+                     "/v1/clickstream","/v1/clickstream/*",
+                     "/cardsservicemock/user","/v1/customer/*",
+                     "/v1/contents", "/v1/contents/*", "/v1/gold/*", "v1/mutualFund/*",
+                     "/internal/v1/loyalty/customers/enroll", "/internal/v1/loyalty/customers/reward-points",
+                     "/internal/v1/loyalty/customers/transactions",
+                     "/internal/v1/loyalty/partners", "/internal/v1/loyalty/partner-info"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-marketplace-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-marketplace-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/v1/*", "/internal/v1/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ni-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ni-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ] # This is a webhook so 3rd party is calling our system
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/cards", "/internal/v1/cards/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/payments/card-payment" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/cards/client" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards/token" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-otp-simulator-service-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-otp-simulator-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/simulator/otps/generate" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-client-authorization-service-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-client-authorization-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/oauth/token", "/internal/v1/oauth/token/validate" ,"/v1/client-authentication",
+                     "/v2/client-authentication" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fast-onboarding-mp-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fast-onboarding-mp-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/mp/fob/*", "/internal/v1/arb/customers/info" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/arb/customers/info" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-open-banking-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-open-banking-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/consent-management/account-access-consents",
+                     "/internal/v1/consent-management/account-access-consents/*",
+                     "/internal/v1/consent-management/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/consent-management/*" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/consent-management/account-access-consents/tpp/*" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/internal/v1/consent-management/account-access-consents/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-focal-blacklist-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-focal-blacklist-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/focal/blacklist/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-auth-fob-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-auth-fob-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/mp/fob/*", "/internal/v1/customers/fob/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-kyc-fob-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-kyc-fob-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/mp/fob/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-customer-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-customer-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH" ]
+            paths: [ "/internal/v1/customers/arb/*", "/internal/v1/onboarding/customers/arb/*",
+                     "/internal/v1/customers/arb-mp/*", "/internal/v1/onboarding/customers/arb-mp/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/arb/customers/info" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/arb/customers/info", "/internal/v1/arb/customers/profile" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-drahim-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-drahim-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/drahim/merchants/categorize", "/v1/drahim/merchants/category-vote" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mock-api-service-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mock-api-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/login", "/mock-server/*"]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/login", "/mock-server/*"]
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/mock-server/*" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/login", "/mock-server/*"]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-spl-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-spl-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/arb/customers/spl/national-address" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-treasury-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-treasury-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/treasury","/internal/v1/treasury/*" ]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-vat-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-vat-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/arb/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-loyalty-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-loyalty-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/loyalty/customers/*","/internal/v1/loyalty/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-aio-card-statement-service-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-aio-card-statement-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/aio-card/statements", "/v1/aio-card/statements/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-complaint-service-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-complaint-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/v1/complaint" , "/v1/complaint/*" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/bank", "/v1/bank/*" ]
+---

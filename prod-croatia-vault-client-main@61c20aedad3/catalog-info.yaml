@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  title: Croatia Shared Services
+  name: croatia-shared-services
+spec:
+  owner: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./vault-client
+  title: Vault Client
+  name: vault-client
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-shared-services

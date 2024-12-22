@@ -1,0 +1,26 @@
+# Source: camunda-platform/charts/elasticsearch/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch-master
+spec:
+  selector:
+    matchLabels:
+      app: "elasticsearch-master"
+  replicas: 2
+  template:
+    metadata:
+      name: "elasticsearch-master"
+    spec:
+      securityContext:
+        fsGroup: null
+        runAsUser: null
+      containers:
+      - name: "elasticsearch"
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: null
+

@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: san-sandbox-artifactory
+  namespace: argocd
+  labels:
+    environment: san-sandbox
+    component: sharedservices
+spec:
+  destination:
+    name: |
+      san-sandbox
+    namespace: artifactory
+  project: croatia-digital-platform
+  source:
+    path: tactical/artifactory
+    repoURL: ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

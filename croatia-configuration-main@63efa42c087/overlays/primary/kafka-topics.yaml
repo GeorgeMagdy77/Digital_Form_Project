@@ -1,0 +1,1366 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-create-action
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-update-action
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-actions-errors
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-notification-send
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-notification-initiate
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-create-customer-event
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-create-case-event
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-create-notification-event
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-create-error-event
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-preferences-notifications-updated
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-onboarding-complete
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 24
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-notification-set-default-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-edd-decision
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-profile-notifications-updated
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-preferences-language-updated
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-referral-criteria-complete
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-notification-adapter-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-notification-failed
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-transaction-create
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-initial-payment-message-process-failed
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-rewards-referral-grantable
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-rewards-referral-redeemed
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-rewards-referral-redeemed-failed
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-rewards-referral-failed-grantable
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-rewards-referral-failed-redeemed
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-accounts-created
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-accounts-statements
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-transactions-successful
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-transactions-unsuccessful
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-custom-date-statement-ack
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-monthly-statement-ack
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-logging-complete
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-adhoc-doc-init
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-adhoc-closure
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-adhoc-documents-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-notification-center
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-cms-errors
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef: 
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-sama-fulfil-reserved-amount
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sama-notification-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-national-id-expiry-date-push
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-create-action-failed
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-create-action
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-notification-initiate-failed
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-update-action
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-high-risk-customer-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-evidence-code
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-exit-deceased-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-round-up-transaction
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-id-expiry
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-panic-mode-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sas-app-registration-mng
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sas-open-online-acc
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sas-user-login
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sas-error-topic
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-limit
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-limit-update
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-error-limit
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sas-create-beneficiary
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sas-transaction-confirmation
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-failed-recurring-payment
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-transact-monthly-account-stmt
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-transact-adhoc-account-stmt
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-mutualfund-subscription-failed
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-failed-saving-pot-recurring
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-gold-transaction-failed
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-saving-pot-data-ingested
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-mutualfund-onboarding-success
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-mutual-fund-onboarding-suitability-question
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-mutual-fund-subscription
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-goal-creation
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-delete-adhoc-beneficiary
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-transfer-notification
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-aio-fees-notification
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sos-activate
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-payments-recurring
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-aio-recurring-payment
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-aio-failed-recurring-payment
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-recurring-payment
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-normal-recurring-payment
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-dev-normal-failed-recurring-payment
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-card-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-account-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-aio-statement-ready
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-aio-issuance-notification
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-biometric
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-tokenization-notification-processing
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-aio-tokenization-notification-processing
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-rtp-paid
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-bulk-create-actions
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-deactivate-action-type
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-debit-card-notification
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-salaryflag
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-savings-pot-recurring
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-mutualfund-recurring
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-recurring-callback
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-mutualfund-answer-suitability-questions
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-mutualfund-subscription-status
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-aio-closure-notification
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-login
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-device-registration
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-device-blocked
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: failed-savings-pot-recurring
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: payable-file-fx-initiate
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-customer-rtp-popup
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sas-pay-sadad-bill
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-payment-dispute-refund
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-payment-error
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-rtp-sas-advice
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-gold-callback
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: transaction-categorization-initiate
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-sas-card-non-financial
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-aio-card-trans-sas
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-debit-card-declined-trans
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: croatia-debit-card-success-trans
+  namespace: confluent-kafka
+spec:
+  replicas: 3
+  partitionCount: 12
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka

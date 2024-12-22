@@ -1,0 +1,16 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-temenos-banking-adapter-ingress"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-temenos-banking-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/accounts" ]

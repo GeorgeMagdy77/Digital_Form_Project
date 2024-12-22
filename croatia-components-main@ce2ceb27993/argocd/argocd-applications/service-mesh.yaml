@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: service-mesh
+  namespace: argocd-2-12-3
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+            argo-cluster-type: alpha
+            argo-cluster-role: primary
+  template:
+    metadata:
+      name: '{{nameNormalized}}-service-mesh'
+      namespace: argocd-2-12-3
+      labels:
+        environment: '{{nameNormalized}}'
+        component: alpha
+    spec:
+      destination:
+        namespace: service-mesh
+        server: '{{server}}'
+      project: croatia-digital-platform
+      source:
+        path: 'overlays/{{ nameNormalized }}/service-mesh'
+        repoURL: 'ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git'
+        targetRevision: HEAD
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true

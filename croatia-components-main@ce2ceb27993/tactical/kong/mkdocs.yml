@@ -1,0 +1,3 @@
+site_name: kong
+nav:
+  - Home: index.md

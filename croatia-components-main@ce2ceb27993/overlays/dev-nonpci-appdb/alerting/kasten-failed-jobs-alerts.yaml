@@ -1,0 +1,37 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: kasten-failed-jobs-alerts
+  namespace: kasten-io
+spec:
+  groups:
+    - name: Kasten
+      rules:
+        - alert: KastenFailedBackup
+          annotations:
+            description: This Alert Fires When Kasten Backup Policy Fails.
+            message: 'Kasten Backup Policy ### {{ $labels.policy }} ### has just failed'
+            summary: Kasten Backup Job Failed!
+          expr: >-
+            sum by (policy, state)
+            (increase(action_backup_ended_count{state="failed"}[10m]) > 0)
+          for: 5m
+          labels:
+            clustername: NPNBank-DEV-NONPCI-APPDB
+            severity: critical
+            task: Backup
+        - alert: KastenFailedExport
+          annotations:
+            description: This Alert Fires When Kasten Export Fails.
+            message: >-
+              Kasten Export For Policy ### {{ $labels.policy }} ### has just
+              failed
+            summary: Kasten Export Job Failed!
+          expr: >-
+            sum by (policy, state)
+            (increase(action_export_ended_count{state="failed"}[10m]) > 0)
+          for: 5m
+          labels:
+            clustername: NPNBank-DEV-NONPCI-APPDB
+            severity: critical
+            task: Export

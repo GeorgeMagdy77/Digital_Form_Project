@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app.kubernetes.io/component: keycloak
+    app.kubernetes.io/instance: camunda-platform
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: keycloak
+    helm.sh/chart: keycloak-12.3.0
+  name: camunda-platform-keycloak
+  namespace: camunda
+spec:
+  podManagementPolicy: Parallel
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: keycloak
+      app.kubernetes.io/instance: camunda-platform
+      app.kubernetes.io/name: keycloak
+  serviceName: camunda-platform-keycloak-headless
+  template:
+    metadata:
+      annotations:
+        checksum/configmap-env-vars: 4225035f926a2c2d6a41db4dbdd4d4e74ecb47be13d2529145522f6b5613f266
+        checksum/secrets: 384844449a1c8d26424013ce7ff7d4a443ec848a652d8eb4537da83006077648
+      labels:
+        app.kubernetes.io/component: keycloak
+        app.kubernetes.io/instance: camunda-platform
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: keycloak
+        helm.sh/chart: keycloak-12.3.0
+    spec:
+      affinity:
+        nodeAffinity: null
+        podAffinity: null
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/instance: camunda-platform
+                  app.kubernetes.io/name: keycloak
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: BITNAMI_DEBUG
+          value: "false"
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: admin-password
+              name: camunda-platform-keycloak
+        - name: KEYCLOAK_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: camunda-platform-postgresql
+        - name: KEYCLOAK_HTTP_RELATIVE_PATH
+          value: /auth/
+        - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+          value: "false"
+        envFrom:
+        - configMapRef:
+            name: camunda-platform-keycloak-env-vars
+        image: docker.io/bitnami/keycloak:19.0.3
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /auth/
+            port: http
+          initialDelaySeconds: 300
+          periodSeconds: 1
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: keycloak
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /auth/realms/master
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits: {}
+          requests: {}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1001
+        volumeMounts:
+        - mountPath: /opt/bitnami/keycloak/themes/identity
+          name: camunda-theme
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - cp -a /app/keycloak-theme/* /mnt
+        image: camunda/identity:8.2.11
+        imagePullPolicy: IfNotPresent
+        name: copy-camunda-theme
+        volumeMounts:
+        - mountPath: /mnt
+          name: camunda-theme
+      securityContext:
+        fsGroup: 1001
+      serviceAccountName: camunda-platform-keycloak
+      volumes:
+      - emptyDir:
+          sizeLimit: 10Mi
+        name: camunda-theme
+  updateStrategy:
+    rollingUpdate: {}
+    type: RollingUpdate

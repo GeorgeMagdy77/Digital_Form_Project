@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: operators
+  namespace: argocd-2-12-3
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+            argo-cluster-project: croatia
+            argo-cluster-role: primary
+  template:
+    metadata:
+      labels:
+        environment: '{{ nameNormalized }}'
+      name: '{{ nameNormalized }}-operators'
+    spec:
+      destination:
+        server: '{{ server }}'
+      project: croatia-digital-platform
+      source:
+        path: overlays/{{ nameNormalized }}/operators
+        repoURL: "ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git"
+        targetRevision: HEAD

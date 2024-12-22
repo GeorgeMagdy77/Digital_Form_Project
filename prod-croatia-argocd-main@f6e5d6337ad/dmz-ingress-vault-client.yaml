@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-dmz-ingress-vault-client
+  namespace: argocd
+spec:
+  destination:
+    namespace: vault
+    server: https://api.prod-dmz-ingress.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: overlays/prod-dmz-ingress
+    repoURL: ssh://git@bitbucket.nrapp.cloud/dig/prod-croatia-vault-client.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

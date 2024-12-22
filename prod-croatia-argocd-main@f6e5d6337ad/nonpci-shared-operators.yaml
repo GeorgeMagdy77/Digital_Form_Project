@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-croatia-operator-nonpci-shared
+  namespace: argocd
+spec:
+  destination:
+    namespace: openshift-operators
+    server: https://api.prod-nonpci-shared.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: nonpci-shared
+    repoURL: ssh://git@bitbucket.nrapp.cloud/dig/prod-croatia-operators.git
+    targetRevision: HEAD
+
+

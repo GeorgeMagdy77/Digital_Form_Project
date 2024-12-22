@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    istio-injection: disabled
+    kubernetes.io/metadata.name: camunda-platform
+  name: camunda
+

@@ -1,0 +1,23 @@
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: OCPAdmins
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+users:
+  - markfisher@deloitte.co.uk
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: OCPAdmins
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: OCPAdmins
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin

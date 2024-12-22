@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-nonpci-shared-bitbucket
+  namespace: argocd
+  labels:
+    environment: dev-nonpci-shared
+    component: sharedservices
+spec:
+  destination:
+    name: |
+      dev-nonpci-shared
+    namespace: bitbucket
+  project: croatia-digital-platform
+  source:
+    path: bitbucket
+    repoURL: ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

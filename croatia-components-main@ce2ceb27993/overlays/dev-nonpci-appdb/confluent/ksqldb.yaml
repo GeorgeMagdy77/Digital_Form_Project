@@ -1,0 +1,22 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KsqlDB
+metadata:
+  name: ksqldb
+  namespace: confluent-kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 2
+  tls:
+    secretRef: kafka-tls
+    ignoreTrustStoreConfig: false
+  image:
+    application: docker.io/confluentinc/cp-ksqldb-server:7.4.0
+    init: docker.io/confluentinc/confluent-init-container:2.6.0
+  externalAccess:
+    route:
+      domain: apps.dev-nonpci-appdb.npnbank.local
+    type: route  
+  dataVolumeCapacity: 100Gi
+  podTemplate:
+    podSecurityContext: {}

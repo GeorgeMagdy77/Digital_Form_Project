@@ -1,0 +1,715 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-crm-adapter", "cluster.local/ns/alpha/sa/alpha-onboarding-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/*", "/api/v1/customers/*", "/api/v1/annotation/*", "/api/v1/annotation" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/details", "/v1/customers", "/v1/customers/screening/case", "/v1/customers/*",
+                     "/api/v1/customers/*", "/api/v1/annotation" ] #Internal apis ?
+            #Istio is not allowing regex like /v1/customers/*/accounts so therefor we need to add /v1/customer/*
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/v1/customers" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v1/customers", "/v1/customers/screening/status",
+                     "/api/v1/customers/*", "/api/v1/annotation/*", "/api/v1/annotation" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-appreciation-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/api/v1/customers/appreciation/appreciationconfig" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/api/v1/customers/*" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/api/v1/customers/*" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-payments-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/cases/*" ]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-cbs-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-cbs-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-statement-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/accounts/custom-statement" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-adhoc-generation-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/accounts/iban-certificate" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/accounts/bank-certificates" ]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-focal-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-focal-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-screening-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/api/v2/login/access-token",
+                     "/api/v2/screen/individual",
+                     "/api/v2/screen/approve",
+                     "/api/v2/screen/reject",
+                     "/api/v2/screen/pending" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/screening/individual" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-nafath-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-nafath-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-nafath-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/link", "/opening-account/1.0.0/" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/api/v1/customers/verify/*", "/nafath-auth/v3/gettransactionid", "/nafath-auth/v3/cust-info" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tahaqoq-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tahaqoq-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-tahaqoq-adapter" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/api/v1/person/*", "/mobile-verification" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tier-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tier-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ] #Mocks should not be exposed via kong
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH", "DELETE" ]
+            paths: [ "/v1/customer", "/v1/customer/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-isva-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-isva-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-isva-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST", "GET", "PUT", "PATCH", "DELETE" ]
+            paths: [ "/v1/*", "/v1.0/*", "/v2.0/*" ]
+    - from:
+        - source:
+            principals: ["cluster.local/ns/alpha/sa/alpha-transfers-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v2/customers/*" ]
+    - from:
+        - source:
+            principals: ["cluster.local/ns/alpha/sa/alpha-sas-advice-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v2/customers/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-paymentology-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-paymentology-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-paymentology-payment-adapter", "cluster.local/ns/alpha/sa/alpha-temenos-banking-event-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/api/v1/pws_create_card", "/api/v1/pws_create_card/*", "/pws/pws_update_balance/", "/pws/pws_update_balance/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "superior-lifestyle-stub-service"
+spec:
+  selector:
+    matchLabels:
+      app: "superior-lifestyle-stub-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-goal-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/mutual-fund/*", "/v1/gold/*", "/v1/savingPots/*", "/v1/goals/*", "/internal/v1/balances" ]
+        - operation:
+            methods: [ "PATCH", "DELETE" ]
+            paths: [ "/v1/customers/savings-pots/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customer/*" ] #Why is a service calling public apis ?
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customer/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customer/preferences/notifications" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/customer/preferences/notifications" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-referral-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/customer/referral", "/protected/v1/customer", "/protected/v1/customer/referrals/*",
+                     "/internal/v1/customers/*", "/internal/v1/customer" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/protected/v1/customer/referral", "/internal/v1/customer/referral" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-cms-adapter-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/contents", "/v1/contents/*", "/v1/contents/categories", "/v1/contents/datatypes" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-notification-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/RiCHClientServiceREST.svc/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-genesys-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/contents" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-gold-service"]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/v1/gold/wallet" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/gold/wallet/*" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/gold/wallet/*" , "/v1/gold/market-price" , "/v1/gold/terms-conditions" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/gold/confirm-deal" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/gold/final-deal" ]
+        - operation:
+            methods: [ "GET", "POST", "PATCH", "DELETE" ]
+            paths: [ "/v1/gold/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/price-plans/price-plan" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/core-banking/get-vat-percent" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/genesys/outbound/call/activate-card" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/products/product-type-code" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/products/product-code" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/CardBalanceEnquiry" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/aio-card/rewards" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/aio-card/transaction","/v1/products/rewards", "/internal/v1/aio-card/cashback" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/aio-card/transactions" , "/internal/v1/ni-adapter/update-account" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-mutual-fund-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/recurring" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-shahid-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v2/subscriptions" , "/v2/subscriptions/*" , "/v2/user/status", "/v1/aio-card/shahid/notification" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-anghami-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/alrajhi_bank/activate" , "/alrajhi_bank/deactivate" ]
+---
+#To be removed once Genesys is in place
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/genesys/2/chat/croatia", "/genesys/2/chat/croatia/*",
+                     "/v1/customers/passcode/ivr/*", "/customer/*" ]
+        - operation:
+            methods: ["GET"]
+            paths: ["/api/v1/chat"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-genesys-adapter" ]
+      to:
+        - operation:
+            methods: ["GET"]
+            paths: ["/api/v1/chat"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/passcode/ivr/*", "/customer/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/genesys/outbound/call/add-card-apple-wallet",
+                     "/internal/v1/genesys/outbound/call/activate-card"]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-marketplace-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-marketplace-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-marketplace-adapter"]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH" ]
+            paths: [ "/Portfolio/*", "/ams/customer-profile/v1/customers/balance", "/customers/*",
+                     "/internal/v1/*", "/Portfolios/*", "/products/*", "/{productId}/last3years-performance",
+                     "/oauth2security/oauth2/token", "/loyalty-earning/*", "/loyalty-management/*",
+                     "/loyalty-redemption/*", "/motor-insurance/*", "/motor-quotation/*", "/yakeen-art/*",
+                     "/najm/*", "/fast-onboarding/*", "/saudi-post-art/*", "/suitability-questionnaire/v1/data",
+                     "/v1/customers/portfolios/cash-in/validate", "/suitability-questionnaire/v1/scoring",
+                     "/onboarding-account-opening" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ips-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ips-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-ips-management-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/customers-linked-aliases/v1/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/customers/instant-payment-alias/v1/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-ips-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/transfers/v1/local" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-rtp-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" , "GET"]
+            paths: [ "/internal/v1/ips/rtp/*" ]
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/v1/ips/rtp/*", "/v1/ips/rtp" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-temenos-transct-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-temenos-transct-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-temenos-banking-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/party/order/cro/paymentorder/EXSTOCROIncomingPayment",
+                     "/product/cro/accounts/CustomerBookEntry",
+                     "/product/cro/standing/order", "/order/cro/recurringPayments/stoForIPSOutgoingPayments",
+                     "/order/cro/recurringPayments/stoForCroToArbPayments",
+                     "/order/cro/recurringPayments/stoForSARIEOutgoingPayments"]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/product/cro/accounts/CustomerBlocksInquiry",
+                     "/product/cro/standing/order" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/product/cro/accounts/CustomerBookEntryRelease/*",
+                     "/product/cro/standing/order/*",
+                     "/order/cro/recurringPayments/*"]
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/product/cro/accounts/CustomerBookEntryModify/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-exit-deceased-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/customer/*"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-arb-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/account-to-account-transfers/1.0.0/wallet-to-local-account-transfers",
+                     "/beneficiary/v1/verification" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/iban/validate/*", "/iban/*", "/beneficiaries/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/fulfil/reserved/notification" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-arb-vat-adapter" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/tax-invoices" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ni-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ni-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-ni-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/CardServices/*", "/CardControl/*","/AccountServices/Enquiry/V2/AccountStatusChange" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards/pin/verify" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-panic-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards/accounts/status" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-customer-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-customer-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-savings-pot-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "PATCH" ]
+            paths: [ "/v1/customer/notifications" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fob-mp-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fob-mp-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-fast-onboarding-mp-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/fast-onboarding/v2/*", "/customers/v2"]
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/customers/customers-details/v1/main-data"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-neotek-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-neotek-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-adapter" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/consent-management/v1/account-access-consents",
+                     "/consent-management/v1/account-access-consents/*",
+                     "/consent-management/v1/tpps" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/consent-management/v1/account-access-consents/authorize" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/consent-management/v1/tpp/*" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/consent-management/v1/account-access-consents/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sas-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sas-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sas-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/sas/maketransfer-within-bank",
+                     "/sas/maketransfer",
+                     "/sas/paymentinitiate",
+                     "/sas/create-new-beneficiary",
+                     "/sas-routers/v1/consult",
+                     "/sas-routers/v1/notify"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sas-advice-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/sas-routers/v1/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-tanfeeth-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-tanfeeth-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-transaction-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-block-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/sama-tanfeeth/customers/salary" , "/internal/v1/cards/*"]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/sama-tanfeeth/transactions", "/v1/blacklist/*" ]
+        - operation:
+            methods: [ "GET" ,"POST" ,"PATCH" ]
+            paths: [ "/v1/sama-tanfeeth/block"]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/customers/accounts/*"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-account-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/customers/accounts/*", "/v1/sama-tanfeeth/account"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-focal-blacklist-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/blacklist/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-evidence-code-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-account-statement-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/customers/accounts/*" ]

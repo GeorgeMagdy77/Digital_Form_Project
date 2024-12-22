@@ -1,0 +1,92 @@
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  labels:
+    machine.openshift.io/cluster-api-cluster: dev-nonpci-shared-5f9mm
+  name: worker-highmem
+  namespace: openshift-machine-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: dev-nonpci-shared-5f9mm
+      machine.openshift.io/cluster-api-machineset: worker-highmem
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        machine.openshift.io/cluster-api-cluster: dev-nonpci-shared-5f9mm
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: worker-highmem
+    spec:
+      providerSpec:
+        value:
+          apiVersion: vsphereprovider.openshift.io/v1beta1
+          credentialsSecret:
+            name: vsphere-cloud-credentials
+          diskGiB: 100
+          kind: VSphereMachineProviderSpec
+          memoryMiB: 32000
+          metadata:
+            creationTimestamp: null
+          network:
+            devices:
+              - networkName: NSX-SEG-NonProd-NonPCI-Shared
+          numCPUs: 8
+          numCoresPerSocket: 1
+          snapshot: ""
+          userDataSecret:
+            name: worker-user-data
+          template: dev-nonpci-shared-5f9mm-rhcos
+          workspace:
+            datacenter: OCI-DigitalPlatform
+            datastore: vsanDatastore-NonPCI
+            folder: /OCI-DigitalPlatform/vm/dev-nonpci-shared-5f9mm
+            resourcePool: >-
+              /OCI-DigitalPlatform/host/DigitalPlatform_NonPCI_VMware_Cluster/Resources
+            server: vcenter-nonproddpsddc.sddc.jed.oci.oraclecloud.com
+
+---
+apiVersion: "logging.openshift.io/v1"
+kind: "ClusterLogging"
+metadata:
+  name: "instance"
+  namespace: openshift-logging
+spec:
+  collection:
+    logs:
+      fluentd: {}
+      type: "fluentd"
+  logStore:
+    type: "elasticsearch"
+    elasticsearch:
+      nodeCount: 3
+      storage:
+        size: "1000G"
+        storageClassName: "thin"
+      redundancyPolicy: "SingleRedundancy"
+      resources: 
+        limits:
+          memory: 10Gi
+        requests:
+          cpu: 500m
+          memory: 8Gi
+  visualization:
+    kibana:
+      proxy:
+        resources: 
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+      replicas: 2
+      resources: 
+        limits:
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 500Mi
+    type: "kibana"

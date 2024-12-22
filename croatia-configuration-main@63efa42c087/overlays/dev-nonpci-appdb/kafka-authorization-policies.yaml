@@ -1,0 +1,15 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: kafka-external-rules
+  namespace: confluent-kafka
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: [ "alpha", "alpha-eit" ]
+      to:
+        - operation:
+            ports: [ "9092", "2181", "8081" ]

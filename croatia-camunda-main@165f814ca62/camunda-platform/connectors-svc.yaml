@@ -1,0 +1,25 @@
+# Source: camunda-platform/charts/connectors/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: camunda-platform-connectors
+  labels:
+    app: camunda-platform
+    app.kubernetes.io/name: connectors
+    app.kubernetes.io/instance: camunda-platform
+    app.kubernetes.io/part-of: camunda-platform
+    app.kubernetes.io/component: connectors
+  annotations:
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    name: http
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: camunda-platform
+    app.kubernetes.io/name: connectors
+    app.kubernetes.io/instance: camunda-platform
+    app.kubernetes.io/part-of: camunda-platform
+    app.kubernetes.io/component: connectors

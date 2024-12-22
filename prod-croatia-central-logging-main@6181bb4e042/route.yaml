@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: elasticsearch-passthrough
+  namespace: openshift-logging
+spec:
+  host: elasticsearch-logging.apps.prod-nonpci-shared.nrapp.cloud
+  port:
+    targetPort: 9200
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: elasticsearch
+    weight: 100

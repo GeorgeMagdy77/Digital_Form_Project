@@ -1,0 +1,1889 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-account-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-account-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-actions-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-actions-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-authentication-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-authentication-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-card-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-card-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-cms-adapter-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-cms-adapter-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-event-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-event-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-display-content-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-display-content-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-isva-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-isva-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-nafath-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-nafath-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-paymentology-payment-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-paymentology-payment-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-payments-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-payments-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-savings-pot-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-savings-pot-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-screening-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-screening-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-configuration-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-configuration-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mobile-homepage-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mobile-homepage-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-customer-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-customer-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-feedback-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-feedback-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-lifestyle-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-lifestyle-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-notification-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-notification-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-otp-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-otp-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-referral-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-referral-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-reward-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-reward-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tahaqoq-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tahaqoq-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-temenos-banking-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-temenos-banking-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-temenos-banking-event-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-temenos-banking-event-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-transaction-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-transaction-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-workflow-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-workflow-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-transfers-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-transfers-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-development-simulator-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-development-simulator-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-content-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-content-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-dms-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-dms-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-dms-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-dms-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-dms-reports-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-dms-reports-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-statement-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-statement-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-marketplace-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-marketplace-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-hijridate-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-hijridate-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-motor-insurance-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-motor-insurance-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ips-management-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ips-management-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-notification-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-notification-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-appreciation-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-appreciation-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-adhoc-request-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-adhoc-request-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ni-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ni-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-customer-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-customer-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-otp-simulator-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-otp-simulator-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-goal-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-goal-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-gold-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-gold-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fast-onboarding-mp-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fast-onboarding-mp-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ips-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ips-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-aio-card-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-aio-card-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-open-banking-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-open-banking-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-open-banking-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-open-banking-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mutual-fund-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mutual-fund-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sas-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sas-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-exit-deceased-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-exit-deceased-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-focal-blacklist-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-focal-blacklist-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "ejada-pc-catalogues-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "ejada-pc-catalogues-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "ejada-pc-orders-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "ejada-pc-orders-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-evidence-code-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-evidence-code-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-blacklist-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-blacklist-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-block-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-block-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-card-trans-auth-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-card-trans-auth-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-transaction-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-transaction-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-recurring-payment-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-recurring-payment-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-account-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-account-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sadad-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sadad-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-account-statement-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-account-statement-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sarie-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sarie-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-panic-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-panic-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-client-authorization-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-client-authorization-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-customer-limits-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-customer-limits-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-document-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-document-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-vat-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-vat-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-shahid-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-shahid-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-rtp-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-rtp-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-anghami-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-anghami-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-auth-fob-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-auth-fob-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-kyc-fob-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-kyc-fob-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-customer-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-customer-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-launch-control-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-launch-control-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-account-finder-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-account-finder-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-account-finder-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-account-finder-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-open-banking-ais-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-open-banking-ais-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-drahim-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-drahim-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-data-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-data-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-completion-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-completion-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-identify-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-identify-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-validate-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-validate-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-flow-mng-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-flow-mng-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fob-kyc-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fob-kyc-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fob-authentication-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fob-authentication-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mock-api-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mock-api-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-spl-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-spl-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sos-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sos-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-treasury-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-treasury-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-standing-order-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-standing-order-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-loyalty-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-loyalty-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-high-risk-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-high-risk-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-loyalty-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-loyalty-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-recurring-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-recurring-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-aio-card-statement-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-aio-card-statement-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-treasury-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-treasury-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-travel-insurance-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-travel-insurance-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-benefits-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-benefits-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-complaint-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-complaint-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/swagger/*", "/swagger-ui", "/swagger-ui/*" ]
+---

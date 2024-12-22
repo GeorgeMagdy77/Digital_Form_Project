@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: san-sandbox-service-mesh
+  namespace: argocd
+  labels:
+    environment: san-sandbox
+    component: sharedservices
+spec:
+  destination:
+    name: |
+      san-sandbox
+    namespace: service-mesh
+  project: croatia-digital-platform
+  source:
+    path: tactical/overlays/san-sandbox/service-mesh
+    repoURL: ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

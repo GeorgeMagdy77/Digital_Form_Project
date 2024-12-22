@@ -1,0 +1,59 @@
+deploymentType: "StatefulSet"
+replicaCount: 1
+OpenShift:
+  enabled: true
+  createSCC: true
+edition: "developer"
+image:
+  repository: "nexus.projectcroatia.cloud:18080/sonarqube"
+  tag: 9.9.0-{{ .Values.edition }}
+  pullPolicy: Always
+nginx:
+  enabled: false
+ingress:
+  enabled: false
+route:
+  enabled: false
+initSysctl:
+  enabled: true
+  vmMaxMapCount: 524288
+  fsFileMax: 131072
+  nofile: 131072
+  nproc: 8192
+  securityContext:
+    privileged: true
+initFs:
+  enabled: true
+  securityContext:
+    privileged: true
+prometheusExporter:
+  enabled: false
+  securityContext:
+    runAsUser: 0
+    runAsGroup: 0
+plugins:
+  install: []
+postgresql:
+  enabled: true
+  image:
+    registry: "nexus.projectcroatia.cloud:18080"
+    repository: "bitnami/postgresql"
+    tag: 15.2.0-debian-11-r1
+    pullPolicy: Always
+  securityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+  volumePermissions:
+    enabled: true
+    securityContext:
+      runAsUser: "auto"
+  shmVolume:
+    chmod:
+      enabled: false
+  serviceAccount:
+    enabled: false
+tests:
+  enabled: false
+serviceAccount:
+  create: true

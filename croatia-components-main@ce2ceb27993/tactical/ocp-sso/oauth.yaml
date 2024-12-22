@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-options: Prune=false
+  name: croatia-keycloak-ca
+  namespace: openshift-config
+data:
+  ca.crt: |-
+    -----BEGIN CERTIFICATE-----
+    MIIDAjCCAeqgAwIBAgIQIKTPNrLlbjMiFBtkZ0GMGjANBgkqhkiG9w0BAQsFADAb
+    MRkwFwYDVQQDExBrZXljbG9hay1jYS1jZXJ0MB4XDTIzMDMzMTExNTMwN1oXDTIz
+    MDYyOTExNTMwN1owGzEZMBcGA1UEAxMQa2V5Y2xvYWstY2EtY2VydDCCASIwDQYJ
+    KoZIhvcNAQEBBQADggEPADCCAQoCggEBAKbmprv/wwawWAe4wWbGJwyLiNBfu2SP
+    lYB7lp2Kw0ROsGFV4NbwlGN1S5G/8jXcXQiNGUn9Y4pXXShYCSl7wTGUoclelcJ6
+    TVGfjC6D8IaZuOXv9/rsoTuvjtqlP/A4V4kGkLJlEnp1jXs0ay69RajB0BBKauxU
+    rwOjdG8WYzHuuSlngxNdpqDG9xZnnxyGaMbam1be+jhzLFqLatme5+E7xJ6fLCX9
+    4F+5olLmQX4awkx5wyFfG3pojGIoWDuYk9PFqaJFzR4iB1Pgpu1Oty23PB+lHOOv
+    ZGRZ8GeaBlXHjxQxu4qoC73/ofjc46305AzPWdlXst3s0FKF9N4Yn2cCAwEAAaNC
+    MEAwDgYDVR0PAQH/BAQDAgKkMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFHCO
+    +YKlHBV9ZXjEBcR3Q94W1OiNMA0GCSqGSIb3DQEBCwUAA4IBAQBVQ99fEFFF6HQK
+    EYIQAz/W8d/BCe9YBxtInOL+CT+ZAforNfyv1DpMnzukRbb+fgewZ/s/ySFs0KkC
+    HqKQPGOroxN9q8b2VgsqFl5v+AkCJok2HNawOZy8oFOpeUbzeU/3fgiqfK3XPnIc
+    XzlwywizJ7gJTKn8dWDl5Y/icBIIRt+yYm3l9mOfM/YqhtKkehyFoF9nGlZ+sJ5K
+    6NqTHwPhjMJx/l4PA9QfJjDzD5mmR2G+/FO6dKzQqoOeqnveIigh0FTNpK34N64E
+    iAaIb1Ha084A/cySXAVCr7dB9enx4oJ9MXI/kq4PKSFjpxczW3rdDu0L39U1olWU
+    7grtvNFd
+    -----END CERTIFICATE-----
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-options: Prune=false
+  name: croatia-keycloak-client-secret
+  namespace: openshift-config
+type: Opaque
+data:
+  clientSecret: ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJZ09pQWlTbGRVSWl3aWEybGtJaUE2SUNJMU9UTXdOamc1TmkwM05EZzJMVFJtTWprdFlXUTBNeTFtWkRVeU56QTFaakZrTVRNaWZRLmV5SmxlSEFpT2pFMk56YzRORFExTnprc0ltbGhkQ0k2TVRZM056YzFPREUzT1N3aWFuUnBJam9pTXpsaVpXTTRNRGt0WmpJMFppMDBNVGRtTFRrME0yRXRabVJqTkRWaU1EVTRaR1F5SWl3aWFYTnpJam9pYUhSMGNITTZMeTlyWlhsamJHOWhheTVoY0hCekxuTmhiaTF6WVc1a1ltOTRMbkJ5YjJwbFkzUmpjbTloZEdsaExtTnNiM1ZrTDNKbFlXeHRjeTl0WVhOMFpYSWlMQ0poZFdRaU9pSm9kSFJ3Y3pvdkwydGxlV05zYjJGckxtRndjSE11YzJGdUxYTmhibVJpYjNndWNISnZhbVZqZEdOeWIyRjBhV0V1WTJ4dmRXUXZjbVZoYkcxekwyMWhjM1JsY2lJc0luUjVjQ0k2SWtsdWFYUnBZV3hCWTJObGMzTlViMnRsYmlKOS4zTWRka1d5LURxVkxzMGpjUkhSa1E4dGRaUXljdXJJaEJvR0R2UjgyVW4w
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-options: Prune=false
+  name: v4-0-config-user-idp-0-ca
+  namespace: openshift-authentication
+data:
+  ca.crt: |-
+    -----BEGIN CERTIFICATE-----
+    MIIDAjCCAeqgAwIBAgIQIKTPNrLlbjMiFBtkZ0GMGjANBgkqhkiG9w0BAQsFADAb
+    MRkwFwYDVQQDExBrZXljbG9hay1jYS1jZXJ0MB4XDTIzMDMzMTExNTMwN1oXDTIz
+    MDYyOTExNTMwN1owGzEZMBcGA1UEAxMQa2V5Y2xvYWstY2EtY2VydDCCASIwDQYJ
+    KoZIhvcNAQEBBQADggEPADCCAQoCggEBAKbmprv/wwawWAe4wWbGJwyLiNBfu2SP
+    lYB7lp2Kw0ROsGFV4NbwlGN1S5G/8jXcXQiNGUn9Y4pXXShYCSl7wTGUoclelcJ6
+    TVGfjC6D8IaZuOXv9/rsoTuvjtqlP/A4V4kGkLJlEnp1jXs0ay69RajB0BBKauxU
+    rwOjdG8WYzHuuSlngxNdpqDG9xZnnxyGaMbam1be+jhzLFqLatme5+E7xJ6fLCX9
+    4F+5olLmQX4awkx5wyFfG3pojGIoWDuYk9PFqaJFzR4iB1Pgpu1Oty23PB+lHOOv
+    ZGRZ8GeaBlXHjxQxu4qoC73/ofjc46305AzPWdlXst3s0FKF9N4Yn2cCAwEAAaNC
+    MEAwDgYDVR0PAQH/BAQDAgKkMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFHCO
+    +YKlHBV9ZXjEBcR3Q94W1OiNMA0GCSqGSIb3DQEBCwUAA4IBAQBVQ99fEFFF6HQK
+    EYIQAz/W8d/BCe9YBxtInOL+CT+ZAforNfyv1DpMnzukRbb+fgewZ/s/ySFs0KkC
+    HqKQPGOroxN9q8b2VgsqFl5v+AkCJok2HNawOZy8oFOpeUbzeU/3fgiqfK3XPnIc
+    XzlwywizJ7gJTKn8dWDl5Y/icBIIRt+yYm3l9mOfM/YqhtKkehyFoF9nGlZ+sJ5K
+    6NqTHwPhjMJx/l4PA9QfJjDzD5mmR2G+/FO6dKzQqoOeqnveIigh0FTNpK34N64E
+    iAaIb1Ha084A/cySXAVCr7dB9enx4oJ9MXI/kq4PKSFjpxczW3rdDu0L39U1olWU
+    7grtvNFd
+    -----END CERTIFICATE-----
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-options: Prune=false
+  name: v4-0-config-user-idp-0-client-secret
+  namespace: openshift-authentication
+type: Opaque
+data:
+  clientSecret: ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJZ09pQWlTbGRVSWl3aWEybGtJaUE2SUNJMU9UTXdOamc1TmkwM05EZzJMVFJtTWprdFlXUTBNeTFtWkRVeU56QTFaakZrTVRNaWZRLmV5SmxlSEFpT2pFMk56YzRORFExTnprc0ltbGhkQ0k2TVRZM056YzFPREUzT1N3aWFuUnBJam9pTXpsaVpXTTRNRGt0WmpJMFppMDBNVGRtTFRrME0yRXRabVJqTkRWaU1EVTRaR1F5SWl3aWFYTnpJam9pYUhSMGNITTZMeTlyWlhsamJHOWhheTVoY0hCekxuTmhiaTF6WVc1a1ltOTRMbkJ5YjJwbFkzUmpjbTloZEdsaExtTnNiM1ZrTDNKbFlXeHRjeTl0WVhOMFpYSWlMQ0poZFdRaU9pSm9kSFJ3Y3pvdkwydGxlV05zYjJGckxtRndjSE11YzJGdUxYTmhibVJpYjNndWNISnZhbVZqZEdOeWIyRjBhV0V1WTJ4dmRXUXZjbVZoYkcxekwyMWhjM1JsY2lJc0luUjVjQ0k2SWtsdWFYUnBZV3hCWTJObGMzTlViMnRsYmlKOS4zTWRka1d5LURxVkxzMGpjUkhSa1E4dGRaUXljdXJJaEJvR0R2UjgyVW4w
+---
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    include.release.openshift.io/self-managed-high-availability: 'true'
+    include.release.openshift.io/single-node-developer: 'true'
+    release.openshift.io/create-only: 'true'
+    argocd.argoproj.io/sync-options: Prune=false
+  name: cluster
+spec:
+  identityProviders:
+    - mappingMethod: add
+      name: keycloak
+      openID:
+        ca:
+          name: croatia-keycloak-ca
+        claims:
+          email:
+            - email
+          name:
+            - name
+          preferredUsername:
+            - preferred_username
+        clientID: cluster-default
+        clientSecret:
+          name: croatia-keycloak-client-secret
+        extraScopes: []
+        issuer: https://keycloak.apps.san-sandbox.projectcroatia.cloud/realms/master
+      type: OpenID

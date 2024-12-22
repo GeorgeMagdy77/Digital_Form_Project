@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kong
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - cluster: san-kong
+  template:
+    metadata:
+      labels:
+        environment: '{{ cluster }}'
+      name: '{{ cluster }}-kong'
+    spec:
+      destination:
+        namespace: kong
+        name: |
+          {{ cluster }}
+      project: croatia-digital-platform
+      source:
+        path: overlays/{{ cluster }}
+        repoURL: "ssh://git@bitbucket.projectcroatia.cloud/alpha/alpha-kong-configuration-poc.git"
+        targetRevision: HEAD
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true

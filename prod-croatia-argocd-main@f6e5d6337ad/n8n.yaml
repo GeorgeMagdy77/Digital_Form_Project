@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-nonpci-shared-n8n
+  namespace: argocd
+spec:
+  destination:
+    namespace: n8n
+    server: https://api.prod-nonpci-shared.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source: 
+    repoURL: ssh://git@bitbucket.nrapp.cloud/scm/dig/prod-croatia-components.git
+    path: n8n
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+      - Prune=false
+      - Validate=true
+      - SkipDryRunOnMissingResource=false
+      - Delete=false
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - Replace=false
+      - ServerSideApply=false
+      - FailOnSharedResource=true
+      - RespectIgnoreDifferences=false
+      - CreateNamespace=true

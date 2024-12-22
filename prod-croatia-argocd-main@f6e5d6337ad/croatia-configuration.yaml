@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/instance: sharedservices
+    component: sharedservices
+    environment: prod-nonpci-shared
+  name: prod-nonpci-appdb-croatia-configuration
+  namespace: argocd
+spec:
+  destination:
+    namespace: alpha
+    server: https://api.prod-nonpci-appdb.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: overlays/prod-nonpci-appdb
+    repoURL: ssh://git@bitbucket.nrapp.cloud/dig/prod-croatia-configuration.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

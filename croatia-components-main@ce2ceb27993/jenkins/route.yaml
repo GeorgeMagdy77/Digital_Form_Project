@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  host: jenkins.apps.dev-nonpci-shared.npnbank.local
+  to:
+    kind: Service
+    name: jenkins
+    weight: 100
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

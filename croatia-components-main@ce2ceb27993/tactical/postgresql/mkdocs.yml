@@ -1,0 +1,3 @@
+site_name: postgresql
+nav:
+  - Home: index.md

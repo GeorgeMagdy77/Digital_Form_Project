@@ -1,0 +1,3 @@
+site_name: cert-manager
+nav:
+  - Home: index.md

@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: unleash-be
+  namespace: argocd
+spec:
+  destination:
+    namespace: unleash-be
+    server: 'https://api.dev-nonpci-shared.npnbank.local:6443'
+  source:
+    path: unleash-be
+    repoURL: 'ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git'
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+      - Prune=false
+      - Validate=true
+      - SkipDryRunOnMissingResource=false
+      - Delete=false
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=false
+      - Replace=false
+      - ServerSideApply=false
+      - FailOnSharedResource=false
+      - RespectIgnoreDifferences=false
+      - CreateNamespace=false
+  project: croatia-digital-platform

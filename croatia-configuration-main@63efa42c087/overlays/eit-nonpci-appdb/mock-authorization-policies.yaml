@@ -1,0 +1,269 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-crm-adapter", "cluster.local/ns/alpha-eit/sa/alpha-onboarding-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/details", "/v1/customers", "/v1/customers/screening/case", "/v1/customers/*" ] #Internal apis ?
+            #Istio is not allowing regex like /v1/customers/*/accounts so therefor we need to add /v1/customer/*
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/v1/customers" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v1/customers", "/v1/customers/screening/status" ]
+            
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-focal-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-focal-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-screening-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/api/v2/login/access-token",
+                     "/api/v2/screen/individual",
+                     "/api/v2/screen/approve",
+                     "/api/v2/screen/reject",
+                     "/api/v2/screen/pending" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-nafath-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-nafath-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-nafath-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/link" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/api/v1/customers/verify/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tahaqoq-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tahaqoq-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-tahaqoq-adapter" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/api/v1/person/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tier-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tier-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ] #Mocks should not be exposed via kong
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH", "DELETE" ]
+            paths: [ "/v1/customer", "/v1/customer/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-development-simulator-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-development-simulator-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ] #This should be on dev only
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PUT" ]
+            paths: [ "/v1/simulator/screening/*",
+                     "/v1/simulator/referrals/*",
+                     "/v1/simulator/customers/*",
+                     "/v1/simulator/notifications/*",
+                     "/v1/simulator/actions/*",
+                     "/v1/simulator/statements/*",
+                     "/v1/simulator/adhoc-documents/*",
+                     "/v1/simulator/fulfillment/*"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-isva-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-isva-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-isva-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST", "GET", "PUT", "PATCH", "DELETE" ]
+            paths: [ "/v1/*", "/v1.0/*", "/v2.0/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-paymentology-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-paymentology-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-paymentology-payment-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/api/v1/pws_create_card", "/api/v1/pws_create_card/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "superior-lifestyle-stub-service"
+spec:
+  selector:
+    matchLabels:
+      app: "superior-lifestyle-stub-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-goal-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/mutual-fund/*", "/v1/gold/*", "/v1/savingPots/*", "/v1/goals/*", "/internal/v1/balances" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-card-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customer/*" ] #Why is a service calling public apis ?
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customer/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-customer-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customer/preferences/notifications" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/customer/preferences/notifications" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-referral-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/customer/referral", "/protected/v1/customer", "/protected/v1/customer/referrals/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/protected/v1/customer/referral", "/internal/v1/customer/referral" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-cms-adapter-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/contents", "/protected/v1/contents/*", "/protected/v1/contents/categories", "/v1/contents/datatypes" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha-eit/sa/alpha-notification-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/RiCHClientServiceREST.svc/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-mutual-fund-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/recurring" ]
+---
+#To be removed once Genesys is in place
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/service-mesh/sa/istio-ingressgateway-service-account" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/genesys/2/chat/croatia", "/genesys/2/chat/croatia/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-marketplace-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-marketplace-mock-framework"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-marketplace-adapter"]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/Portfolio/*", "/ams/customer-profile/v1/customers/balance", "/customers/*",
+                     "/internal/v1/*", "/Portfolios/*", "/products/*", "/{productId}/last3years-performance",
+                     "/oauth2security/oauth2/token", "/loyalty-earning/*", "/loyalty-management/*",
+                     "/loyalty-redemption/*", "/motor-insurance/*", "/motor-quotation/*", "/yakeen-art/*",
+                     "/najm/*", "/fast-onboarding/*", "/saudi-post-art/*", "/suitability-questionnaire/v1/data",
+                     "/v1/customers/portfolios/cash-in/validate", "/suitability-questionnaire/v1/scoring",
+                     "/onboarding-account-opening" ]

@@ -1,0 +1,244 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  title: Croatia Components
+  name: croatia-components
+spec:
+  owner: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  title: Croatia Shared Services
+  name: croatia-shared-services
+spec:
+  owner: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  title: Croatia Alpha Platform
+  name: croatia-alpha-platform
+spec:
+  owner: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./artifactory
+  title: Artifactory
+  name: artifactory
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-shared-services
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./bitbucket
+  title: Bitbucket
+  name: bitbucket
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-shared-services
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./camunda-platform
+  title: Camunda Platform
+  name: camunda-platform
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-alpha-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./cert-manager
+  title: Certificate Manager
+  name: cert-manager
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-components
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./confluent
+  title: Confluent Platform
+  name: confluent
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-alpha-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./jenkins
+  title: Jenkins
+  name: jenkins
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-shared-services
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./keycloak
+  title: Keycloak
+  name: keycloak
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-shared-services
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./kong
+  title: Kong
+  name: kong
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-alpha-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./logging
+  title: Openshift Logging
+  name: logging
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-components
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./ocp-sso
+  title: Openshift SSO
+  name: ocp-sso
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-components
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./operators
+  title: Openshift Operators
+  name: operators
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-components
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./postgresql
+  title: Percona Managed Postgresql
+  name: postgresql
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-components
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./redis
+  title: Redis
+  name: redis
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-alpha-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./service-mesh
+  title: Openshift Service Mesh
+  name: service-mesh
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-components
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./sonarqube
+  title: SonarQube
+  name: sonarqube
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-shared-services
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./vault
+  title: Hashicorp Vault
+  name: vault
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-shared-services
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./vault-client
+  title: Vault Client
+  name: vault-client
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-components

@@ -1,0 +1,39 @@
+# Source: camunda-platform/charts/identity/charts/keycloak/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+  labels:
+    app.kubernetes.io/component: keycloak
+  name: camunda-platform-keycloak
+  namespace: camunda
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: keycloak
+      app.kubernetes.io/instance: camunda-platform
+      app.kubernetes.io/name: keycloak
+  serviceName: camunda-platform-keycloak-headless
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: keycloak
+        app.kubernetes.io/instance: camunda-platform
+    spec:
+      securityContext:
+        fsGroup: null
+        runAsUser: null
+      containers:
+        - name: keycloak
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: null
+      initContainers:
+        - name: init-quarkus-directory
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: null
+        - name: copy-camunda-theme
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: null

@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- namespace.yaml
+- externalsecret-root-password.yaml
+- routes.yaml
+- services.yaml
+helmCharts:
+- name: nexus3
+  repo: https://stevehipwell.github.io/helm-charts/
+  version: 4.45.1
+  releaseName: nexus3
+  namespace: nexus-repository
+  valuesFile: values.yaml

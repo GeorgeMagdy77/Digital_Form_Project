@@ -1,0 +1,3 @@
+site_name: sonarqube
+nav:
+  - Home: index.md

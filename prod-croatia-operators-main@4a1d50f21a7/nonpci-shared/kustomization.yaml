@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- elasticsearch.yaml
+- kiali.yaml
+- jaeger.yaml
+- service-mesh.yaml
+- sso.yaml
+- logging.yaml
+- argocd.yaml
+- external-secrets.yaml
+

@@ -1,0 +1,74 @@
+deploymentType: "StatefulSet"
+replicaCount: 1
+OpenShift:
+  enabled: false
+  createSCC: true
+edition: "developer"
+imagePullPolicy: Always
+image:
+  repository: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/sonarqube
+  tag: 9.9.0-developer
+  pullPolicy: Always
+nginx:
+  enabled: false
+ingress:
+  enabled: false
+route:
+  enabled: false
+initSysctl:
+  enabled: true
+
+caCerts:
+  enabled: true
+  image: aadoptopenjdk/openjdk11:alpine
+  secret: router-certs-sonar
+  
+
+initFs:
+  enabled: true
+  securityContext:
+    privileged: true
+
+prometheusExporter:
+  enabled: false
+  securityContext:
+    runAsUser: 0
+    runAsGroup: 0
+plugins:
+  install: []
+postgresql:
+  enabled: true
+  image:
+    repository: "bitnami/postgresql"
+    tag: 15.2.0-debian-11-r1
+    pullPolicy: Always
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+      ephemeral-storage: "5Gi"
+    limits:
+      cpu: "1"
+      memory: 2Gi
+      ephemeral-storage: "10Gi"
+
+  securityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1000980010
+    runAsGroup: 1000980010
+    readOnlyRootFilesystem: true
+  volumePermissions:
+    enabled: true
+    securityContext:
+      runAsUser: "auto"
+  shmVolume:
+    chmod:
+      enabled: false
+  serviceAccount:
+    enabled: false
+tests:
+  enabled: false
+serviceAccount:
+  create: true

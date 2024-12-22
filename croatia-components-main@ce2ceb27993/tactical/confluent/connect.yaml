@@ -1,0 +1,16 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connect
+metadata:
+  name: connect
+  namespace: confluent-kafka
+spec:
+  replicas: 2
+  image:
+    application: docker.io/confluentinc/cp-server-connect:7.3.0
+    init: docker.io/confluentinc/confluent-init-container:2.5.0
+  podTemplate:
+    podSecurityContext: {}
+    resources:
+      requests:
+        cpu: "1"
+        memory: "4Gi"

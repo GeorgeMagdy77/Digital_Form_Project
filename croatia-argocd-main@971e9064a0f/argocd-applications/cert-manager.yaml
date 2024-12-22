@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - cluster: san-sandbox
+          - cluster: san-kong
+  template:
+    metadata:
+      labels:
+        environment: '{{ cluster }}'
+      name: '{{ cluster }}-cert-manager'
+    spec:
+      destination:
+        name: |
+          {{ cluster }}
+      project: croatia-digital-platform
+      source:
+        path: cert-manager
+        repoURL: "ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git"
+        targetRevision: HEAD
+      syncPolicy: {}
+

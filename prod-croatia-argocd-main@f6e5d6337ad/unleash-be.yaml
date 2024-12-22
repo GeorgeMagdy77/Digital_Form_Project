@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-nonpci-shared-unleash-be
+  namespace: argocd
+spec:
+  destination:
+    namespace: unleash-be
+    server: https://api.prod-nonpci-shared.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source: 
+    repoURL: ssh://git@bitbucket.nrapp.cloud/scm/dig/prod-croatia-components.git
+    path: unleash-be
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

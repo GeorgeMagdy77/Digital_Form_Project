@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-camunda-mod
+  namespace: argocd
+spec:
+  destination:
+    namespace: camunda-mod
+    server: https://api.prod-nonpci-appdb.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: camunda-platform
+    repoURL: ssh://git@bitbucket.nrapp.cloud/scm/dig/prod-camunda-mod.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

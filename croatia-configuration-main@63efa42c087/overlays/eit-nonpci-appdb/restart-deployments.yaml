@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: restart-deployments
+spec:
+    spec:
+      containers:
+        - name: job
+          image: bitnami/kubectl:1.24.8
+          command:
+          - /bin/sh
+          - -c
+          - |
+            DEPLOYMENTS=$(kubectl -n alpha-eit get deployments -l "alphaEnvironmentConfiguration=true" -o jsonpath="{.items[*].metadata.name}")
+            for DEPLOYMENT in $DEPLOYMENTS; do
+              kubectl -n alpha-eit rollout restart deployments ${DEPLOYMENT}
+            done

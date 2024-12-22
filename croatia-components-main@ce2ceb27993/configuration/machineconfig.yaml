@@ -1,0 +1,37 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 99-worker-registries
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - contents:
+          compression: ""
+          source: data:;base64,dW5xdWFsaWZpZWQtc2VhcmNoLXJlZ2lzdHJpZXMgPSBbImRvY2tlci5pbyJdCgpbW3JlZ2lzdHJ5XV0KbG9jYXRpb24gPSAiZG9ja2VyLmlvIgogIFtbcmVnaXN0cnkubWlycm9yXV0KICBsb2NhdGlvbiA9ICJhcnRpZmFjdG9yeS5hcHBzLmRldi1ub25wY2ktc2hhcmVkLm5wbmJhbmsubG9jYWwvZG9ja2VyIgoKW1tyZWdpc3RyeV1dCmxvY2F0aW9uID0gImNsb3VkLm9wZW5zaGlmdC5jb20iCiAgW1tyZWdpc3RyeS5taXJyb3JdXQogIGxvY2F0aW9uID0gImFydGlmYWN0b3J5LmFwcHMuZGV2LW5vbnBjaS1zaGFyZWQubnBuYmFuay5sb2NhbC9jbG91ZC5vcGVuc2hpZnQuY29tIgoKW1tyZWdpc3RyeV1dCmxvY2F0aW9uID0gInF1YXkuaW8iCiAgW1tyZWdpc3RyeS5taXJyb3JdXQogIGxvY2F0aW9uID0gImFydGlmYWN0b3J5LmFwcHMuZGV2LW5vbnBjaS1zaGFyZWQubnBuYmFuay5sb2NhbC9xdWF5LmlvIgoKW1tyZWdpc3RyeV1dCmxvY2F0aW9uID0gInJlZ2lzdHJ5LmNvbm5lY3QucmVkaGF0LmNvbSIKICBbW3JlZ2lzdHJ5Lm1pcnJvcl1dCiAgbG9jYXRpb24gPSAiYXJ0aWZhY3RvcnkuYXBwcy5kZXYtbm9ucGNpLXNoYXJlZC5ucG5iYW5rLmxvY2FsL3JlZ2lzdHJ5LmNvbm5lY3QucmVkaGF0LmNvbSIKCltbcmVnaXN0cnldXQpsb2NhdGlvbiA9ICJyZWdpc3RyeS5yZWRoYXQuaW8iCiAgW1tyZWdpc3RyeS5taXJyb3JdXQogIGxvY2F0aW9uID0gImFydGlmYWN0b3J5LmFwcHMuZGV2LW5vbnBjaS1zaGFyZWQubnBuYmFuay5sb2NhbC9yZWdpc3RyeS5yZWRoYXQuaW8iCg==
+        mode: 420
+        overwrite: true
+        path: /etc/containers/registries.conf
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-master-registries
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - contents:
+          compression: ""
+          source: data:;base64,dW5xdWFsaWZpZWQtc2VhcmNoLXJlZ2lzdHJpZXMgPSBbImRvY2tlci5pbyJdCgpbW3JlZ2lzdHJ5XV0KbG9jYXRpb24gPSAiZG9ja2VyLmlvIgogIFtbcmVnaXN0cnkubWlycm9yXV0KICBsb2NhdGlvbiA9ICJhcnRpZmFjdG9yeS5hcHBzLmRldi1ub25wY2ktc2hhcmVkLm5wbmJhbmsubG9jYWwvZG9ja2VyIgoKW1tyZWdpc3RyeV1dCmxvY2F0aW9uID0gImNsb3VkLm9wZW5zaGlmdC5jb20iCiAgW1tyZWdpc3RyeS5taXJyb3JdXQogIGxvY2F0aW9uID0gImFydGlmYWN0b3J5LmFwcHMuZGV2LW5vbnBjaS1zaGFyZWQubnBuYmFuay5sb2NhbC9jbG91ZC5vcGVuc2hpZnQuY29tIgoKW1tyZWdpc3RyeV1dCmxvY2F0aW9uID0gInF1YXkuaW8iCiAgW1tyZWdpc3RyeS5taXJyb3JdXQogIGxvY2F0aW9uID0gImFydGlmYWN0b3J5LmFwcHMuZGV2LW5vbnBjaS1zaGFyZWQubnBuYmFuay5sb2NhbC9xdWF5LmlvIgoKW1tyZWdpc3RyeV1dCmxvY2F0aW9uID0gInJlZ2lzdHJ5LmNvbm5lY3QucmVkaGF0LmNvbSIKICBbW3JlZ2lzdHJ5Lm1pcnJvcl1dCiAgbG9jYXRpb24gPSAiYXJ0aWZhY3RvcnkuYXBwcy5kZXYtbm9ucGNpLXNoYXJlZC5ucG5iYW5rLmxvY2FsL3JlZ2lzdHJ5LmNvbm5lY3QucmVkaGF0LmNvbSIKCltbcmVnaXN0cnldXQpsb2NhdGlvbiA9ICJyZWdpc3RyeS5yZWRoYXQuaW8iCiAgW1tyZWdpc3RyeS5taXJyb3JdXQogIGxvY2F0aW9uID0gImFydGlmYWN0b3J5LmFwcHMuZGV2LW5vbnBjaS1zaGFyZWQubnBuYmFuay5sb2NhbC9yZWdpc3RyeS5yZWRoYXQuaW8iCg==
+        mode: 420
+        overwrite: true
+        path: /etc/containers/registries.conf

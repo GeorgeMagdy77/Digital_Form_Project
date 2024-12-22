@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: artifactory
+  namespace: artifactory
+spec:
+  host: artifactory.apps.dev-nonpci-shared.npnbank.local
+  to:
+    kind: Service
+    name: jfrog-platform-artifactory
+    weight: 100
+  port:
+    targetPort: 8082
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: croatia-sso
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+            argo-cluster-type: alpha
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+            argo-cluster-type: shared-services
+  template:
+    metadata:
+      name: '{{nameNormalized}}-sso'
+      namespace: argocd
+      labels:
+        environment: '{{nameNormalized}}'
+        component: croatia-digital-platform
+    spec:
+      destination:
+        server: '{{server}}'
+      project: croatia-digital-platform
+      source:
+        path: 'tactical/overlays/{{ nameNormalized }}/ocp-sso'
+        repoURL: 'ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git'
+        targetRevision: HEAD
+      syncPolicy:
+        automated: {}

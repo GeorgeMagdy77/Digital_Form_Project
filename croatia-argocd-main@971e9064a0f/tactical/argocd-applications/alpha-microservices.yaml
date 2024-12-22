@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: alpha-microservices
+  namespace: argocd
+spec:
+  generators:
+    - matrix:
+        generators:
+          - scmProvider:
+              bitbucketServer:
+                project: ALPHA
+                api: https://bitbucket.projectcroatia.cloud
+                allBranches: false
+                basicAuth:
+                  username: jenkins
+                  passwordRef:
+                    secretName: bitbucket
+                    key: bitbucket-token
+              filters:
+              - pathsExist: [Dockerfile]
+          - merge:
+              mergeKeys:
+              - nameNormalized
+              generators:
+              - clusters:
+                  selector:
+                    matchLabels:
+                      argocd.argoproj.io/secret-type: cluster
+                      argo-cluster-type: alpha
+                  values:
+                    targetRevision: '*'
+                    gatewayCreate: 'true'
+              - list:
+                  elements:
+                  - nameNormalized: dev-cit
+                    values.targetRevision: '0.1.*'
+                    values.gatewayCreate: 'false'
+  template:
+    metadata:
+      name: '{{nameNormalized}}-{{repository}}'
+      namespace: argocd
+      labels:
+        environment: '{{nameNormalized}}'
+        component: alpha
+    spec:
+      destination:
+        namespace: alpha
+        server: '{{server}}'
+      project: alpha
+      source:
+        chart: '{{repository}}'
+        repoURL: 'https://nexus.projectcroatia.cloud/repository/alpha-charts/'
+        targetRevision: '{{values.targetRevision}}'
+        helm:
+          values: |-
+            gateway:
+              create: {{values.gatewayCreate}}
+            hosts:
+            - {{repository}}.apps.{{nameNormalized}}.projectcroatia.cloud
+            - {{repository}}.ingress.{{nameNormalized}}.projectcroatia.cloud
+      syncPolicy: {}

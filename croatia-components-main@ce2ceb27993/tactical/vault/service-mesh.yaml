@@ -1,0 +1,52 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: vault
+  namespace: vault
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - vault.ingress.san-sandbox.projectcroatia.cloud
+    port:
+      name: http2-vault
+      number: 80
+      protocol: HTTP2
+    tls:
+      httpsRedirect: true
+  - hosts:
+    - vault.ingress.san-sandbox.projectcroatia.cloud
+    port:
+      name: https-vault
+      number: 443
+      protocol: HTTPS
+    tls:
+      mode: PASSTHROUGH
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: Prune=false
+  name: vault
+  namespace: vault
+spec:
+  gateways:
+  - vault/vault
+  hosts:
+  - vault.ingress.san-sandbox.projectcroatia.cloud
+  tls:
+  - match:
+    - sniHosts:
+      - vault.ingress.san-sandbox.projectcroatia.cloud
+    route:
+    - destination:
+        host: vault-active
+        port:
+          number: 8200
+      weight: 100

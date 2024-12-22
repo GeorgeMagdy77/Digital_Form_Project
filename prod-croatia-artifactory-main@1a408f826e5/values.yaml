@@ -1,0 +1,63 @@
+global:
+  masterKeySecretName: artifactory-keys
+  joinKeySecretName: artifactory-keys
+artifactory:
+  enabled: true
+  mc:
+    enabled: false
+  artifactory:
+    customCertificates:
+      enabled: true
+      certificateSecretName: router-certs-pca
+    persistence:
+      size: 1Ti
+    license:
+      secret: artifactory-keys
+      dataKey: license
+    customPersistentVolumeClaim:
+      name: backup
+      mountPath: /data/backup
+      accessModes: 
+      - ReadWriteOnce
+      size: 1.5Ti
+  rbac:
+    create: true
+    role:
+      rules:
+      - apiGroups:
+        - ''
+        resources:
+        - services
+        - endpoints
+        - pods
+        verbs:
+        - get
+        - watch
+        - list
+      - apiGroups:
+        - security.openshift.io
+        resources:
+        - securitycontextconstraints
+        resourceNames:
+        - anyuid
+        verbs:
+        - use
+  serviceAccount:
+    create: true
+  nginx:
+    enabled: false
+xray:
+  enabled: false
+insight:
+  enabled: false
+pipelines:
+  enabled: false
+redis:
+  enabled: false
+rabbitmq:
+  enabled: false
+postgresql:
+  persistence:
+    size: 1Ti
+distribution:
+  enabled: false

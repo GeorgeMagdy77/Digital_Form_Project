@@ -1,0 +1,3 @@
+site_name: ocp-sso
+nav:
+  - Home: index.md

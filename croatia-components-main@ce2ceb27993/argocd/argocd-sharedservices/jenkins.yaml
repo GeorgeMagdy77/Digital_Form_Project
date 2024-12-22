@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-nonpci-shared-jenkins
+  namespace: argocd-2-12-3
+  labels:
+    environment: dev-nonpci-shared
+    component: sharedservices
+spec:
+  destination:
+    name: |
+      dev-nonpci-shared
+  project: croatia-digital-platform
+  source:
+    path: jenkins
+    repoURL: ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git
+    targetRevision: HEAD
+  syncPolicy: {}

@@ -1,0 +1,188 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: croatia-configuration
+  labels:
+    croatia-environment: eit-nonpci-appdb
+data:
+  ENVIRONMENT_NAME: eit-nonpci-appdb
+  #  Oracle DB config - More Control
+  JDBC_URL_MC_PREFIX: "jdbc:oracle:thin:MCCIT/MCCIT@//10.1.1.81:1521/"
+  JDBC_MC_USER: MCCIT
+
+  #  Oracle DB config - Superior Lifestyle
+  JDBC_URL_SL_PREFIX: "jdbc:oracle:thin:SLCIT/SLCIT@//10.1.1.81:1521/"
+  JDBC_SL_USER: SLCIT
+
+  #  Oracle DB config - Smarter Choices
+  JDBC_URL_SC_PREFIX: "jdbc:oracle:thin:SCCIT/SCCIT@//10.1.1.81:1521/"
+  JDBC_SC_USER: SCCIT
+
+  DB_ACTIONS_SERVICE: "CDB1_ACTION_DB_CIT"
+  DB_CARD_SERVICE: "CDB1_CARD_DB_CIT"
+  DB_PAYMENTS_SERVICE: "CDB1_PAYMENT_DB_CIT"
+  DB_TRANSFERS_SERVICE: "CDB1_TRANSFER_DB_CIT"
+  DB_ONBOARDING_SERVICE: "CDB1_REGISTRATION_DB_CIT"
+  DB_DMS_SERVICE: "CDB_DMS_DB_CIT"
+  DB_ADHOC_SERVICE: "CDB_ADHOC_DB_CIT"
+  DB_STATEMENT_SERVICE: "CDB_STATEMENT_DB_CIT"
+  DB_HIJRI_CALENDAR_SERVICE: "CDB_HIJRI_CALENDAR_DB_CIT"
+  DB_REPORTING_ENGINE_SERVICE: "CDB_REPORTING_DB_CIT"
+  DB_SAVINGS_POT_SERVICE: "CDB1_SAVING_POT_DB_CIT"
+  DB_SL_CONFIGURATION_SERVICE: "CDB1_CONFIG_DB_CIT"
+  DB_SL_LIFESTYLE_SERVICE: "CDB1_LS_DB_CIT"
+  DB_SL_NOTIFICATION_SERVICE: "CDB1_NOTIFY_DB_CIT"
+  DB_SL_REWARD_SERVICE: "CDB1_REFERRAL_DB_CIT"
+  DB_SL_FEEDBACK_SERVICE: "CDB1_FEEDBACK_DB_CIT"
+  DB_SL_GOAL_SERVICE: "CDB_GOALS_DB_CIT"
+  DB_SL_CONTENT_FEEDBACK_SERVICE: "CDB1_CONTENT_DB_CIT"
+  DB_AUTHENTICATION_SERVICE: "CDB_AUTHENTICATION_DB_CIT"
+
+
+  # drahim
+  DRAHIM_CLIENT_ID: croatia-app
+  DRAHIM_CLIENT_URL: "https://dev-pfm-api.drahim.sa"
+  DRAHIM_ADAPTER_URL: "http://alpha-drahim-adapter:8080"
+
+
+  # Generic url
+  DOMAIN_NAME: ".apps.eit-nonpci-appdb.npnbank.local"
+  PREFIX_TRUSTED_URL: "https://"
+  PREFIX_UNTRUSTED_URL: "http://"
+
+  #Genesys adapter
+  TRANSFER_SERVICE: "alpha-transfers-service"
+  GENESYS_BENEFICIARY_URL: "/v1/transfers/beneficiaries/activate"
+
+
+  # Focal client details
+  FOCAL_CLIENT_URL: "http://alpha-focal-mock-framework:8080/api/v2"
+  FOCAL_CLIENT_USERNAME: "alrajhi_test@mozn.sa"
+  FOCAL_CLIENT_THRESHOLD: "70"
+
+  CRM_INTEGRATION_USERNAME: CrmIntegration
+  CRM_CHANNEL: CrmAdaptor1
+  CRM_API_URL: http://10.109.83.12:455
+  CRM_MOCK_URL: http://alpha-crm-mock-framework:8080
+
+
+  TAHAQOQ_CLIENT_ID: d0759d108ff8d2f080ea33d77f4ebe9b
+  TAHAQOQ_URL: "https://gwt.alrajhibank.com.sa:9443/api-factory/dev/tahaqoq/v1"
+  TAHAQOQ_MOCK_CLIENT_URL: http://alpha-tahaqoq-mock-framework:8080
+  TAHAQOQ_MOCK_FLAG: "1"
+
+  ISVA_URL: http://alpha-isva-mock-framework:8080
+  ISVA_CLIENT_ID: "ISVAClientId"
+  ISVA_SCOPE: "ISVAScope"
+
+  IBM_ISVA_URL: https://isva-rp1.apps.dev-nonprod-isva.npnbank.local
+  IBM_ISVA_ADMIN_CLIENT_ID: "myclient"
+  IBM_ISVA_ADMIN_SCOPE: "openid"
+  IBM_ISVA_ADMIN_GRANT_TYPE: "client_credentials"
+  IBM_ISVA_USER_CLIENT_ID: "usertoken"
+  IBM_ISVA_USER_SCOPE: "openid,CIC"
+  IBM_ISVA_USER_GRANT_TYPE: "password"
+
+  ISVA_TOKEN_CLIENT_ID: "myclient,crmclient"
+
+  NAFATH-CLIENT_URL: "https://gwt.alrajhibank.com.sa:9443/api-factory/sit"
+  NAFATH_CLIENT_ID: 8b31cd9a638afe45911a2b25cf041d85
+  NAFATH_CHANNEL_ID: OPEN_ACCT_PORTAL
+  NAFATH_SUB_CHANNEL_ID: STANDARD
+  NAFATH_MOCK_FLAG: "1"
+  NAFATH_MOCK_CLIENT_URL: http://alpha-nafath-mock-framework:8080
+  
+  ISVA_ADAPTER_URL: http://alpha-isva-adapter:8080
+  OTP_SERVICE_URL: http://alpha-otp-service:8080
+  DMS_ADAPTER_CLIENT_URL: http://alpha-dms-adapter:8080
+
+  TEMENOS_API_BASE: "http://transact-croiris-transact.apps.sit-corebanking.npnbank.local/CroIris/api/v1.0.0"
+  TEMENOS_CLIENT_URL: http://alpha-temenos-banking-adapter:8080
+
+  # MARKETPLACE
+  MARKETPLACE_YAKEEN_CLIENT_ID: d2bcf0e72d79c1de1d202141cdefb581
+  MARKETPLACE_CLIENT_URL: "https://sit.api-marketplace.alrajhibank.com.sa/apimarketplace-sit/api-marketplace-sit"
+  MARKETPLACE_CLIENT_ID: 548bd8378fb4007d7f5deae72bff18d3
+  MARKETPLACE_URL: "https://apimarketplace-int-gw-svc-gw-gateway-traffic-cp4i-nprd.ob-nonprod-cl01-de8fb88b0db8c47d4745b3af8ac7158d-0000.eu-de.containers.appdomain.cloud/api-marketplace/api-marketplace-sit"
+  MARKETPLACE_MOCK_CLIENT_URL: http://alpha-marketplace-mock-framework:8080
+  MARKETPLACE_MOCK_FLAG: "1"
+  MARKETPLACE_ADAPTER_CLIENT_URL: http://alpha-marketplace-adapter:8080
+  MARKETPLACE_AUTH_ADAPTER_URL: http://alpha-mp-auth-fob-adapter:8080
+  MARKETPLACE_KYC_CLIENT_URL: http://alpha-mp-kyc-fob-adapter:8080
+  MARKETPLACE_GRANT_TYPE_CLIENT_CREDENTIALS: client_credentials
+  MARKETPLACE_GRANT_TYPE_AUTHORIZATION_CODE: authorization_code
+  MARKETPLACE_GRANT_TYPE_REFRESH_TOKEN: refresh_token
+  MARKETPLACE_SCOPE_APIS: marketplace_apis
+  MARKETPLACE_SCOPE_ONBOARDING: onboarding
+  MARKETPLACE_RESPONSE_TYPE: code
+  MARKETPLACE_VERIFY_ACCOUNT: "/iban-identification/v1/identification-requests"
+  MARKETPLACE_VERIFY_TRANSFER_ACCOUNT: "/accounts/outwards-verification/v1/initiate/transfer-account"
+
+  HIJRI_DATE_SERVICE_CLIENT_URL: http://alpha-hijridate-service:8080
+  CUSTOMER_SERVICE_MOCK_CLIENT_URL: http://alpha-customer-mock-framework:8080
+
+  CMS_CLIENT_URL: http://alpha-cms-adapter-service:8080
+  CMS_CONTENT_CLIENT_URL: http://alpha-content-service:8080
+
+  CARD_SERVICE_CLIENT_URL: http://alpha-card-service:8080
+
+  # FOB MP
+  FOB_MP_URL: https://apic10-gw-01.ejada.com:9446/apimarketplace/api-marketplace-dev
+  FOB_MP_CLIENT_ID: "4f90f9709d8e5f625938632c0c10818e"
+  FOB_MP_SCOPE: "marketplace_apis"
+  FOB_MP_GRANT_TYPE: "client_credentials"
+  FOB_MOCK_MP_URL: http://alpha-fob-mp-mock-framework:8080
+  FOB_ADAPTER_CLIENT_URL: http://alpha-fast-onboarding-mp-adapter:8080
+  MARKETPLACE_HOST_NAME: "sit.api-marketplace.alrajhibank.com.sa"
+
+  # NEO TEK
+  NEO_TEK_MOCK_URL: http://alpha-neotek-mock-framework:8080
+
+  OPEN_BANKING_ADAPTER_URL: http://alpha-open-banking-adapter:8080
+
+  FOCAL_ADAPTER_URL: http://alpha-focal-adapter:8080
+
+  FOCAL_MOCK_ADAPTER_URL: http://alpha-focal-mock-framework:8080
+
+  KAFKA_CRM_EVENT_PUBLISH_ID_EXPIRY_TOPIC: croatia-customer-id-expiry
+
+  # MC - Publish Evidence Code
+  KAFKA_CRM_EVENT_PUBLISH_EVIDENCE_CODE_TOPIC: croatia-evidence-code
+  KAFKA_EXIT_DECEASED_ERRORS_TOPIC: croatia-exit-deceased-error
+
+  SAVING_POTS_ACCOUNTS_NUMBER: "4"
+
+  # MC - SAS Advice Kafka Topics
+  KAFKA_TOPIC_SAS_APP_REGISTRATION_MNG: croatia-sas-app-registration-mng
+  KAFKA_TOPIC_SAS_OPEN_ONLINE_ACC: croatia-sas-open-online-acc
+  KAFKA_TOPIC_SAS_USER_LOGIN: croatia-sas-user-login
+  KAFKA_TOPIC_SAS_ERROR: croatia-sas-error-topic
+
+  # SC - SAS Advice flow Kafka Topics
+  KAFKA_SAS_BENEFICIARY_TOPIC: croatia-sas-create-beneficiary
+  KAFKA_SAS_CONFIRMATION_TOPIC: croatia-sas-transaction-confirmation
+
+  # SC - Temenos Event Adapter Recurring Payment Kafka Topics
+  KAFKA_SUCCESS_RECURRING_PAYMENT_TOPIC: croatia-dev-recurring-payment
+  KAFKA_FAILED_RECURRING_PAYMENT_TOPIC: croatia-dev-failed-recurring-payment
+
+  # SC - Temenos Event Adapter Account Statements Kafka Topics
+  KAFKA_MONTHLY_ACCOUNT_STATEMENT_TOPIC: croatia-transact-monthly-account-stmt
+  KAFKA_ADHOC_ACCOUNT_STATEMENT_TOPIC: croatia-transact-adhoc-account-stmt
+
+  #SHAHID CLIENT PARAMETERS
+  SHAHID_CLIENT_URL: "https://shd-30-api.shahid.net/proxy/v2"
+  SHAHID_CLIENT_PARTNER_CODE: "10021"
+
+  #CB
+  JDBC_URL_CB_PREFIX: "jdbc:oracle:thin:@//10.109.94.11:1521/"
+  JDBC_CB_USER: "CB"
+  DB_EVENT_ADAPTER: "CDB_CB_EVENT_ADAPTER_DB"
+
+  OTP_MOCK_FLAG: "1"
+
+  # Transfer Notification Event Kafka Topics
+  KAFKA_TRANSACTIONS_TRANSFER_TOPIC: croatia-transfer-notification
+
+  TREASURY_ADAPTER_CLIENT_URL: "http://alpha-treasury-adapter:8080"
+  CUSTOMER_LIMITS_SERVICE_URL: "http://alpha-customer-limits-service:8080"

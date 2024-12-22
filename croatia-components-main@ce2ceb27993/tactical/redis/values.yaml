@@ -1,0 +1,65 @@
+image:
+  registry: nexus.projectcroatia.cloud:18080
+  repository: bitnami/redis
+  tag: 7.0.10-debian-11-r4
+  digest: ""
+  pullPolicy: Always
+
+master:
+  count: 1
+  containerPorts:
+    redis: 6379
+
+  resources:
+    limits:
+      cpu: 700m
+      memory: 1024Mi
+      ephemeral-storage: "5Gi"
+    requests:
+      cpu: 500m
+      memory: 512Mi
+      ephemeral-storage: "2Gi"
+
+  podSecurityContext:
+    enabled: false
+    fsGroup: 1001
+    readOnlyRootFilesystem: true
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1000980010
+    runAsGroup: 1000980010
+    readOnlyRootFilesystem: true
+
+pdb:
+ create: true
+ minAvailable: 1
+ maxUnavailable: ""
+
+replica:
+  replicaCount: 2
+  containerPorts:
+    redis: 6379
+
+  resources:
+    limits:
+      cpu: 700m
+      memory: 1024Mi
+      ephemeral-storage: "5Gi"
+    requests:
+      cpu: 500m
+      memory: 512Mi
+      ephemeral-storage: "2Gi"
+
+  podSecurityContext:
+    enabled: false
+    fsGroup: 1001
+    readOnlyRootFilesystem: true
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1000980010
+    runAsGroup: 1000980010
+    readOnlyRootFilesystem: true
+pdb:
+ create: true
+ minAvailable: 1
+ maxUnavailable: ""

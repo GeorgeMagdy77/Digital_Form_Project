@@ -1,0 +1,21 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaRegistry
+metadata:
+  name: schemaregistry
+  namespace: confluent-kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 2
+  tls:
+    secretRef: kafka-tls
+    ignoreTrustStoreConfig: true
+  image:
+    application: docker.io/confluentinc/cp-schema-registry:7.4.0
+    init: docker.io/confluentinc/confluent-init-container:2.6.0
+  externalAccess:
+    route:
+      domain: apps.nft-nonpci-appdb.npnbank.local
+    type: route  
+  podTemplate:
+    podSecurityContext: {}

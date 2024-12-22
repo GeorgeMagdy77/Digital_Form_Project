@@ -1,0 +1,27 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: postgresql-wokers
+  namespace: openshift-machine-api
+  labels:
+    machine.openshift.io/cluster-api-cluster: san-sandbox
+spec:
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: san-sandbox
+      machine.openshift.io/cluster-api-machineset: san-sandbox-postgresql
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: san-sandbox
+        machine.openshift.io/cluster-api-machineset: san-sandbox-postgresql
+    spec:
+      providerSpec:
+        value:
+          network:
+            devices:
+              - networkName: san-sandbox
+          workspace:
+            folder: /oci-w01dc/vm/san-sandbox-gbp2k
+            server: vcenter-sandbox.sddc.jed.oci.oraclecloud.com
+          template: san-sandbox-gbp2k-rhcos

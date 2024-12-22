@@ -1,0 +1,72 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: nexus
+  namespace: nexus-repository
+spec:
+  host: nexus.apps.dev-nonpci-shared.npnbank.local
+  to:
+    kind: Service
+    name: nexus3
+    weight: 100
+  port:
+    targetPort: 8081
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: nexus-connector-ai
+  namespace: nexus-repository
+spec:
+  host: nexus-connector-ai.apps.dev-nonpci-shared.npnbank.local
+  to:
+    kind: Service
+    name: nexus3-connector-ai
+    weight: 100
+  port:
+    targetPort: 4042
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: nexus-connector
+  namespace: nexus-repository
+spec:
+  host: nexus-connector.apps.dev-nonpci-shared.npnbank.local
+  to:
+    kind: Service
+    name: nexus3-connector
+    weight: 100
+  port:
+    targetPort: 5051
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: nexus-proxy
+  namespace: nexus-repository
+spec:
+  host: nexus-proxy.apps.dev-nonpci-shared.npnbank.local
+  path: /
+  to:
+    kind: Service
+    name: nexus3-proxy
+    weight: 100
+  port:
+    targetPort: 5052
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

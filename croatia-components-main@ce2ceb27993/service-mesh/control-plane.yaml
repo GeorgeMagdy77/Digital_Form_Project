@@ -1,0 +1,51 @@
+apiVersion: maistra.io/v2
+kind: ServiceMeshControlPlane
+metadata:
+  name: basic
+  namespace: service-mesh
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  addons:
+    grafana:
+      enabled: true
+    jaeger:
+      install:
+        storage:
+          type: Memory
+    kiali:
+      enabled: true
+    prometheus:
+      enabled: true
+  gateways:
+    egress:
+      enabled: true
+      runtime:
+        deployment:
+          replicas: 3
+    enabled: true
+    ingress:
+      enabled: true
+      ingress: true
+      service: {}
+      runtime:
+        deployment:
+          replicas: 3
+    openshiftRoute:
+      enabled: false
+  policy:
+    type: Istiod
+  profiles:
+    - default
+  proxy:
+    accessLogging:
+      file:
+        name: /dev/stdout
+    injection:
+      autoInject: true
+  telemetry:
+    type: Istiod
+  tracing:
+    sampling: 10000
+    type: Jaeger
+  version: v2.1

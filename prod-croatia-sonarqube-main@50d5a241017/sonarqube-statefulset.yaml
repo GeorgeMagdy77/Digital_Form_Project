@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sonarqube-sonarqube
+spec:
+  serviceName: sonarqube-sonarqube-headless
+  template:
+    metadata:
+      labels:
+        name: sonarqube-sonarqube
+
+    spec:
+      volumes:
+      - name: sonarqube-downloads
+        emptyDir: {}
+      containers:
+        - name: sonarqube
+          livenessProbe:
+            timeoutSeconds: 5
+          readinessProbe:
+            timeoutSeconds: 5
+          startupProbe:
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 200m
+              memory: 500Mi
+              ephemeral-storage: "5Gi"
+            limits:
+              cpu: "1"
+              memory: 2Gi
+              ephemeral-storage: "10Gi"
+          securityContext:
+            runAsUser: 1000980010
+            runAsGroup: 1000980010
+            readOnlyRootFilesystem: true
+          volumeMounts:
+          - mountPath: /opt/sonarqube/extensions/downloads
+            name: sonarqube-downloads
+
+      initContainers:
+      - command:
+        - /bin/sh
+        - -c
+        - for i in $(seq 1 200); do echo 0 && exit 0
+          || sleep 2; done; exit 1
+        - name: "wait-for-db"
+          imagePullPolicy: Always
+          image: bitnami/bitnami-shell:10-debian-10-r199
+          resources:
+            requests:
+              cpu: 200m
+              memory: 500Mi
+              ephemeral-storage: "5Gi"
+            limits:
+              cpu: "1"
+              memory: 2Gi
+              ephemeral-storage: "10Gi"
+          securityContext:
+            runAsUser: 1000980010
+            runAsGroup: 1000980010
+            readOnlyRootFilesystem: true

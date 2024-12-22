@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: croatia-configuration
+  labels:
+    croatia-environment: default
+data:
+  ENVIRONMENT_NAME: default
+# Oracle DB config
+  JDBC_DRIVER: oracle.jdbc.OracleDriver
+  JDBC_URL_POSTFIX: ".paas.oracle.com"
+#Micronaut
+  PROJECT_NAME: "croatia"
+# Topics
+  KAFKA_BOOTSTRAP: "kafka.confluent-kafka:9092"
+  KAFKA_CUSTOMER_LIMIT_ACTION: croatia-customer-limit
+  KAFKA_CUSTOMER_LIMIT_UPDATE: croatia-customer-limit-update
+  KAFKA_CUSTOMER_LIMIT_ERROR_TOPIC: croatia-error-limit
+  KAFKA_CUSTOMER_CREATE_EVENT: croatia-create-customer-event
+  KAFKA_TOPIC_FAILED_NOTIFICATION_SEND: croatia-mutualfund-subscription-failed
+  KAFKA_TOPIC_SAVING_POT_INGESTED: roatia-saving-pot-data-ingested
+  KAFKA_TOPIC_MUTUAL_FUND_ONBOARDING_SUCCESS: croatia-mutualfund-onboarding-success
+  KAFKA_TOPIC_MUTUAL_FUND_SUITABILITY_SUCCESS: croatia-mutual-fund-onboarding-suitability-question
+  KAFKA_TOPIC_MUTUAL_FUND_SUBSCRIPTION: croatia-mutual-fund-subscription
+  KAFKA_TOPIC_CUSTOMER_LIMIT: croatia-customer-limit
+  KAFKA_TOPIC_CUSTOMER_GOAL_CREATION: croatia-customer-goal-creation
+  KAFKA_DELETE_ADHOC_BENEFICIARY_TOPIC: croatia-delete-adhoc-beneficiary
+  KAFKA_AIO_STATEMENT_READY_TOPIC: croatia-aio-statement-ready
+  KAFKA_AIO_ISSUANCE_NOTIFICATION_TOPIC: croatia-aio-issuance-notification
+  KAFKA_AIO_FEES_NOTIFICATION_TOPIC: croatia-aio-fees-notification
+  KAFKA_TOPIC_ACTION_PUBLISH_CREATE_BULK: croatia-bulk-create-actions
+  KAFKA_TOPIC_ACTION_PUBLISH_DEACTIVATE: croatia-deactivate-action-type
+  KAFKA_TOPIC_MUTUAL_FUND_SUITABILITY_QUESTIONS: croatia-mutualfund-answer-suitability-questions
+  KAFKA_TOPIC_MUTUAL_FUND_SUBSCRIPTION_STATUS: croatia-mutualfund-subscription-status
+  KAFKA_PAYABLE_FILE_TOPIC: payable-file-fx-initiate
+  PAYABLE_FX_RETRY_EXPIRY: "PT5M"
+  PAYABLE_FX_NUMBER-OF-RETRIES: "4"
+  KAFKA_TOPIC_SAS_ADVICE: "croatia-sas-pay-sadad-bill"
+  KAFKA_RTP_SAS_ADVICE: "croatia-rtp-sas-advice"
+  KAFKA_TOPIC_SAS_CARD_FINANCIAL_SUCCESS: croatia-debit-card-success-trans
+  KAFKA_TOPIC_SAS_CARD_FINANCIAL_DECLINE: croatia-debit-card-declined-trans
+
+
+  # SC - Customer Limits Service
+  CUSTOMER_LIMITS_MAX_TRIAL: "3"
+  CUSTOMER_LIMITS_IN_BETWEEN_TRIAL_PERIOD: "60000"
+
+  #Redis Cache
+  CACHE_WRITE_URL: "redis://redis-master.redis.svc.cluster.local:6379"
+  CACHE_READ_URL: "redis://redis-master.redis.svc.cluster.local:6379"

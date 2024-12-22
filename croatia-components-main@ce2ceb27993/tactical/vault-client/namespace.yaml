@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: vault
+    istio-injection: disabled
+  name: vault
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+---
+kind: ServiceMeshMember
+apiVersion: maistra.io/v1
+metadata:
+  name: default
+  namespace: vault
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  controlPlaneRef:
+    name: basic
+    namespace: service-mesh

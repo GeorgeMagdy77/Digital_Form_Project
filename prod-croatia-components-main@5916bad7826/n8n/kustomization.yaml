@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - route.yaml
+  - externalsecret-postgres.yaml
+  - externalsecret-app-postgres.yaml
+  - externalsecret-encryption-key.yaml
+  - externalsecret-redis.yaml
+  - service-postgres.yaml
+  - service-app-postgres.yaml
+  - statefulset-postgres.yaml
+  - statefulset-app-postgres.yaml
+helmCharts:
+- name: n8n
+  repo: "https://nexus.apps.prod-nonpci-shared.nrapp.cloud/repository/helm-local"
+  version: 0.24.5
+  releaseName: n8n
+  namespace: n8n
+  valuesFile: values.yaml

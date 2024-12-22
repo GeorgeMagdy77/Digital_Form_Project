@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-croatia-operator-nonpci-appdb
+  namespace: argocd
+spec:
+  destination:
+    namespace: openshit-operators
+    server: https://api.prod-nonpci-appdb.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: nonpci-appdb
+    repoURL: ssh://git@bitbucket.nrapp.cloud/dig/prod-croatia-operators.git
+    targetRevision: HEAD

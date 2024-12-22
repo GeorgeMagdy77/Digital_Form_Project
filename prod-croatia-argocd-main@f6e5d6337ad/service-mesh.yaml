@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-nonpci-appdb-servicemesh
+  namespace: argocd
+spec:
+  destination:
+    namespace: service-mesh
+    server: https://api.prod-nonpci-appdb.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: overlays/prod-nonpci-appdb
+    repoURL: ssh://git@bitbucket.nrapp.cloud/dig/prod-croatia-servicemesh.git
+    targetRevision: HEAD

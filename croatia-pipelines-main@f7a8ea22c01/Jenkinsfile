@@ -1,0 +1,22 @@
+pipeline {
+  agent {
+    kubernetes {
+      inheritFrom 'microservices'
+    }
+  }
+  stages {
+    stage('Test') {
+      steps {
+        sh './gradlew clean test'
+      }
+    }
+  }
+  post {
+    always {
+      catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        archiveArtifacts artifacts: 'build/reports/tests/test/**/*', followSymlinks: false
+        publishHTML allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/reports/tests/test', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true
+      }
+    }
+  }
+}

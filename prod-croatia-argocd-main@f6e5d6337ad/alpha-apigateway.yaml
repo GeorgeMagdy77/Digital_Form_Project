@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-alpha-apigateway
+  namespace: argocd
+spec:
+  destination:
+    namespace: kong
+    server: https://api.prod-dmz-ingress.nrapp.cloud:6443
+  project: alpha
+  source:
+    path: overlays/prod-dmz-ingress
+    repoURL: ssh://git@bitbucket.nrapp.cloud/scm/alpha/alpha-apigateway.git
+    targetRevision: release/prod

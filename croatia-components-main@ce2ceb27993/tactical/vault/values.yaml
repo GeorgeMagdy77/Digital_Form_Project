@@ -1,0 +1,41 @@
+injector:
+  enabled: true
+ui:
+  enabled: true
+global:
+  openshift: true
+  tlsDisable: false
+
+server:
+  enabled: true
+  standalone:
+    enabled: false
+  dev:
+    enabled: false
+  extraEnvironmentVars:
+    VAULT_CACERT : /vault/userconfig/vault-cert/ca.crt
+  extraVolumes:
+  - type: secret
+    name: vault-cert
+  extraSecretEnvironmentVars:
+  - envName: VAULT_PG_CONNECTION_URL
+    secretName: vault-postgresql
+    secretKey: connection_url
+  ha:
+    enabled: true
+    config: |
+      ui = true
+
+      listener "tcp" {
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+        tls_cert_file = "/vault/userconfig/vault-cert/tls.crt"
+        tls_key_file  = "/vault/userconfig/vault-cert/tls.key"
+        tls_client_ca_file = "/vault/userconfig/vault-cert/ca.crt"
+      }
+
+      storage "postgresql" {
+        ha_enabled = true
+      }
+
+      service_registration "kubernetes" {}

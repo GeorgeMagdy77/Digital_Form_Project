@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  host: backstage.apps.dev-nonpci-shared.npnbank.local
+  to:
+    kind: Service
+    name: backstage
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

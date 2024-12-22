@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault-enterprise
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: vault-enterprise
+    server: 'https://api.dev-nonpci-shared.npnbank.local:6443'
+  source:
+    path: vault-enterprise/vault
+    repoURL: 'ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - ../prod_ent.yaml
+      releaseName: vault-ent
+  sources: []
+  project: croatia-digital-platform

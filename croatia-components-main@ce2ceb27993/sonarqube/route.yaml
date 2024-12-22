@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: sonarqube
+  namespace: sonarqube
+spec:
+  host: sonarqube.apps.dev-nonpci-shared.npnbank.local
+  to:
+    kind: Service
+    name: sonarqube-sonarqube
+    weight: 100
+  port:
+    targetPort: 9000
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

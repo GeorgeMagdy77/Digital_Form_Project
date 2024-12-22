@@ -1,0 +1,1000 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-account-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-account-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-actions-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-actions-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-authentication-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-authentication-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-card-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-card-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-cms-adapter-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-cms-adapter-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-event-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-event-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-display-content-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-display-content-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-isva-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-isva-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-nafath-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-nafath-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-paymentology-payment-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-paymentology-payment-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-payments-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-payments-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-savings-pot-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-savings-pot-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-screening-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-screening-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-configuration-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-configuration-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mobile-homepage-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mobile-homepage-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-customer-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-customer-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-feedback-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-feedback-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-lifestyle-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-lifestyle-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-notification-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-notification-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-otp-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-otp-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-referral-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-referral-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-reward-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-reward-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tahaqoq-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tahaqoq-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-temenos-banking-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-temenos-banking-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-temenos-banking-event-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-temenos-banking-event-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-transaction-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-transaction-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-workflow-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-workflow-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-transfers-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-transfers-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-development-simulator-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-development-simulator-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-content-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-content-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-dms-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-dms-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-dms-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-dms-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-dms-reports-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-dms-reports-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-statement-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-statement-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-marketplace-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-marketplace-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-hijridate-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-hijridate-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-motor-insurance-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-motor-insurance-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ips-management-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ips-management-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-notification-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-notification-adapter"
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-appreciation-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-appreciation-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-adhoc-request-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-adhoc-request-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ni-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ni-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-customer-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-customer-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-card-trans-auth-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-card-trans-auth-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-otp-simulator-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-otp-simulator-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-goal-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-goal-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-gold-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-gold-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-client-authorization-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-client-authorization-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fast-onboarding-mp-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fast-onboarding-mp-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-aio-card-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-aio-card-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ips-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ips-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-open-banking-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-open-banking-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-open-banking-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-open-banking-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mutual-fund-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mutual-fund-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sas-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sas-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-focal-blacklist-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-focal-blacklist-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-exit-deceased-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-exit-deceased-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "ejada-pc-catalogues-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "ejada-pc-catalogues-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "ejada-pc-orders-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "ejada-pc-orders-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-evidence-code-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-evidence-code-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-blacklist-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-blacklist-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-block-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-block-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-recurring-payment-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-recurring-payment-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-transaction-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-transaction-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-account-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-account-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sadad-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sadad-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-account-statement-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-account-statement-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sarie-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sarie-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-panic-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-panic-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-customer-limits-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-customer-limits-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-document-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-document-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-vat-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-vat-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-shahid-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-shahid-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-rtp-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-rtp-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-anghami-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-anghami-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-auth-fob-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-auth-fob-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-kyc-fob-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-kyc-fob-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-customer-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-customer-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-launch-control-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-launch-control-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-account-finder-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-account-finder-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-account-finder-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-account-adapter-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-open-banking-ais-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-open-banking-ais-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-drahim-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-drahim-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-treasury-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-treasury-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-data-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-data-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-completion-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-completion-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-identify-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-identify-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-validate-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-validate-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-flow-mng-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-flow-mng-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fob-kyc-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fob-kyc-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fob-authentication-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fob-authentication-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mock-api-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mock-api-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sos-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sos-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-spl-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-spl-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-standing-order-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-standing-order-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-loyalty-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-loyalty-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-loyalty-adapter-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-loyalty-adapter"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-high-risk-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-high-risk-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-recurring-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-recurring-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-aio-card-statement-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-aio-card-statement-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-treasury-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-treasury-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-travel-insurance-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-travel-insurance-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-salary-flag-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-salary-flag-service-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-benefits-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-benefits-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-complaint-service-swagger"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-complaint-service"
+---

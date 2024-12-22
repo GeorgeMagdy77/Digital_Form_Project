@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/instance: sharedservices
+    component: sharedservices
+    environment: prod-nonpci-shared
+  name: prod-nonpci-shared-sonarqube
+  namespace: argocd
+spec:
+  destination:
+    namespace: sonarqube
+    server: https://api.prod-nonpci-shared.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: ./
+    repoURL: ssh://git@bitbucket.nrapp.cloud/dig/prod-croatia-sonarqube.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

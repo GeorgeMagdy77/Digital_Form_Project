@@ -1,0 +1,3 @@
+site_name: redis
+nav:
+  - Home: index.md

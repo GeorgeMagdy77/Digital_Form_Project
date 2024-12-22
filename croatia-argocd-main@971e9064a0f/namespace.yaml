@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: argocd
+    istio-injection: disabled
+  name: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"

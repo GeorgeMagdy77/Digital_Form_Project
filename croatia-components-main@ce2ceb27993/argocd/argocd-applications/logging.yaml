@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: logging
+  namespace: argocd-2-12-3
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+            argo-cluster-type: alpha
+            argo-cluster-role: primary
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+            argo-cluster-type: dmz
+            argo-cluster-role: primary
+  template:
+    metadata:
+      labels:
+        environment: '{{ nameNormalized }}'
+      name: '{{ nameNormalized }}-logging'
+    spec:
+      destination:
+        server: "{{ server }}"
+      project: croatia-digital-platform
+      source:
+        path: 'overlays/{{nameNormalized}}/logging'
+        repoURL: "ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git"
+        targetRevision: HEAD

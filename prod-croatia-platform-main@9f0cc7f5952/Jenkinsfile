@@ -1,0 +1,42 @@
+pipeline {
+  agent any
+
+  options {
+    disableConcurrentBuilds()
+    ansiColor('xterm')
+  }
+
+  environment {
+    BITBUCKET_CREDENTIALS = credentials('jenkins-git')
+    KUBE_CONFIG_PATH = './kubeconfig'
+  }
+
+  stages {
+    stage('Setup') {
+      steps {
+        checkout scm: BbS(branches: [[name: '*/main']], credentialsId: 'jenkins-git', extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'croatia-variables']], id: 'variables', mirrorName: '', projectName: 'DigitalPlatform', repositoryName: 'croatia-variables', serverId: 'croatia', sshCredentialsId: 'opc-master')
+      }
+    }
+    stage('Terraform Validate') {
+      steps {
+        sh 'terraform init -backend=false'
+      }
+    }
+    stage('Terraform Init') {
+      steps {
+        sh "terraform init -backend-config=./croatia-variables/backends/sandbox/platform/backend.tfvars"
+      }
+    }
+    stage('Terraform Plan') {
+      steps {
+        sh "terraform plan -var-file=./croatia-variables/variables.tfvars -var-file=./croatia-variables/sandbox/variables.tfvars --out platform.plan"
+      }
+    }
+    stage('Terraform Apply') {
+      steps {
+        input 'Is the plan ok to run?'
+        sh "terraform apply platform.plan"
+      }
+    }
+  }
+}

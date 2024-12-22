@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: redis-platform
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+            argo-cluster-type: alpha
+            argo-cluster-role: primary
+  template:
+    metadata:
+      name: '{{nameNormalized}}-redis-platform'
+      namespace: argocd
+      labels:
+        environment: '{{nameNormalized}}'
+        component: alpha
+    spec:
+      destination:
+        server: '{{server}}'
+      project: croatia-digital-platform
+      source:
+        path: 'redis'
+        repoURL: 'ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git'
+        targetRevision: HEAD
+      syncPolicy:
+          automated: {}

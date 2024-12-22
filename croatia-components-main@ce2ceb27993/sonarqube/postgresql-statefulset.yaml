@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sonarqube-postgresql
+  namespace: sonarqube
+spec:
+  serviceName: sonarqube-postgresql-headless
+  template:
+    metadata:
+      labels:
+        name: sonarqube-postgresql
+    spec:
+      volumes:
+      - name: pg-conf
+        emptyDir: {}
+      - name: pg-tmp
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+      containers:
+        - name: sonarqube-postgresql
+          volumeMounts:
+          - mountPath: /opt/bitnami/postgresql/conf
+            name: pg-conf
+          - mountPath: /opt/bitnami/postgresql/tmp
+            name: pg-tmp
+          - mountPath: /tmp
+            name: tmp
+      initContainers:
+        - name: "wait-for-db"
+          imagePullPolicy: Always
+          image: artifactory.apps.dev-nonpci-shared.npnbank.local/docker/bitnami/bitnami-shell:10-debian-10-r299
+          resources:
+            requests:
+              cpu: 200m
+              memory: 500Mi
+              ephemeral-storage: "5Gi"
+            limits:
+              cpu: "1"
+              memory: 2Gi
+              ephemeral-storage: "10Gi"
+          securityContext:
+            runAsUser: 1000980010
+            runAsGroup: 1000980010
+            readOnlyRootFilesystem: true
+          volumeMounts:
+          - mountPath: /opt/bitnami/postgresql/conf
+            name: pg-conf
+        - name: "init-chmod-data"
+          imagePullPolicy: Always
+          image: artifactory.apps.dev-nonpci-shared.npnbank.local/docker/bitnami/bitnami-shell:10-debian-10-r299
+          resources:
+            requests:
+              cpu: 200m
+              memory: 500Mi
+              ephemeral-storage: "5Gi"
+            limits:
+              cpu: "1"
+              memory: 2Gi
+              ephemeral-storage: "10Gi"
+          securityContext:
+            runAsUser: 1000980010
+            runAsGroup: 1000980010
+            readOnlyRootFilesystem: true

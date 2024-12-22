@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - route.yaml
+  - secrets.yaml
+helmCharts:
+- name: unleash
+  repo: https://docs.getunleash.io/helm-charts
+  version: 5.1.6
+  releaseName: unleash
+  namespace: unleash
+  valuesFile: values.yaml

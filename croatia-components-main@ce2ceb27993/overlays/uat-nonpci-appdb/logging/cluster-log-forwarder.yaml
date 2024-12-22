@@ -1,0 +1,29 @@
+---
+apiVersion: "logging.openshift.io/v1"
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  outputs:
+   - name: elasticsearch
+     type: "elasticsearch"
+     url: https://elasticsearch-logging.apps.dev-nonpci-shared.npnbank.local:443
+     secret:
+        name: collector
+     tls:
+       insecureSkipVerify: true
+  pipelines:
+   - name: infrastructure
+     inputRefs:
+      - infrastructure
+     outputRefs:
+      - elasticsearch
+     labels:
+       environment: uat-nonpci-appdb
+   - inputRefs:
+      - application
+     outputRefs:
+      - elasticsearch
+     labels:
+       environment: uat-nonpci-appdb

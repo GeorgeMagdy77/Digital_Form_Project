@@ -1,0 +1,14 @@
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  name: argocd-2-12-3
+  namespace: sso
+spec:
+  instanceSelector:
+    matchLabels:
+      app: sso
+  realm:
+    displayName: argocd-2-12-3
+    enabled: true
+    id: argocd-2-12-3
+    realm: argocd-2-12-3

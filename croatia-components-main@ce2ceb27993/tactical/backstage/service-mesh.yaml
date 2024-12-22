@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: backstage
+  namespace: backstage
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - backstage.projectcroatia.cloud
+    port:
+      name: http2-backstage
+      number: 80
+      protocol: HTTP2
+  - hosts:
+    - backstage.projectcroatia.cloud
+    port:
+      name: https-backstage
+      number: 443
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: backstage-cert
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: backstage
+  namespace: backstage
+spec:
+  gateways:
+  - backstage/backstage
+  hosts:
+  - backstage.projectcroatia.cloud
+  http:
+  - route:
+    - destination:
+        host: backstage.backstage.svc.cluster.local
+        port:
+          number: 7007
+      weight: 100

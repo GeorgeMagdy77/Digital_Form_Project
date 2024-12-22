@@ -1,0 +1,25 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connect
+metadata:
+  name: connect
+  namespace: confluent-kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  externalAccess:
+    route:
+      domain: apps.nft-nonpci-appdb.npnbank.local
+    type: route
+  replicas: 2
+  tls:
+    ignoreTrustStoreConfig: true
+    secretRef: kafka-tls
+  image:
+    application: docker.io/confluentinc/cp-server-connect:7.4.0
+    init: docker.io/confluentinc/confluent-init-container:2.6.0
+  podTemplate:
+    podSecurityContext: {}
+    resources:
+      requests:
+        cpu: "1"
+        memory: "4Gi"

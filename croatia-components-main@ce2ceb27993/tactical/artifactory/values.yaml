@@ -1,0 +1,6 @@
+global:
+  masterKeySecretName: artifactory
+  joinKeySecretName: artifactory
+artifactory:
+  persistence:
+    size: 100Gi # TODO increase it for prod.

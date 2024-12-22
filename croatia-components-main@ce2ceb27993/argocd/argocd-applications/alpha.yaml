@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: alpha
+  namespace: argocd-2-12-3
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            argocd.argoproj.io/secret-type: cluster
+            argo-cluster-type: alpha
+  template:
+    metadata:
+      name: '{{nameNormalized}}-alpha'
+      namespace: argocd-2-12-3
+      labels:
+        environment: '{{nameNormalized}}'
+        component: alpha
+    spec:
+      destination:
+        server: '{{server}}'
+      project: alpha
+      source:
+        path: 'overlays/{{nameNormalized}}/alpha'
+        repoURL: 'ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git'
+        targetRevision: HEAD

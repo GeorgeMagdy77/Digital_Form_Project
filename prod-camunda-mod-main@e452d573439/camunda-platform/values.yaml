@@ -1,0 +1,59 @@
+---
+elasticsearch:
+  tests:
+    enabled: true
+  securityContext:
+    runAsUser: null
+
+  podSecurityContext:
+    fsGroup: null
+    runAsUser: null
+
+  sysctlInitContainer:
+    enabled: false
+
+identity:
+  keycloak:
+    enabled: true
+    containerSecurityContext:
+      runAsUser: null
+    podSecurityContext:
+      fsGroup: null
+      runAsUser: null
+    postgresql:
+      primary:
+        containerSecurityContext:
+          runAsUser: null
+        podSecurityContext:
+          fsGroup: null
+          runAsUser: null
+      readReplicas:
+        containerSecurityContext:
+          runAsUser: null
+        podSecurityContext:
+          fsGroup: null
+          runAsUser: null
+      metrics:
+        containerSecurityContext:
+          runAsUser: null
+        podSecurityContext:
+          fsGroup: null
+          runAsUser: null
+operate:
+  image:
+    repository: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/camunda/operate
+optimize:
+  image:
+    repository: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/camunda/optimize
+retentionPolicy:
+  image:
+    repository: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/bitnami/elasticsearch-curator
+tasklist:
+  image:
+    repository: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/camunda/tasklist
+zeebe:
+  image:
+    repository: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/camunda/zeebe
+zeebe-gateway:
+  image:
+    repository: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/camunda/zeebe

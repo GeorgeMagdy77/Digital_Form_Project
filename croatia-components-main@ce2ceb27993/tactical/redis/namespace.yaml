@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: redis
+    istio-injection: disabled
+  name: redis
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+    openshift.io/sa.scc.mcs: "s0:c27,c19"
+    openshift.io/sa.scc.supplemental-groups: "1000980000/10000"
+    openshift.io/sa.scc.uid-range: "1000980000/10000"
+---
+kind: ServiceMeshMember
+apiVersion: maistra.io/v1
+metadata:
+  name: default
+  namespace: redis
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  controlPlaneRef:
+    name: basic
+    namespace: redis

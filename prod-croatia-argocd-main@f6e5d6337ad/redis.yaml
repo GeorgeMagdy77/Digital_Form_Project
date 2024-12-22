@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-croatia-redis-nonpci-appdb
+  namespace: argocd
+spec:
+  destination:
+    namespace: redis
+    server: https://api.prod-nonpci-appdb.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: ./
+    repoURL: ssh://git@bitbucket.nrapp.cloud/dig/prod-croatia-redis.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

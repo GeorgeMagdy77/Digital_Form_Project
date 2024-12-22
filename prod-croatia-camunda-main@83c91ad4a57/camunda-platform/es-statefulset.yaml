@@ -1,0 +1,32 @@
+# Source: camunda-platform/charts/elasticsearch/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: camunda-platform-elasticsearch-master
+  namespace: camunda
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: master
+      app.kubernetes.io/instance: camunda-platform
+      app.kubernetes.io/name: elasticsearch
+  replicas: 2
+  template:
+    spec:
+      securityContext:
+        seLinuxOptions: null
+        fsGroup: null
+        runAsUser: null
+        runAsGroup: null
+        supplementalGroups: null
+        sysctls: null
+      containers:
+      - name: "elasticsearch"
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: null
+          runAsGroup: null
+          seLinuxOptions: null

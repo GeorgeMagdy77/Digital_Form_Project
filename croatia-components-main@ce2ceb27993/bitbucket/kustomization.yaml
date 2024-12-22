@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- namespace.yaml
+- postgres-deployment.yaml
+- postgres-service.yaml
+- postgres-pvc.yaml
+- postgres-configmap.yaml
+- pvc.yaml
+- role.yaml
+- rolebinding.yaml
+- secrets.yaml
+helmCharts:
+- name: bitbucket
+  repo: https://atlassian.github.io/data-center-helm-charts
+  version: 1.12.0
+  releaseName: bitbucket
+  namespace: bitbucket
+  valuesFile: values.yaml

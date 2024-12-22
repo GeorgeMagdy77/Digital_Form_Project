@@ -1,0 +1,146 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  version: v2.6.3
+  server:
+    autoscale:
+      enabled: false
+    grpc:
+      ingress:
+        enabled: false
+    ingress:
+      enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+    route:
+      enabled: true
+    service:
+      type: ''
+    insecure: true
+    host: argocd.projectcroatia.cloud
+  grafana:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  notifications:
+    enabled: false
+  prometheus:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  initialSSHKnownHosts: {}
+  resourceCustomizations: |
+    ServiceAccount:
+      ignoreDifferences: |
+        jsonPointers:
+        - /imagePullSecrets
+    admissionregistration.k8s.io/MutatingWebhookConfiguration:
+      ignoreDifferences: |
+        jsonPointers:
+        - /webhooks/0/clientConfig/caBundle
+        - /webhooks/1/clientConfig/caBundle
+        - /webhooks/2/clientConfig/caBundle
+        - /webhooks/3/clientConfig/caBundle
+        - /webhooks/4/clientConfig/caBundle
+        - /webhooks/5/clientConfig/caBundle
+        - /webhooks/6/clientConfig/caBundle
+        - /webhooks/7/clientConfig/caBundle
+        - /webhooks/8/clientConfig/caBundle
+        - /webhooks/9/clientConfig/caBundle
+        - /webhooks/10/clientConfig/caBundle
+    admissionregistration.k8s.io/ValidatingWebhookConfiguration:
+      ignoreDifferences: |
+        jsonPointers:
+        - /webhooks/0/clientConfig/caBundle
+        - /webhooks/1/clientConfig/caBundle
+        - /webhooks/2/clientConfig/caBundle
+        - /webhooks/3/clientConfig/caBundle
+        - /webhooks/4/clientConfig/caBundle
+        - /webhooks/5/clientConfig/caBundle
+        - /webhooks/6/clientConfig/caBundle
+        - /webhooks/7/clientConfig/caBundle
+        - /webhooks/8/clientConfig/caBundle
+        - /webhooks/9/clientConfig/caBundle
+        - /webhooks/10/clientConfig/caBundle
+  applicationSet: {}
+  rbac:
+    policy: 'g, argocd-administrators, role:admin'
+  repo:
+    resources:
+      limits:
+        cpu: '1'
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  ha:
+    enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  kustomizeBuildOptions: '--enable-helm --load-restrictor LoadRestrictionsNone'
+  tls:
+    ca: {}
+  redis:
+    image: 'docker.io/redis:7'
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  usersAnonymousEnabled: true
+  controller:
+    processors: {}
+    resources:
+      limits:
+        cpu: '2'
+        memory: 2Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi
+    sharding: {}
+  oidcConfig: |
+    name: Keycloak
+    issuer: https://keycloak.apps.san-sandbox.projectcroatia.cloud/realms/master
+    clientID: argocd
+    clientSecret: na
+    requestedScopes: ["openid", "profile", "email", "groups"]
+    skipAudienceCheckWhenTokenHasNoAudience: true
+    rootCA: |
+      -----BEGIN CERTIFICATE-----
+      MIIDAjCCAeqgAwIBAgIQfGux0HN2r5MkpNOlCRYN/DANBgkqhkiG9w0BAQsFADAb
+      MRkwFwYDVQQDExBrZXljbG9hay1jYS1jZXJ0MB4XDTIzMDUzMDExNTMwN1oXDTIz
+      MDgyODExNTMwN1owGzEZMBcGA1UEAxMQa2V5Y2xvYWstY2EtY2VydDCCASIwDQYJ
+      KoZIhvcNAQEBBQADggEPADCCAQoCggEBAKbmprv/wwawWAe4wWbGJwyLiNBfu2SP
+      lYB7lp2Kw0ROsGFV4NbwlGN1S5G/8jXcXQiNGUn9Y4pXXShYCSl7wTGUoclelcJ6
+      TVGfjC6D8IaZuOXv9/rsoTuvjtqlP/A4V4kGkLJlEnp1jXs0ay69RajB0BBKauxU
+      rwOjdG8WYzHuuSlngxNdpqDG9xZnnxyGaMbam1be+jhzLFqLatme5+E7xJ6fLCX9
+      4F+5olLmQX4awkx5wyFfG3pojGIoWDuYk9PFqaJFzR4iB1Pgpu1Oty23PB+lHOOv
+      ZGRZ8GeaBlXHjxQxu4qoC73/ofjc46305AzPWdlXst3s0FKF9N4Yn2cCAwEAAaNC
+      MEAwDgYDVR0PAQH/BAQDAgKkMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFHCO
+      +YKlHBV9ZXjEBcR3Q94W1OiNMA0GCSqGSIb3DQEBCwUAA4IBAQBmvuVBtAkIISk9
+      y019+HYM9cTfo/8dETsJQFNrutk9T9wGYTsVxsVPfNchBmVSdqI2sd7ov0DdGz0Y
+      JjEZd2LPr0YL9lt8FVmgitCtOKKWN3blim8sEk5wH7S61EwYck1pK7n+MyKWZnCn
+      BWkH8EZ0ys+IcS50uG8G7Sz+e+jfL+4+C9igCmphHj16NaXfBCjTHjYSjiaqOc4Q
+      sOI6T/5lsGTxN+6f2S70sSSmJaoBc8z9eymRCPmihLcEFynqM+y5ZHhvxR3O1/LD
+      Ev7er1OLSUUqh1Sax8gm2T+tcRbSJA2HTt3+YTPcN03byoOTfHtmRjBwI690wm93
+      6WjhZy8z
+      -----END CERTIFICATE-----

@@ -1,0 +1,131 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: croatia-configuration
+  labels:
+    croatia-environment: development
+data:
+  ENVIRONMENT_NAME: development
+  #  Oracle DB config - More Control
+  JDBC_URL_MC_PREFIX: "jdbc:oracle:thin:MC/MC@//10.109.94.5:1521/"
+  JDBC_MC_USER: MC
+
+  #  Oracle DB config - Superior Lifestyle
+  JDBC_URL_SL_PREFIX: "jdbc:oracle:thin:SL/SL@//10.109.94.5:1521/"
+  JDBC_SL_USER: SL
+
+  #  Oracle DB config - Smarter Choices
+  JDBC_URL_SC_PREFIX: "jdbc:oracle:thin:SC/SC@//10.109.94.5:1521/"
+  JDBC_SC_USER: SC
+
+  DB_ACTIONS_SERVICE: "CDB_ACTION_DB_MORE_CONTROL"
+  DB_CARD_SERVICE: "CDB_CARD_DB_SMARTER_CHOICE"
+  DB_PAYMENTS_SERVICE: "CDB_PAYMENT_DB_SMARTER_CHOICE"
+  DB_TRANSFERS_SERVICE: "CDB_TRANSFER_DB_SMARTER_CHOICE"
+  DB_ONBOARDING_SERVICE: "CDB_REGISTRATION_DB_MORE_CONTROL"
+  DB_DMS_SERVICE: "CDB_DMS_DB_MORE_CONTROL"
+  DB_ADHOC_SERVICE: "CDB_ADHOC_DB_MORE_CONTROL"
+  DB_STATEMENT_SERVICE: "CDB_STATEMENT_DB_MORE_CONTROL"
+  DB_HIJRI_CALENDAR_SERVICE: "CDB_HIJRI_CALENDAR_DB_MORE_CONTROL"
+  DB_REPORTING_ENGINE_SERVICE: "CDB_REPORTING_DB_MORE_CONTROL"
+  DB_SAVINGS_POT_SERVICE: "CDB_SAVING_POT_DB_SMARTER_CHOICE"
+  DB_SL_CONFIGURATION_SERVICE: "CDB_CONFIG_DB_SUPERIOR_LIFESTYLE"
+  DB_SL_LIFESTYLE_SERVICE: "CDB_LS_DB_SUPERIOR_LIFESTYLE"
+  DB_SL_NOTIFICATION_SERVICE: "CDB_NOTIFY_DB_SUPERIOR_LIFESTYLE"
+  DB_SL_REWARD_SERVICE: "CDB_REFERRAL_DB_SUPERIOR_LIFESTYLE"
+  DB_SL_FEEDBACK_SERVICE: "CDB_FEEDBACK_DB_SUPERIOR_LIFESTYLE"
+  DB_SL_CONTENT_FEEDBACK_SERVICE: "CDB_CONTENT_DB_SUPERIOR_LIFESTYLE"
+  DB_SL_OTP_SERVICE: "CDB_OTP_DB_SUPERIOR_LIFESTYLE"
+  DB_SL_APPRECIATION_SERVICE: "CDB_APPRECIATIONS_DB_SUPERIOR_LIFE"
+  DB_TRANSACTION_SERVICE: "CDB_TRANSACTION_DB_MORE_CONTROL"
+  DB_IPS_MANAGEMENT_SERVICE: "CDB_IPS_DB_MORE_CONTROL"
+  DB_SL_GOAL_SERVICE: "CDB_GOALS_DB_SUPERIOR_LIFESTYLE"
+  DB_SL_AIO_CARD_SERVICE: "CDB_AIO_CARD_DB_SUPERIOR_LIFESTYLE"
+  DB_SL_GOLD_SERVICE: "CDB_GOLD_DB_SUPERIOR_LIFESTYLE"
+  DB_CARD_TRANS_AUTH_SERVICE: "CDB_CARD_TRANS_AUTH_DB_SC"
+  DB_SHADOW_BALANCE_SERVICE: "CDB_SHADOW_BALANCE_DB_SC"
+  DB_SAF_SERVICE: "CDB_SAF_DB_SMARTER_CHOICE"
+  DB_PC_DEFINITION_SERVICE: "CDB_PC_DEFINITION_DB_SUPERIOR_LIFE"
+  DB_PC_ORDERS_SERVICE: "CDB_PC_ORDERS_DB_SUPERIOR_LIFE"
+  DB_SL_RECURRING_SERVICE: "CDB_RECURRING_DB_SUPERIOR_LIFESTYLE"
+
+  # Focal client details
+  FOCAL_CLIENT_URL: "http://alpha-focal-mock-framework:8080/api/v2"
+  FOCAL_CLIENT_USERNAME: "alrajhi_test@mozn.sa"
+  FOCAL_CLIENT_THRESHOLD: "70"
+
+
+  CRM_INTEGRATION_USERNAME: CrmIntegration
+  CRM_CHANNEL: CrmAdaptor1
+  CRM_API_URL: http://10.109.82.12:455
+
+  TAHAQOQ_CLIENT_ID: 2ba91af1768af16fd61d8444cf2fe99f
+  TAHAQOQ_URL: "https://gwt.alrajhibank.com.sa:9443/api-factory/dev/tahaqoq/v1"
+  TAHAQOQ_MOCK_CLIENT_URL: http://alpha-tahaqoq-mock-framework:8080
+  TAHAQOQ_MOCK_FLAG: "0"
+
+  ISVA_URL: http://alpha-isva-mock-framework:8080
+  ISVA_CLIENT_ID: "ISVAClientId"
+  ISVA_SCOPE: "ISVAScope"
+
+  NAFATH_BE_CLIENT_URL: "https://gwt.alrajhibank.com.sa:9443/api-factory/sit"
+  NAFATH_CLIENT_ID: 8b31cd9a638afe45911a2b25cf041d85
+  NAFATH_CHANNEL_ID: OPEN_ACCT_PORTAL
+  NAFATH_SUB_CHANNEL_ID: STANDARD
+  NAFATH_MOCK_FLAG: "1"
+  NAFATH_MOCK_CLIENT_URL: http://alpha-nafath-mock-framework:8080
+
+  CRM_CLIENT_URL: http://alpha-crm-adapter:8080
+  TAHAQOQ_CLIENT_URL: http://alpha-tahaqoq-adapter:8080
+  WORKFLOW_CLIENT_URL: http://alpha-workflow-service:8080
+  NAFATH_CLIENT_URL: http://alpha-nafath-adapter:8080
+  TEMENOS_CLIENT_URL: http://alpha-temenos-banking-adapter:8080
+
+  ISVA_ADAPTER_URL: http://alpha-isva-adapter:8080
+  OTP_SERVICE_URL: http://alpha-otp-service:8080
+  DMS_ADAPTER_CLIENT_URL: http://alpha-dms-adapter:8080
+  DMS_SERVICE_CLIENT_URL: http://alpha-dms-service:8080
+  ACCOUNT_SERVICE_URL: http://alpha-account-service:8080
+
+
+  # temenos client details
+  TEMENOS_API_BASE: "http://10.0.48.150:9089/CroIris/api/v1.0.0"
+  TEMENOS_DEFAULT_TIMESTAMP_ENABLED: "true"
+  MARKETPLACE_YAKEEN_CLIENT_ID: d2bcf0e72d79c1de1d202141cdefb581
+  MARKETPLACE_CLIENT_ID: 548bd8378fb4007d7f5deae72bff18d3
+  MARKETPLACE_URL: "https://apimarketplace-int-gw-svc-gw-gateway-traffic-cp4i-nprd.ob-nonprod-cl01-de8fb88b0db8c47d4745b3af8ac7158d-0000.eu-de.containers.appdomain.cloud/api-marketplace/api-marketplace-sit"
+  MARKETPLACE_MOCK_CLIENT_URL: http://alpha-marketplace-mock-framework:8080
+  MARKETPLACE_MOCK_FLAG: "1"
+  MARKETPLACE_ADAPTER_CLIENT_URL: http://alpha-marketplace-adapter:8080
+
+  ARB_CLIENT_URL: "https://gwt.alrajhibank.com.sa:9443/api-factory/sit"
+  ARB_CLIENT_ID: 8b31cd9a638afe45911a2b25cf041d85
+  ARB_CLIENT_SECRET: 31c7dc2a0239e675dcd28cd5f32b955c
+  ARB_SPL_CLIENT_ID: f1fcf35cc9d41e501ec5bbe837a7246a
+  ARB_SPL_CLIENT_SECRET: ef9dbed666dd0db2875a7b3f488b4a4d
+
+  HIJRI_DATE_SERVICE_CLIENT_URL: http://alpha-hijridate-service:8080
+
+  # T2 client details
+  T2_CLIENT_URL: "https://xservices.rich.sa"
+  T2_USERNAME: "dev@deloitte.com"
+  T2_SENDER: "MyMessage"
+  T2_APP_ID: "14"
+
+  CMS_CLIENT_URL: http://alpha-cms-adapter-service:8080
+  CMS_CONTENT_CLIENT_URL: http://alpha-content-service:8080
+
+  #SL - Anghami client
+  ANGHAMI_CLIENT_URL: "https://apisec.anghami.com/anghmob/partnerships"
+  ANGHAMI_CLIENT_USERNAME: "alrajhi"
+
+  #SL - Treasury client
+  TREASURY_CLIENT_URL: "http://superior-lifestyle-stub-service:8080"
+  TREASURY_CLIENT_ID: "31c7dc2a0239e675dcd28cd5f32b955c"
+
+  #CB
+  JDBC_URL_CB_PREFIX: "jdbc:oracle:thin:@//10.109.94.11:1521/"
+  JDBC_CB_USER: "CB"
+  DB_EVENT_ADAPTER: "CDB_CB_EVENT_ADAPTER_DB"
+
+  OTP_MOCK_FLAG: "1"

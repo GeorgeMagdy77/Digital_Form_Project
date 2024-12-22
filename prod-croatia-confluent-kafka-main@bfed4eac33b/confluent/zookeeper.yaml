@@ -1,0 +1,16 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Zookeeper
+metadata:
+  name: zookeeper
+  namespace: confluent-kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 3
+  image:
+    application: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/confluentinc/cp-zookeeper:7.4.0
+    init: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/confluentinc/confluent-init-container:2.6.0
+  dataVolumeCapacity: 100Gi
+  logVolumeCapacity: 100Gi
+  podTemplate:
+    podSecurityContext: {}

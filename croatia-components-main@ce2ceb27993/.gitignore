@@ -1,0 +1,4 @@
+charts
+.tgz
+.idea/
+argocd/values.yaml

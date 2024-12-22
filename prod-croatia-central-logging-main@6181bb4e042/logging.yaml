@@ -1,0 +1,41 @@
+apiVersion: "logging.openshift.io/v1"
+kind: "ClusterLogging"
+metadata:
+  name: "instance"
+  namespace: openshift-logging
+spec:
+  collection:
+    logs:
+      fluentd: {}
+      type: "fluentd"
+  logStore:
+    type: "elasticsearch"
+    elasticsearch:
+      nodeCount: 3
+      storage:
+        size: "1000G"
+        storageClassName: "thin-csi"
+      redundancyPolicy: "SingleRedundancy"
+      resources: 
+        limits:
+          memory: 10Gi
+        requests:
+          cpu: 500m
+          memory: 8Gi
+  visualization:
+    kibana:
+      proxy:
+        resources: 
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+      replicas: 2
+      resources: 
+        limits:
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 500Mi
+    type: "kibana"

@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: argocd
+  namespace: argocd
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - argocd.projectcroatia.cloud
+    port:
+      name: http2-argocd
+      number: 80
+      protocol: HTTP2
+  - hosts:
+    - argocd.projectcroatia.cloud
+    port:
+      name: https-argocd
+      number: 443
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: argocd-cert
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: argocd
+  namespace: argocd
+spec:
+  gateways:
+  - argocd/argocd
+  hosts:
+  - argocd.projectcroatia.cloud
+  http:
+  - route:
+    - destination:
+        host: argocd-server.argocd.svc.cluster.local
+        port:
+          number: 80
+      weight: 100

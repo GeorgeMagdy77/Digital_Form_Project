@@ -1,0 +1,19 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  host: argocd.apps.dev-nonpci-shared.npnbank.local
+  to:
+    kind: Service
+    name: argocd-server
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+status:
+  ingress: []

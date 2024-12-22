@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: assign-camunda-roles-mod
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "-2"
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: assign-camunda-roles-mod
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "-2"
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: assign-camunda-roles-mod
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "-1"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: assign-camunda-roles-mod
+subjects:
+- kind: ServiceAccount
+  name: assign-camunda-roles-mod
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: assign-camunda-roles-mod
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  backoffLimit: 5
+  activeDeadlineSeconds: 300
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+    spec:
+      serviceAccountName: assign-camunda-roles-mod
+      automountServiceAccountToken: true
+      restartPolicy: OnFailure
+      containers:
+        - name: job
+          image: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker-local/croatia-infrastructure-agent:latest
+          command:
+          - /bin/sh
+          - -c
+          - |
+            ADMINUSER=admin
+            PASSWORD=$(kubectl -n camunda get secrets/camunda-platform-keycloak --template='{{ index .data "admin-password" | base64decode}}')
+            GRANT_TYPE=password
+            CLIENT_ID=admin-cli
+            KEYCLOAK_URL="http://camunda-platform-key.camunda.svc.cluster.local:80"
+            ACCESS_TOKEN=$(curl -d "client_id=$CLIENT_ID" -d "username=$ADMINUSER" -d "password=$PASSWORD" -d "grant_type=$GRANT_TYPE" "$KEYCLOAK_URL/auth/realms/master/protocol/openid-connect/token" | sed -n 's|.*"access_token":"\([^"]*\)".*|\1|p')
+            OPERATE_CLIENT_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients?clientId=operate"  | jq -r '.[].id')
+            TASKLIST_CLIENT_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients?clientId=tasklist"  | jq -r '.[].id')
+            OPERATE_SA_USER=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients/$OPERATE_CLIENT_ID/service-account-user"  | jq -r '.id')
+            TASKLIST_SA_USER=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients/$TASKLIST_CLIENT_ID/service-account-user"  | jq -r '.id')
+            OPERATE_ROLE_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/roles/Operate"  | jq -r '.id')
+            TASKLIST_ROLE_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/roles/Tasklist"  | jq -r '.id')
+            OPERATE_ASSIGN_ROLE=$(curl -kv -X POST "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/users/$OPERATE_SA_USER/role-mappings/realm" --header "Content-Type: application/json" --header "Authorization: Bearer $ACCESS_TOKEN" -d '[ { "id": "'$OPERATE_ROLE_ID'", "name": "Operate"} ]')
+            TASKLIST_ASSIGN_ROLE=$(curl -kv -X POST "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/users/$TASKLIST_SA_USER/role-mappings/realm" --header "Content-Type: application/json" --header "Authorization: Bearer $ACCESS_TOKEN" -d '[ { "id": "'$TASKLIST_ROLE_ID'", "name": "Tasklist"} ]')
+            OPERATE_API_CLIENT_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients?clientId=operate-api"  | jq -r '.[].id')
+            TASKLIST_API_CLIENT_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients?clientId=tasklist-api"  | jq -r '.[].id')
+            OPERATE_READ_ROLE_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients/$OPERATE_API_CLIENT_ID/roles/read:*"  | jq -r '.id')
+            OPERATE_WRITE_ROLE_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients/$OPERATE_API_CLIENT_ID/roles/write:*"  | jq -r '.id')
+            OPERATE_API_ASSIGN_READ_ROLE=$(curl -kv -X POST "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/users/$OPERATE_SA_USER/role-mappings/clients/$OPERATE_API_CLIENT_ID" --header "Content-Type: application/json" --header "Authorization: Bearer $ACCESS_TOKEN" -d '[ { "id": "'$OPERATE_READ_ROLE_ID'", "name": "read:*"} ]')
+            OPERATE_API_ASSIGN_WRITE_ROLE=$(curl -kv -X POST "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/users/$OPERATE_SA_USER/role-mappings/clients/$OPERATE_API_CLIENT_ID" --header "Content-Type: application/json" --header "Authorization: Bearer $ACCESS_TOKEN" -d '[ { "id": "'$OPERATE_WRITE_ROLE_ID'", "name": "write:*"} ]')
+            TASKLIST_READ_ROLE_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients/$TASKLIST_API_CLIENT_ID/roles/read:*"  | jq -r '.id')
+            TASKLIST_WRITE_ROLE_ID=$(curl  -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/clients/$TASKLIST_API_CLIENT_ID/roles/write:*"  | jq -r '.id')
+            TASKLIST_API_ASSIGN_READ_ROLE=$(curl -kv -X POST "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/users/$TASKLIST_SA_USER/role-mappings/clients/$TASKLIST_API_CLIENT_ID" --header "Content-Type: application/json" --header "Authorization: Bearer $ACCESS_TOKEN" -d '[ { "id": "'$TASKLIST_READ_ROLE_ID'", "name": "read:*"} ]')
+            TASKLIST_API_ASSIGN_WRITE_ROLE=$(curl -kv -X POST "$KEYCLOAK_URL/auth/admin/realms/camunda-platform/users/$TASKLIST_SA_USER/role-mappings/clients/$TASKLIST_API_CLIENT_ID" --header "Content-Type: application/json" --header "Authorization: Bearer $ACCESS_TOKEN" -d '[ { "id": "'$TASKLIST_WRITE_ROLE_ID'", "name": "write:*"} ]')
+

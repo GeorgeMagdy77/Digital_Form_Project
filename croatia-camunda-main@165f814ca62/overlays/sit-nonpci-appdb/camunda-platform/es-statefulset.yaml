@@ -1,0 +1,35 @@
+# Source: camunda-platform/charts/elasticsearch/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch-master
+spec:
+  selector:
+    matchLabels:
+      app: "elasticsearch-master"
+  replicas: 2
+  template:
+    metadata:
+      name: "elasticsearch-master"
+    spec:
+      securityContext:
+        fsGroup: null
+        runAsUser: null
+      containers:
+      - name: "elasticsearch"
+        resources:
+            limits:
+              cpu: '2'
+              memory: 6Gi
+            requests:
+              cpu: '1'
+              memory: 6Gi
+        env:
+          - name: ES_JAVA_OPTS
+            value: '-Xmx3g -Xms3g'
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: null

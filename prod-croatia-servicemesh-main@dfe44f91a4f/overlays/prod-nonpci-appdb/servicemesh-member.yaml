@@ -1,0 +1,11 @@
+piVersion: maistra.io/v1
+kind: ServiceMeshMember
+metadata:
+  name: default
+  namespace: alpha
+  labels:
+    app.kubernetes.io/instance: prod-nonpci-appdb-alpha
+spec:
+  controlPlaneRef:
+    name: basic
+    namespace: service-mesh

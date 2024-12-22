@@ -1,0 +1,33 @@
+postgresql:
+  primary:
+    containerSecurityContext:
+      runAsUser: 1001190000
+    podSecurityContext:
+      fsGroup: 1001190000
+      runAsUser: 1001190000
+  readReplicas:
+    containerSecurityContext:
+      runAsUser: 1001190000
+    podSecurityContext:
+      fsGroup: 1001409999
+      runAsUser: 1001190000
+  auth:
+    existingSecret: unleash-be
+    secretKeys:
+      adminPasswordKey: POSTGRES_PASSWORD
+      userPasswordKey: POSTGRES_PASSWORD
+dbConfig:     
+  useExistingSecret:
+    name: unleash-be
+    key: POSTGRES_PASSWORD
+
+env:
+  - name: UNLEASH_DEFAULT_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: unleash-be
+        key: UNLEASH_PASSWORD
+        
+
+    
+ 

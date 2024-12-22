@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backstage
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: backstage
+    spec:
+      serviceAccountName: backstage
+      securityContext: {}
+      volumes:
+        - name: config
+          secret:
+            secretName: backstage
+      containers:
+        - name: backstage
+          volumeMounts:
+          - mountPath: /tmp/secrets
+            name: config
+            readOnly: true
+          securityContext: {}
+          image: artifactory.apps.dev-nonpci-shared.npnbank.local/docker/backstage:latest
+          imagePullPolicy: Always
+          env:
+            - name: NODE_ENV
+              value: development
+          command: ["node"]
+          args: ["packages/backend", "--config", /tmp/secrets/app-config.production.yaml]
+          ports:
+            - name: http
+              containerPort: 7007
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 7007
+            initialDelaySeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 7007
+            initialDelaySeconds: 10
+          resources:
+            limits:
+              cpu: '2'
+              memory: 8Gi
+            requests:
+              cpu: '1'
+              memory: 4Gi

@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: san-sandbox-vault
+  namespace: argocd
+  labels:
+    environment: san-sandbox
+    component: sharedservices
+spec:
+  destination:
+    name: |
+      san-sandbox
+  project: croatia-digital-platform
+  source:
+    path: tactical/vault
+    repoURL: ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git
+    targetRevision: HEAD
+  syncPolicy: {}

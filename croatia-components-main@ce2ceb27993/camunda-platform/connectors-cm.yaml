@@ -1,0 +1,30 @@
+# Source: camunda-platform/charts/connectors/templates/cm.yaml
+apiVersion: v1
+data:
+  application.yml: |
+    # Connectors configuration file
+    camunda.connectors:
+      ### TODO: add Operate API dependency for Inbound connectors
+      # Zeebe instance
+      zeebe:
+        # Broker contact point
+        brokerContactPoint: "camunda-platform-zeebe-gateway:26500"
+    logging:
+      level:
+        ROOT: INFO
+        io.camunda.connector: DEBUG
+    #Spring Boot Actuator endpoints to be exposed
+    management.endpoints.web.exposure.include: health,info,conditions,configprops,prometheus
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: camunda-platform
+    meta.helm.sh/release-namespace: camunda-platform
+  labels:
+    app: camunda-platform
+    app.kubernetes.io/component: connectors
+    app.kubernetes.io/instance: camunda-platform
+    app.kubernetes.io/name: connectors
+    app.kubernetes.io/part-of: camunda-platform
+  name: camunda-platform-connectors
+  namespace: camunda

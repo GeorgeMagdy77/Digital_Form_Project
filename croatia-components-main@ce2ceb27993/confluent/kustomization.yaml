@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ns.yaml
+- crds/platform.confluent.io_clusterlinks.yaml
+- crds/platform.confluent.io_confluentrolebindings.yaml
+- crds/platform.confluent.io_connectors.yaml
+- crds/platform.confluent.io_connects.yaml
+- crds/platform.confluent.io_controlcenters.yaml
+- crds/platform.confluent.io_kafkarestclasses.yaml
+- crds/platform.confluent.io_kafkarestproxies.yaml
+- crds/platform.confluent.io_kafkas.yaml
+- crds/platform.confluent.io_kafkatopics.yaml
+- crds/platform.confluent.io_ksqldbs.yaml
+- crds/platform.confluent.io_schemaexporters.yaml
+- crds/platform.confluent.io_schemaregistries.yaml
+- crds/platform.confluent.io_schemas.yaml
+- crds/platform.confluent.io_zookeepers.yaml
+- kafka.yaml
+- zookeeper.yaml
+- connect.yaml
+# - controlcenter.yaml
+- kafkarestproxy.yaml
+- ksqldb.yaml
+- schemaregistry.yaml
+- kafkarestclass.yaml
+helmCharts:
+- name: confluent-for-kubernetes
+  repo: https://packages.confluent.io/helm
+  version: 0.581.55
+  releaseName: confluent
+  namespace: confluent
+  valuesFile: values.yaml

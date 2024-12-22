@@ -1,0 +1,7 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  title: Digital Platform
+  name: digital-platform
+spec:
+  owner: platform

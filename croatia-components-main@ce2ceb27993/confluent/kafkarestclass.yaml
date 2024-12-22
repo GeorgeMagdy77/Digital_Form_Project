@@ -1,0 +1,11 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaRestClass
+metadata:
+  name: kafka
+  namespace: confluent-kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  kafkaClusterRef:
+    name: kafka
+    namespace: confluent-kafka

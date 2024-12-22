@@ -1,0 +1,36 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka
+  namespace: confluent-kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 3
+  image:
+    application: docker.io/confluentinc/cp-server:7.3.0
+    init: docker.io/confluentinc/confluent-init-container:2.5.0
+  dataVolumeCapacity: 100Gi
+  metricReporter:
+    enabled: true
+  podTemplate:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: platform.confluent.io/type
+                    operator: In
+                    values:
+                      - kafka
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+    podSecurityContext: {}
+    resources:
+      requests:
+        cpu: "1"
+        memory: "4Gi"
+      limits:
+        cpu: "1"
+        memory: "16Gi"

@@ -1,0 +1,70 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned
+  namespace: keycloak
+  annotations:
+    argocd.argoproj.io/sync-wave: "-4"
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: keycloak-ca-cert
+  namespace: keycloak
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  isCA: true
+  commonName: keycloak-ca-cert
+  secretName: keycloak-ca-cert
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  issuerRef:
+    name: selfsigned
+    kind: Issuer
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned-ca
+  namespace: keycloak
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  ca:
+    secretName: keycloak-ca-cert
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: keycloak-cert
+  namespace: keycloak
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  secretName: keycloak-cert
+  subject:
+    organizations:
+      - projectcroatia
+  commonName: keycloak.apps.san-sandbox.projectcroatia.cloud
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - server auth
+  dnsNames:
+    - keycloak.apps.san-sandbox.projectcroatia.cloud
+    - keycloak.ingress.san-sandbox.projectcroatia.cloud
+    - keycloak.keycloak.svc.cluster.local
+  issuerRef:
+    name: selfsigned-ca
+    kind: Issuer

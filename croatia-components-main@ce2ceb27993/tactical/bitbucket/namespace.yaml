@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: bitbucket
+    istio-injection: disabled
+  name: bitbucket
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-options: Prune=false
+---
+kind: ServiceMeshMember
+apiVersion: maistra.io/v1
+metadata:
+  name: default
+  namespace: bitbucket
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  controlPlaneRef:
+    name: basic
+    namespace: service-mesh

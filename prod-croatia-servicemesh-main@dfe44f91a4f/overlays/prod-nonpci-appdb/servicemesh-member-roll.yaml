@@ -1,0 +1,7 @@
+piVersion: maistra.io/v1
+kind: ServiceMeshMemberRoll
+metadata:
+  name: default
+  namespace: service-mesh
+spec: {}
+

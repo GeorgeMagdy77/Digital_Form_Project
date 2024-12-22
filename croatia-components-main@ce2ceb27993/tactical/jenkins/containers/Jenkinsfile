@@ -1,0 +1,38 @@
+pipeline {
+  agent {
+    kubernetes {
+      inheritFrom 'infrastructure'
+      yaml '''
+      spec:
+        containers:
+        - name: jnlp
+          securityContext: 
+            privileged: true
+            runAsUser: 0
+      '''
+    }
+  }
+  environment {
+    NEXUS_CREDENTIALS = credentials('nexus')
+    IMAGE_TYPE="${env.IMAGE_TYPE}"
+  }
+  stages {
+    stage('build') {
+      steps {
+        sh '''
+        IMAGE_TAG=$(echo $BRANCH | sed 's,origin/,,g')
+        IMAGE_TAG=$(echo $IMAGE_TAG | sed 's,/,-,g')
+        IMAGE_TAG=$(echo $IMAGE_TAG | sed 's,\\\\,-,g')
+        SHORT_COMMIT=$(echo $GIT_COMMIT |  cut -c 1-7)
+        IMAGE_TAG="$IMAGE_TAG-$SHORT_COMMIT"
+        cd "tactical/jenkins/containers/$IMAGE_TYPE"
+        buildah login -u "$NEXUS_CREDENTIALS_USR" -p "$NEXUS_CREDENTIALS_PSW" nexus.projectcroatia.cloud:18079
+        buildah bud -t "nexus.projectcroatia.cloud:18079/jenkins/croatia-${IMAGE_TYPE}-agent:${IMAGE_TAG}" .
+        buildah tag "nexus.projectcroatia.cloud:18079/jenkins/croatia-${IMAGE_TYPE}-agent:${IMAGE_TAG}" "nexus.projectcroatia.cloud:18079/jenkins/croatia-${IMAGE_TYPE}-agent:latest"
+        buildah push "nexus.projectcroatia.cloud:18079/jenkins/croatia-${IMAGE_TYPE}-agent:${IMAGE_TAG}"
+        buildah push "nexus.projectcroatia.cloud:18079/jenkins/croatia-${IMAGE_TYPE}-agent:latest"
+        '''
+      }
+    }
+  }
+}

@@ -1,0 +1,509 @@
+persistence:
+  size: 200Gi
+controller:
+  agentListenerPort: 30500
+  agentListenerNodePort: 30500
+  agentListenerServiceType: NodePort
+  admin:
+    existingSecret: jenkins-admin
+  existingSecret: jenkins-credentials
+  additionalExistingSecrets:
+  - name: jenkins-credentials
+    keyName: admin-password
+  - name: jenkins-credentials
+    keyName: bitbucket-token
+  - name: jenkins-credentials
+    keyName: sonar-token
+  - name: jenkins-credentials
+    keyName: ssh-key
+  - name: jenkins-credentials
+    keyName: openid-client-secret
+  - name: jenkins-credentials
+    keyName: vault-token
+  - name: jenkins-credentials
+    keyName: smtp-user
+  - name: jenkins-credentials
+    keyName: smtp-pass
+  - name: jenkins-credentials
+    keyName: jira-token
+  - name: jenkins-mobile
+    keyName: android-keystore
+  - name: jenkins-mobile
+    keyName: android-keystore-password
+  - name: jenkins-mobile
+    keyName: meawallet-username
+  - name: jenkins-mobile
+    keyName: meawallet-password
+  - name: jenkins-mobile
+    keyName: api-token-prod
+  - name: jenkins-mobile
+    keyName: appsflyer-key-prod
+  - name: jenkins-mobile
+    keyName: appsflyer-key-ios-prod
+  - name: jenkins-mobile
+    keyName: android-appcenter-api-token
+  - name: jenkins-mobile
+    keyName: ios-appcenter-api-token
+  - name: jenkins-credentials
+    keyName: artifactory-username
+  - name: jenkins-credentials
+    keyName: artifactory-password
+  - name: jenkins-credentials
+    keyName: artifactory-docker
+  - name: jenkins-credentials
+    keyName: prod-nonpci-appdb-deployment-token
+  - name: jenkins-credentials
+    keyName: prod-nonpci-shared-deployment-token
+  - name: jenkins-credentials
+    keyName: prod-dmz-ingress-deployment-token
+  - name: jenkins-credentials
+    keyName: prod-pci-appdb-deployment-token
+  containerSecurityContext: {}
+  installPlugins:
+    #- ansicolor:1.0.2
+    #- atlassian-bitbucket-server-integration:3.3.2
+    #- bitbucket-push-and-pull-request:2.8.3
+    #- blueocean:1.27.5.1
+    #- configuration-as-code:1670.v564dc8b_982d0
+    #- email-ext:2.96
+    #- envinject:2.901.v0038b_6471582
+    #- git-parameter:0.9.18
+    #- htmlpublisher:1.32
+    #- javax-mail-api:1.6.2-9
+    #- job-dsl:1.86
+    #- kubernetes:4029.v5712230ccb_f8
+    #- kubernetes-client-api:6.9.2-239.ve49a_3f285167
+    #- matrix-auth:3.1.6
+    #- oic-auth:2.5
+    #- pipeline-utility-steps:2.15.4
+    #- sonar:2.15
+    #- sshd:3.275.v9e17c10f2571
+    #- uno-choice:2.6.5
+    #- allure-jenkins-plugin:2.30.3
+    #- dependency-check-jenkins-plugin:5.4.0
+    - ansicolor:1.0.2
+    - atlassian-bitbucket-server-integration:3.3.2
+    - bitbucket-push-and-pull-request:2.8.3
+    - blueocean:1.27.5.1
+    - configuration-as-code:1670.v564dc8b_982d0
+    - email-ext:2.96
+    - envinject:2.901.v0038b_6471582
+    - git-parameter:0.9.18
+    - htmlpublisher:1.31
+    - javax-mail-api:1.6.2-9
+    - job-dsl:1.86
+    - kubernetes:3937.vd7b_82db_e347b_
+    - kubernetes-client-api:6.4.1-215.v2ed17097a_8e9
+    - matrix-auth:3.1.6
+    - oic-auth:2.5
+    - pipeline-utility-steps:2.15.4
+    - sonar:2.15
+    - sshd:3.275.v9e17c10f2571
+    - uno-choice:2.6.5
+    - allure-jenkins-plugin:2.30.3
+    - dependency-check-jenkins-plugin:5.4.0
+    - ssh-slaves:2.968.v6f8823c91de4
+  initScripts:
+  - |
+    import javaposse.jobdsl.dsl.DslScriptLoader
+    import javaposse.jobdsl.plugin.JenkinsJobManagement
+
+    def jobDslScript = '''
+    freeStyleJob('Seed') {
+      description('Synchronizes Jenkins jobs with ones in bitbucket')
+      displayName('Seed Job')
+      scm {
+        BbS {
+          id('prod-croatia-pipelines')
+          credentialsId('jenkins-git')
+          sshCredentialsId('opc-master')
+          projectName('DigitalPlatform')
+          repositoryName('prod-croatia-pipelines')
+          serverId('croatia')
+          mirrorName('')
+          gitTool('')
+          branches {
+            branchSpec {
+              name('main')
+            }
+          }
+        }
+      }
+      triggers {
+        BitbucketWebhookTriggerImpl {
+          refTrigger(true)
+          pullRequestTrigger(false)
+        }
+      }
+      steps {
+        dsl {
+          external('definitions/*.groovy', 'definitions/**/*.groovy')
+          removeAction("DELETE")
+          removeViewAction("DELETE")
+          additionalClasspath("library/src")
+        }
+      }
+      wrappers {
+        credentialsBinding {
+          usernamePassword {
+            usernameVariable('BITBUCKET_USERNAME')
+            passwordVariable('BITBUCKET_TOKEN')
+            credentialsId('jenkins-git')
+          }
+        }
+      }
+    }
+
+    queue('Seed')
+    '''
+    def workspace = new File('.')
+
+    def jobManagement = new JenkinsJobManagement(System.out, [:], workspace)
+
+    new DslScriptLoader(jobManagement).runScript(jobDslScript)
+  serviceType: ClusterIP
+  JCasC:
+    defaultConfig: false
+    configScripts:
+      main: |-
+        credentials:
+          system:
+            domainCredentials:
+            - credentials:
+              - bitbucketToken:
+                  id: "jenkins"
+                  secret: "${jenkins-credentials-bitbucket-token}"
+              - basicSSHUserPrivateKey:
+                  id: "opc-master"
+                  privateKeySource:
+                    directEntry:
+                      privateKey: |-
+                        ${jenkins-credentials-ssh-key}
+                  scope: GLOBAL
+                  username: "opc"
+              - usernamePassword:
+                  id: "jenkins-git"
+                  password: "${jenkins-credentials-bitbucket-token}"
+                  scope: GLOBAL
+                  username: "jenkins"
+              - usernamePassword:
+                  id: "artifactory"
+                  password: "${jenkins-credentials-artifactory-password}"
+                  scope: GLOBAL
+                  username: "${jenkins-credentials-artifactory-username}"
+              - string:
+                  id: "artifactory-docker"
+                  scope: GLOBAL
+                  secret: "${jenkins-credentials-artifactory-docker}"
+              - string:
+                  id: "sonar"
+                  scope: GLOBAL
+                  secret: "${jenkins-credentials-sonar-token}"
+              - string:
+                  id: "vault-token"
+                  scope: GLOBAL
+                  secret: "${jenkins-credentials-vault-token}"
+              - usernamePassword:
+                  id: "smtp"
+                  password: "${jenkins-credentials-smtp-pass}"
+                  scope: GLOBAL
+                  username: "${jenkins-credentials-smtp-user}"
+              - string:
+                  id: "jira-token"
+                  scope: GLOBAL
+                  secret: "${jenkins-credentials-jira-token}"
+              - file:
+                  fileName: "test.keystore"
+                  id: "android-keystore"
+                  scope: GLOBAL
+                  secretBytes: "${jenkins-mobile-android-keystore}"
+              - string:
+                  id: "android-keystore-password"
+                  scope: GLOBAL
+                  secret: "${jenkins-mobile-android-keystore-password}"
+              - string:
+                  id: "meawallet-username"
+                  scope: GLOBAL
+                  secret: "${jenkins-mobile-meawallet-username}"
+              - string:
+                  id: "meawallet-password"
+                  scope: GLOBAL
+                  secret: "${base64:${jenkins-mobile-meawallet-password}}"
+              - string:
+                  id: "api-token-prod"
+                  scope: GLOBAL
+                  secret: "${jenkins-mobile-api-token-prod}"
+              - string:
+                  id: "appsflyer-key-prod"
+                  scope: GLOBAL
+                  secret: "${jenkins-mobile-appsflyer-key-prod}"
+              - string:
+                  id: "appsflyer-key-ios-prod"
+                  scope: GLOBAL
+                  secret: "${jenkins-mobile-appsflyer-key-ios-prod}"
+              - string:
+                  id: "android-appcenter-api-token"
+                  scope: GLOBAL
+                  secret: "${jenkins-mobile-android-appcenter-api-token}"
+              - string:
+                  id: "ios-appcenter-api-token"
+                  scope: GLOBAL
+                  secret: "${jenkins-mobile-ios-appcenter-api-token}"
+              - string:
+                  id: "prod-nonpci-appdb-deployment-token"
+                  scope: GLOBAL
+                  secret: "${jenkins-credentials-prod-nonpci-appdb-deployment-token}"
+              - string:
+                  id: "prod-nonpci-shared-deployment-token"
+                  scope: GLOBAL
+                  secret: "${jenkins-credentials-prod-nonpci-shared-deployment-token}"
+              - string:
+                  id: "prod-pci-appdb-deployment-token"
+                  scope: GLOBAL
+                  secret: "${jenkins-credentials-prod-pci-appdb-deployment-token}"
+              - string:
+                  id: "prod-dmz-ingress-deployment-token"
+                  scope: GLOBAL
+                  secret: "${jenkins-credentials-prod-dmz-ingress-deployment-token}"
+              - string:
+                  id: "openid-client-secret"
+                  scope: GLOBAL
+                  secret: "${jenkins-credentials-openid-client-secret}"
+        unclassified:
+          location:
+            adminAddress: "jenkins@nrapp.cloud"
+            url: "https://jenkins.apps.prod-nonpci-shared.nrapp.cloud/"
+          bitbucketPluginConfiguration:
+            serverList:
+            - adminCredentialsId: "jenkins"
+              baseUrl: "https://bitbucket.nrapp.cloud"
+              id: "croatia"
+              serverName: "croatia"
+          scmGit:
+            addGitTagAction: false
+            allowSecondFetch: false
+            createAccountBasedOnEmail: false
+            disableGitToolChooser: false
+            globalConfigEmail: "jenkins@nrapp.cloud"
+            globalConfigName: "Project Croatia Jenkins"
+            hideCredentials: false
+            showEntireCommitSummaryInChanges: false
+            useExistingAccountWithSameEmail: false
+          junitTestResultStorage:
+            storage: "file"
+          globalLibraries:
+            libraries:
+            - defaultVersion: "main"
+              implicit: true
+              includeInChangesets: false
+              name: "main"
+              retriever:
+                modernSCM:
+                  libraryPath: "library/"
+                  scm:
+                    git:
+                      credentialsId: "opc-master"
+                      id: "prod-croatia-pipelines"
+                      remote: "ssh://git@bitbucket.nrapp.cloud/dig/prod-croatia-pipelines.git"
+                      traits:
+                      - "gitBranchDiscovery"
+          sonarGlobalConfiguration:
+            buildWrapperEnabled: true
+            installations:
+            - credentialsId: "sonar"
+              name: "croatia"
+              serverUrl: "https://sonarqube.apps.prod-nonpci-shared.nrapp.cloud"
+              triggers:
+                skipScmCause: false
+                skipUpstreamCause: false
+          email-ext:
+            allowedDomains: "@deloitte.co.uk,@deloittece.com,@deloitte.lu,@deloittedigital.se,@deloitte.nl,@ejada.com,@deloitte.com"
+            allowUnregisteredEnabled: true
+            defaultContentType: "text/plain"
+            defaultSuffix: "@nrapp.cloud"
+            mailAccount:
+              credentialsId: "smtp"
+              smtpHost: "smtp.email.me-jeddah-1.oci.oraclecloud.com"
+              smtpPort: "587"
+              useTls: true
+        security:
+          gitHostKeyVerificationConfiguration:
+            sshHostKeyVerificationStrategy: "acceptFirstConnectionStrategy"
+          globalJobDslSecurityConfiguration:
+            useScriptSecurity: false
+        tool:
+          sonarRunnerInstallation:
+            installations:
+            - name: "default"
+              properties:
+              - installSource:
+                  installers:
+                  - sonarRunnerInstaller:
+                      id: "4.7.0.2747"
+          allure:
+            installations:
+            - name: "allure"
+              properties:
+              - installSource:
+                  installers:
+                  - allureCommandlineInstaller:
+                     id: "2.21.0"
+          dependency-check:
+            installations:
+            - name: "OWASP-Dependency-Check"
+              properties:
+              - installSource:
+                  installers:
+                  - dependencyCheckInstaller:
+                     id: "8.2.1"
+        jenkins:
+          nodes:
+          - permanent:
+              labelString: "macos"
+              launcher:
+                inbound:
+                  workDirSettings:
+                    disabled: false
+                    failIfWorkDirIsMissing: false
+                    internalDir: "remoting"
+              mode: EXCLUSIVE
+              name: "arb-mac"
+              remoteFS: "./jenkins-agent"
+              retentionStrategy: "always"
+          globalNodeProperties:
+          - envVars:
+              env:
+              - key: "GRADLE_BUILD_OPTIONS"
+                value: "-x test"
+              - key: "ALLURE_NO_ANALYTICS"
+                value: "1"
+          numExecutors: 0
+          authorizationStrategy:
+            projectMatrix:
+              permissions:
+              - "GROUP:Agent/Build:jenkins-users"
+              - "GROUP:Credentials/View:jenkins-users"
+              - "GROUP:Job/Build:jenkins-users"
+              - "GROUP:Job/Cancel:jenkins-users"
+              - "GROUP:Job/Read:authenticated"
+              - "GROUP:Job/Read:jenkins-users"
+              - "GROUP:Metrics/HealthCheck:jenkins-users"
+              - "GROUP:Metrics/ThreadDump:jenkins-users"
+              - "GROUP:Metrics/View:jenkins-users"
+              - "GROUP:Overall/Administer:jenkins-administrators"
+              - "GROUP:Overall/Read:authenticated"
+              - "GROUP:Overall/Read:jenkins-users"
+              - "GROUP:Run/Replay:jenkins-users"
+              - "GROUP:View/Read:authenticated"
+              - "GROUP:View/Read:jenkins-users"
+              - "USER:Overall/Administer:admin"
+              - "USER:Overall/Read:anonymous"
+              - "USER:Job/Read:anonymous"
+              - "USER:View/Read:anonymous"
+              - "GROUP:Overall/Administer:/GRP-Jenkins-Admins"
+              - "GROUP:Overall/Read:/GRP-Jenkins-Developers"
+              - "GROUP:Job/Read:/GRP-Jenkins-Developers"
+              - "GROUP:View/Read:/GRP-Jenkins-Developers"
+          securityRealm:
+            oic:
+              authorizationServerUrl: "https://keycloak-sso.apps.prod-nonpci-shared.nrapp.cloud/auth/realms/jenkins/protocol/openid-connect/auth"
+              automanualconfigure: "manual"
+              clientId: "jenkins"
+              clientSecret: "${jenkins-credentials-openid-client-secret}"
+              disableSslVerification: true
+              emailFieldName: "email"
+              endSessionEndpoint: "https://keycloak-sso.apps.prod-nonpci-shared.nrapp.cloud/auth/realms/jenkins/protocol/openid-connect/logout"
+              escapeHatchEnabled: true
+              escapeHatchSecret: "${chart-admin-password}"
+              escapeHatchUsername: "admin"
+              fullNameFieldName: "name"
+              groupsFieldName: "groups"
+              postLogoutRedirectUrl: "https://jenkins.apps.prod-nonpci-shared.nrapp.cloud/"
+              scopes: "web-origins acr address phone openid profile roles offline_access groups\
+                \ microprofile-jwt email"
+              tokenAuthMethod: "client_secret_post"
+              tokenServerUrl: "https://keycloak-sso.apps.prod-nonpci-shared.nrapp.cloud/auth/realms/jenkins/protocol/openid-connect/token"
+              userInfoServerUrl: "https://keycloak-sso.apps.prod-nonpci-shared.nrapp.cloud/auth/realms/jenkins/protocol/openid-connect/userinfo"
+              userNameField: "preferred_username"
+              wellKnownOpenIDConfigurationUrl: "https://keycloak-sso.apps.prod-nonpci-shared.nrapp.cloud/auth/realms/jenkins/.well-known/openid-configuration"
+          slaveAgentPort: 30500
+          clouds:
+          - kubernetes:
+              containerCapStr: "20"
+              defaultsProviderTemplate: ""
+              connectTimeout: "5"
+              readTimeout: "15"
+              jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
+              jenkinsTunnel: "jenkins-agent.jenkins.svc.cluster.local:30500"
+              maxRequestsPerHostStr: "32"
+              name: "kubernetes"
+              namespace: "jenkins"
+              serverUrl: "https://kubernetes.default"
+              podLabels:
+              - key: "jenkins/jenkins-jenkins-agent"
+                value: "true"
+              templates:
+                - name: "default"
+                  namespace: "jenkins"
+                  id: "shared-services"
+                  containers:
+                  - name: "jnlp"
+                    alwaysPullImage: true
+                    args: "^${computer.jnlpmac} ^${computer.name}"
+                    command: "/usr/local/bin/jenkins-agent"
+                    envVars:
+                      - envVar:
+                          key: "JENKINS_URL"
+                          value: "http://jenkins.jenkins.svc.cluster.local:8080/"
+                    image: "artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/croatia-base-agent:latest"
+                    privileged: "false"
+                    resourceLimitCpu: 2
+                    resourceLimitMemory: 8Gi
+                    resourceRequestCpu: 1
+                    resourceRequestMemory: 2Gi
+                    runAsUser: 
+                    runAsGroup: 
+                    ttyEnabled: false
+                    workingDir: /home/jenkins/agent
+                  idleMinutes: 0
+                  instanceCap: 2147483647
+                  label: "jenkins-jenkins-agent"
+                  nodeUsageMode: "NORMAL"
+                  podRetention: Never
+                  showRawYaml: true
+                  serviceAccount: "agent"
+                  slaveConnectTimeoutStr: "100"
+                  yamlMergeStrategy: merge
+                - name: "infrastructure"
+                  inheritFrom: "default"
+                  id: "infrastructure"
+                  containers:
+                  - image: "artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/croatia-infrastructure-agent:latest"
+                    alwaysPullImage: true
+                    args: "^${computer.jnlpmac} ^${computer.name}"
+                    command: "/usr/local/bin/jenkins-agent"
+                    name: "jnlp"
+                    workingDir: "/home/jenkins/agent"
+                  yamlMergeStrategy: "merge"
+                - name: "microservices"
+                  inheritFrom: "default"
+                  id: "microservices"
+                  containers:
+                  - image: "artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/croatia-microservices-agent:latest"
+                    alwaysPullImage: true
+                    args: "^${computer.jnlpmac} ^${computer.name}"
+                    command: "/usr/local/bin/jenkins-agent"
+                    name: "jnlp"
+                    workingDir: "/home/jenkins/agent"
+                  yamlMergeStrategy: "merge"
+                - name: "mobile"
+                  inheritFrom: "default"
+                  id: "mobile"
+                  containers:
+                  - image: "artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/croatia-mobile-agent:latest"
+                    alwaysPullImage: true
+                    args: "^${computer.jnlpmac} ^${computer.name}"
+                    command: "/usr/local/bin/jenkins-agent"
+                    name: "jnlp"
+                    workingDir: "/home/jenkins/agent"
+                  yamlMergeStrategy: "merge"

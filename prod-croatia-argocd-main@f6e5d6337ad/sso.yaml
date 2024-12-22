@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-nonpci-shared-sso
+  namespace: argocd
+  labels:
+    environment: prod-nonpci-shared
+    component: sharedservices
+spec:
+  destination:
+    namespace: sso
+    server: https://api.prod-nonpci-shared.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: ./
+    repoURL: ssh://git@bitbucket.nrapp.cloud/dig/prod-croatia-sso.git
+    targetRevision: HEAD

@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-nonpci-shared-artifactory
+  namespace: argocd
+spec:
+  destination:
+    namespace: artifactory
+    server: https://api.prod-nonpci-shared.nrapp.cloud:6443
+  project: prod-croatia-digital-platform
+  source:
+    path: ./
+    repoURL: ssh://git@bitbucket.nrapp.cloud/scm/dig/prod-croatia-artifactory.git
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

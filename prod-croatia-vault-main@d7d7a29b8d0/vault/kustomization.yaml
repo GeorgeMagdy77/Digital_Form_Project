@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- namespace.yaml
+- route.yaml
+- clusterrolebinding.yaml
+- serviceaccount.yaml
+- clustersecretstore.yaml
+- operatorconfig.yaml
+- externalsecret.yaml
+- sso.yaml
+helmCharts:
+- name: vault
+  repo: https://artifactory.apps.prod-nonpci-shared.nrapp.cloud/artifactory/api/helm/hashicorp
+  version: 0.23.0
+  releaseName: vault
+  namespace: vault
+  valuesFile: values.yaml
+- name: postgresql-ha
+  repo: https://artifactory.apps.prod-nonpci-shared.nrapp.cloud/artifactory/api/helm/bitnami
+  version: 12.1.3
+  releaseName: postgresql-ha
+  namespace: vault
+  valuesFile: postgres-values.yaml

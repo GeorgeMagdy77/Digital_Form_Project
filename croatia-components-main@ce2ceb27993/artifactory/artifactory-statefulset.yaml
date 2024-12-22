@@ -1,0 +1,148 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: artifactory
+    chart: artifactory-107.55.9
+    component: artifactory
+    heritage: Helm
+    release: jfrog-platform
+  name: jfrog-platform-artifactory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artifactory
+      release: jfrog-platform
+      role: artifactory
+  serviceName: artifactory
+  template:
+    metadata:
+      labels:
+        app: artifactory
+        chart: artifactory-107.55.9
+        component: artifactory
+        heritage: Helm
+        release: jfrog-platform
+        role: artifactory
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app: artifactory
+                  release: jfrog-platform
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      containers:
+      - command:
+        - /bin/bash
+        - -c
+        - |
+          set -e; if [ -d /artifactory_extra_conf ] && [ -d /artifactory_bootstrap ]; then
+
+            echo "Copying bootstrap config from /artifactory_extra_conf to /artifactory_bootstrap";
+            cp -Lrfv /artifactory_extra_conf/ /artifactory_bootstrap/;
+          fi; exec /entrypoint-artifactory.sh
+        env:
+        - name: SKIP_WAIT_FOR_EXTERNAL_DB
+          value: "true"
+        - name: JF_SHARED_DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: db-user
+              name: jfrog-platform-artifactory-database-creds
+        - name: JF_SHARED_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: db-password
+              name: jfrog-platform-artifactory-database-creds
+        - name: JF_SHARED_DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: db-url
+              name: jfrog-platform-artifactory-database-creds
+        image: releases-docker.jfrog.io/jfrog/artifactory-pro:7.55.9
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - curl -s -k --fail --max-time 5 http://localhost:8091/artifactory/api/v1/system/liveness
+          failureThreshold: 5
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: artifactory
+        ports:
+        - containerPort: 8082
+          name: http
+        - containerPort: 8081
+          name: http-internal
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - NET_RAW
+          runAsNonRoot: true
+        startupProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - curl -s -k --fail --max-time 5 http://localhost:8091/artifactory/api/v1/system/readiness
+          failureThreshold: 90
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+        volumeMounts:
+        - mountPath: /data/bkp
+          name: backup
+        - mountPath: /var/opt/jfrog/artifactory
+          name: artifactory-volume
+        - mountPath: /tmp/etc/artifactory/binarystore.xml
+          name: binarystore-xml
+          subPath: binarystore.xml
+        - mountPath: /artifactory_bootstrap/artifactory.cluster.license
+          name: artifactory-license
+          subPath: license
+        - mountPath: /artifactory_bootstrap/info/installer-info.json
+          name: installer-info
+          subPath: installer-info.json
+      volumes:
+        - name: ca-certs
+          secret:
+            defaultMode: 420
+            secretName: router-certs-pca
+        - name: artifactory-license
+          secret:
+            defaultMode: 420
+            secretName: artifactory-keys
+        - configMap:
+            defaultMode: 420
+            name: jfrog-platform-setup-script
+          name: postgres-setup-init-vol
+        - configMap:
+            defaultMode: 420
+            name: jfrog-platform-artifactory-installer-info
+          name: installer-info
+        - name: systemyaml
+          secret:
+            defaultMode: 420
+            secretName: jfrog-platform-artifactory-systemyaml
+        - name: access-config
+          secret:
+            defaultMode: 420
+            secretName: jfrog-platform-artifactory-access-config
+        - name: binarystore-xml
+          secret:
+            defaultMode: 420
+            secretName: jfrog-platform-artifactory-binarystore
+        - name: backup
+          persistentVolumeClaim:
+            claimName: backup
+      

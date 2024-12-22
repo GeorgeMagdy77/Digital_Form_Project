@@ -1,0 +1,237 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: croatia-configuration
+  labels:
+    croatia-environment: dev-cit
+data:
+  ENVIRONMENT_NAME: dev-cit
+  #  Oracle DB config - More Control
+  JDBC_URL_MC_PREFIX: "jdbc:oracle:thin:MCCIT/MCCIT@//10.109.94.5:1521/"
+  JDBC_MC_USER: MCCIT
+
+  #  Oracle DB config - Superior Lifestyle
+  JDBC_URL_SL_PREFIX: "jdbc:oracle:thin:SLCIT/SLCIT@//10.109.94.5:1521/"
+  JDBC_SL_USER: SLCIT
+
+  #  Oracle DB config - Smarter Choices
+  JDBC_URL_SC_PREFIX: "jdbc:oracle:thin:SCCIT/SCCIT@//10.109.94.5:1521/"
+  JDBC_SC_USER: SCCIT
+
+  DB_ACTIONS_SERVICE: "CDB_ACTION_DB_CIT"
+  DB_CARD_SERVICE: "CDB_CARD_DB_CIT"
+  DB_PAYMENTS_SERVICE: "CDB_PAYMENT_DB_CIT"
+  DB_TRANSFERS_SERVICE: "CDB_TRANSFER_DB_CIT"
+  DB_ONBOARDING_SERVICE: "CDB_REGISTRATION_DB_CIT"
+  DB_DMS_SERVICE: "CDB_DMS_DB_CIT"
+  DB_STATEMENT_SERVICE: "CDB_STATEMENT_DB_CIT"
+  DB_HIJRI_CALENDAR_SERVICE: "CDB_HIJRI_CALENDAR_DB_CIT"
+  DB_REPORTING_ENGINE_SERVICE: "CDB_REPORTING_DB_CIT"
+  DB_SAVINGS_POT_SERVICE: "CDB_SAVING_POT_DB_CIT"
+  DB_SL_CONFIGURATION_SERVICE: "CDB_CONFIG_DB_CIT"
+  DB_SL_LIFESTYLE_SERVICE: "CDB_LS_DB_CIT"
+  DB_SL_NOTIFICATION_SERVICE: "CDB_NOTIFY_DB_CIT"
+  DB_SL_REWARD_SERVICE: "CDB_REFERRAL_DB_CIT"
+  DB_SL_FEEDBACK_SERVICE: "CDB_FEEDBACK_DB_CIT"
+  DB_SL_CONTENT_FEEDBACK_SERVICE: "CDB_CONTENT_DB_CIT"
+  DB_SL_OTP_SERVICE: "CDB_OTP_DB_CIT"
+  DB_TRANSACTION_SERVICE: "CDB_TRANSACTION_DB_CIT"
+  DB_IPS_MANAGEMENT_SERVICE: "CDB_IPS_DB_CIT"
+  DB_SL_GOAL_SERVICE: "CDB_GOALS_DB_CIT"
+  DB_AUTHENTICATION_SERVICE: "CDB_AUTHENTICATION_DB_CIT"
+  DB_CARD_TRANS_AUTH_SERVICE: "CDB_CARD_TRANS_AUTH_DB_CIT"
+  DB_SHADOW_BALANCE_SERVICE: "CDB_SHADOW_BALANCE_DB_CIT"
+  DB_SAF_SERVICE: "CDB_SAF_DB_CIT"
+  DB_LOYALTY_SERVICE: "DP_DP_LOYALTY_DB"
+
+  # Focal client details
+  FOCAL_CLIENT_URL: "http://alpha-focal-mock-framework:8080/api/v2"
+  FOCAL_CLIENT_USERNAME: "alrajhi_test@mozn.sa"
+  FOCAL_CLIENT_THRESHOLD: "70"
+
+  CRM_INTEGRATION_USERNAME: CrmIntegration
+  CRM_CHANNEL: CrmAdaptor1
+  CRM_API_URL: http://10.109.83.12:455
+  
+
+  TAHAQOQ_CLIENT_ID: 2ba91af1768af16fd61d8444cf2fe99f
+  TAHAQOQ_URL: "https://gwt.alrajhibank.com.sa:9443/api-factory/dev/tahaqoq/v1"
+  TAHAQOQ_MOCK_CLIENT_URL: http://alpha-tahaqoq-mock-framework:8080
+  TAHAQOQ_MOCK_FLAG: "1"
+  
+  ISVA_URL: http://alpha-isva-mock-framework:8080
+  ISVA_CLIENT_ID: "ISVAClientId"
+  ISVA_SCOPE: "ISVAScope"
+
+  NAFATH_BE_CLIENT_URL: "https://gwt.alrajhibank.com.sa:9443/api-factory/sit"
+  NAFATH_CLIENT_ID: 8b31cd9a638afe45911a2b25cf041d85
+  NAFATH_CHANNEL_ID: OPEN_ACCT_PORTAL
+  NAFATH_SUB_CHANNEL_ID: STANDARD
+  NAFATH_MOCK_FLAG: "1"
+  NAFATH_MOCK_CLIENT_URL: http://alpha-nafath-mock-framework:8080
+  
+  ISVA_ADAPTER_URL: http:/alpha-isva-adapter:8080
+  OTP_SERVICE_URL: http:/alpha-otp-service:8080
+  DMS_ADAPTER_CLIENT_URL: http://alpha-dms-adapter:8080
+  TEMENOS_CLIENT_URL: http://alpha-temenos-banking-adapter:8080
+
+  MARKETPLACE_YAKEEN_CLIENT_ID: d2bcf0e72d79c1de1d202141cdefb581
+  MARKETPLACE_CLIENT_ID: 548bd8378fb4007d7f5deae72bff18d3
+  MARKETPLACE_URL: "https://apimarketplace-int-gw-svc-gw-gateway-traffic-cp4i-nprd.ob-nonprod-cl01-de8fb88b0db8c47d4745b3af8ac7158d-0000.eu-de.containers.appdomain.cloud/api-marketplace/api-marketplace-sit"
+  MARKETPLACE_MOCK_CLIENT_URL: http://alpha-marketplace-mock-framework:8080
+  MARKETPLACE_MOCK_FLAG: "1"
+  MARKETPLACE_ADAPTER_CLIENT_URL: http://alpha-marketplace-adapter:8080
+
+  CMS_CLIENT_URL: http://alpha-cms-adapter-service:8080
+  CMS_CONTENT_CLIENT_URL: http://alpha-content-service:8080
+
+  # Sl - Referral Service Kafka Topics
+  KAFKA_TOPIC_CUSTOMER_ONBOARDING_COMPLETE: croatia-customer-onboarding-complete
+  KAFKA_TOPIC_INITIAL_PAYMENT_PROCESSING_FAILED: croatia-initial-payment-message-process-failed
+  KAFKA_TOPIC_REFERRAL_CRITERIA_COMPLETE: croatia-referral-criteria-complete
+  KAFKA_TOPIC_REWARDS_REFERRAL_GRANTABLE: croatia-rewards-referral-grantable
+  KAFKA_TOPIC_REWARDS_REFERRAL_REDEEMED: croatia-rewards-referral-redeemed
+  KAFKA_TOPIC_REWARDS_REFERRAL_REDEEMED-FAILED: croatia-rewards-referral-redeemed-failed
+  CUSTOMER_ADAPTER_CLIENT_URL: http://alpha-crm-adapter:8080
+  REWARD_SERVICE_URL: http://alpha-reward-service:8080
+
+  # SL - OTP Service
+  JDBC_SL_OTP_USER: SL
+  OTP_MOCK_FLAG: "1"
+
+  # SL - Configuration Service
+  JDBC_SL_CONFIGURATION_USER: SL
+  KAFKA_ONBOARDING_COMPLETE_TOPIC: croatia-customer-onboarding-complete
+
+  # SL - Lifestyle Service
+  JDBC_SL_LIFESTYLE_USER: SL
+  KAFKA_TOPIC_CUSTOMER_NOTIFICATION_INITIATE: croatia-customer-notification-initiate
+  KAFKA_TOPIC_CUSTOMER_NOTIFICATION_INITIATE_FAILED: croatia-customer-notification-initiate-failed
+  KAFKA_TOPIC_ACTION_PUBLISH_CREATE: croatia-create-action
+  KAFKA_TOPIC_ACTION_PUBLISH_CREATE_FAILED: croatia-dev-create-action-failed
+  KAFKA_TOPIC_ACTION_PUBLISH_UPDATE: croatia-update-action
+  KAFKA_TOPIC_NATIONAL_ID_EXPIRY_DATE_PUSH: croatia-customer-id-expiry
+  KAFKA_TOPIC_ACTION_PUBLISH_CREATE_BULK: croatia-bulk-create-actions
+  KAFKA_TOPIC_ACTION_PUBLISH_DEACTIVATE: croatia-deactivate-action-type
+  
+  # SL - Customer Service 
+  TAHAQOQ_ADAPTER_CLIENT_URL: http://alpha-tahaqoq-adapter:8080
+  CUSTOMER_OTP_CLIENT_URL: http://alpha-otp-service:8080
+  NOTIFICATION_SERVICE_CLIENT_URL: http://alpha-notification-service:8080
+  KAFKA_TOPIC_CUSTOMER_PREFERENCES_NOTIFICATIONS_UPDATED: croatia-customer-preferences-notifications-updated
+  KAFKA_TOPIC_CUSTOMER_PREFERENCES_LANGUAGE_UPDATED: croatia-customer-preferences-language-updated
+  KAFKA_TOPIC_NOTIFICATION_SET_DEFAULT_ERROR: croatia-customer-notification-set-default-error
+  KAFKA_TOPIC_LOGGING_COMPLETE: croatia-logging-complete
+
+  # SL - Feedback Service
+  JDBC_SL_FEEDBACK_USER: SL
+
+  # SL - Notification Service
+  JDBC_SL_NOTIFICATION_USER: SL
+  KAFKA_TOPIC_CUSTOMER_PROFILE_NOTIFICATIONS_UPDATED: croatia-customer-profile-notifications-updated
+  KAFKA_TOPIC_CUSTOMER_NOTIFICAION_FAILED:  croatia-customer-notification-failed
+  KAFKA_TOPIC_CUSTOMER_NOTIFICATION_SEND:  croatia-customer-notification-send 
+  KAFKA_TOPIC_CUSTOMER_NOTIFICATION_CENTER:  croatia-customer-notification-center
+  NOTIFICATIONS_CHANNEL_NAME_SMS:  SMS
+  NOTIFICATIONS_CHANNEL_NAME_EMAIL:  EMAIL
+  NOTIFICATIONS_CHANNEL_NAME_PUSH: PUSH
+  NOTIFICATIONS_PUSH_TITLE: "Croatia App"
+  NOTIFICATIONS_CHANNEL_CUSTOMERS: ""
+
+  # SL - Notification Adapter
+  KAFKA_NOTIFICATION_ADAPTER_ERROR_TOPIC: croatia-notification-adapter-error
+
+  # SL - Reward Service
+  JDBC_SL_REWARD_USER: SL
+  KAFKA_TOPIC_REWARDS_REFERRAL_FAILED_GRANTABLE: "croatia-rewards-referral-failed-grantable"
+  KAFKA_TOPIC_REWARDS_REFERRAL_FAILED_REDEEMED: "croatia-rewards-referral-failed-redeemed"
+  CROATIA_BANK_ACCOUNT_NUMBER: "croatiaNumber"
+  CORE_BANKING_ADAPTER_CLIENT_URL: "http://superior-lifestyle-stub-service:8080"
+  PAYMENTS_SERVICE_CLIENT_URL: "http://superior-lifestyle-stub-service:8080"
+
+  # SL - Content Service
+  CMS_ADAPTER_URL: "http://alpha-cms-adapter-service:8080"
+  CONTENT_FEEDBACK_CLIENT_URL: "http://alpha-content-feedback-service:8080"
+
+  # SL - Content Feedback Service
+  JDBC_SL_CONTENT_FEEDBACK_USER: SL
+
+  # SL - CMS Adapter
+  SITECORE_IMAGE_URL: "https://webcmssc.npnbank.local/sitecore/-/media"
+  SITECORE_MEDIA_MANAGEMENT_URL: "https://webcmssc.npnbank.local/api/Images"
+  SITECORE_EXPERIENCE_PLATFORM_CLIENT_URL: "https://webcmssc.npnbank.local:8983/solr/webcms_web_index/select"
+  KAFKA_CMS_ERROR_TOPIC: "croatia-cms-errors"
+  
+  # SL - Mobile Homepage Service
+  ACTIONS_CLIENT_URL: "http://alpha-actions-service:8080"
+  SAVINGS_POT_CLIENT_URL: "http://alpha-savings-pot-service:8080"
+  CONFIGURATION_CLIENT_URL: "http://alpha-configuration-service:8080"
+
+  # SL - Appreciation Service
+  JDBC_SL_APPRECIATION_USER: "SL"
+  DB_SL_APPRECIATION_SERVICE: "CDB_APPRECIATIONS_DB_SUPERIOR_LIFE"
+
+  # SL - Genesys Service
+  CRM_CLIENT_URL: "http://alpha-crm-adapter:8080"
+  GENESYS_ADAPTER_URL: "http://alpha-genesys-adapter:8080"
+  
+  # SL - Genesys Adapter
+  GENESYS_IVR_CLIENT_URL: "http://10.109.83.31:9180"
+  MOCK_GENESYS_CLIENT_URL: "http://alpha-genesys-mock-framework:8080"
+  GENESYS_CLIENT_URL: "http://10.109.83.35:8080"
+  GENESYS_IVR_OUTBOUND_CLIENT_URL: "http://10.109.83.34:8080"
+  
+  # SL - Goal Service
+  SUPERIOR_LIFESTYLE_MOCK_URL:  "http://superior-lifestyle-stub-service:8080"
+  GOLD_SERVICE_URL:  "http://alpha-gold-service:8080"
+  CORE_BANKING_ADAPTER_URL:  "http://alpha-temenos-banking-adapter:8080"
+  ACCOUNT_SERVICE_URL:  "http://alpha-account-service:8080"
+  WORKFLOW_CLIENT_URL:  "http://alpha-workflow-service:8080"
+  JDBC_SL_GOAL_USER: "SL"
+
+  # SL - LOYALTY Service
+  JDBC_SL_LOYALTY_USER: "SL"
+  MP_LOYALTY_CLIENT_URL: "http://alpha-mp-loyalty-adapter:8080"
+
+  # SL - PC Catalogues Service
+  PC_CATALOGUES_CLIENT_URL: "http://ejada-pc-catalogues-service:8080"
+
+  # SC - Card Service
+  APPLE_WALLET_IDS: "40010030273,37810030273"
+  MADA_WALLET_IDS: "40010030621,37800010202"
+
+  # SL - Transaction service
+  TRANSACTION_SERVICE_URL: "http://alpha-transaction-service:8080"
+
+  #SL - Shahid adapter
+  SHAHID_ADAPTER_CLIENT_URL: "http://alpha-shahid-adapter:8080"
+
+  #SL - Anghami adapter
+  ANGHAMI_ADAPTER_CLIENT_URL: "http://alpha-anghami-adapter:8080"
+
+  #SHAHID CLIENT PARAMETERS
+  SHAHID_CLIENT_URL: "https://shd-30-api.shahid.net/proxy/v2"
+  SHAHID_CLIENT_PARTNER_CODE: "10021"
+
+  #Account finder
+  ACCOUNT_FINDER_ADAPTER: "http://alpha-account-finder-adapter:8080"
+  ACCOUNT_FINDER_SERVICE: "http://alpha-account-finder-service:8080"
+  MARKET_PLACE_ACCOUNT_FINDER_URL: "https://sit.api-marketplace.alrajhibank.com.sa/apimarketplace-sit/api-marketplace-sit"
+
+  #CB
+  JDBC_URL_CB_PREFIX: "jdbc:oracle:thin:@//10.109.94.11:1521/"
+  JDBC_CB_USER: "CB"
+  DB_EVENT_ADAPTER: "CDB_CB_EVENT_ADAPTER_DB"
+
+  KAFKA_DEBIT_CARD_NOTIFICATION_TOPIC: croatia-debit-card-notification
+
+  # STO - Topics Configuration
+
+  KAFKA_STO_SUCCESS_AIO_TOPIC: "croatia-dev-aio-recurring-payment"
+  KAFKA_STO_FAILED_AIO_TOPIC: "croatia-dev-aio-failed-recurring-payment"
+  KAFKA_STO_SUCCESS_SAMA_TOPIC: "croatia-dev-recurring-payment"
+  KAFKA_STO_FAILED_SAMA_TOPIC: "croatia-dev-failed-recurring-payment"
+  KAFKA_STO_SUCCESS_NORMAL_TOPIC: "croatia-dev-normal-recurring-payment"
+  KAFKA_STO_FAILED_NORMAL_TOPIC: "croatia-dev-normal-failed-recurring-payment"
+  KAFKA_TOPIC_SAS_PUBLISH: "croatia-sas-card-non-financial"
+  KAFKA_SAS_CARD_FINANCIAL: "croatia-aio-card-trans-sas"

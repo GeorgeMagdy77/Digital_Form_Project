@@ -1,0 +1,26 @@
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  identityProviders:
+    - mappingMethod: add
+      name: keycloak
+      openID:
+        ca:
+          name: croatia-keycloak-ca
+        claims:
+          email:
+            - email
+          name:
+            - name
+          preferredUsername:
+            - preferred_username
+        clientID: cluster-development
+        clientSecret:
+          name: croatia-keycloak-client-secret
+        extraScopes: []
+        issuer: https://keycloak.apps.san-sandbox.projectcroatia.cloud/realms/master
+      type: OpenID

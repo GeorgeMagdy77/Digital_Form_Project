@@ -1,0 +1,219 @@
+global:
+  image:
+    registry: "artifactory.apps.dev-nonpci-shared.npnbank.local/docker"
+
+#############
+
+# Elasticsearch.
+#
+
+# omit the values below if elasticsearch.enabled is false
+elasticsearch:
+  master:
+    heapSize: 2048m
+    resources:
+      requests:
+        cpu: 1
+        memory: 2Gi
+      limits:
+        cpu: 2
+        memory: 4Gi
+#    podSecurityContext:
+#      runAsGroup: null
+#      fsGroup: null
+#      runAsUser: null
+    containerSecurityContext:
+      runAsUser: null
+      runAsGroup: null
+      fsGroup: null
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+  # If needed, OpenShift TuneD operator will be used to set sysctl vm.max_map_count.
+  # Apply the manifest "openshift-tuned.yaml" before install Camunda 8 chart.
+  sysctlImage:
+    enabled: false
+  commonLabels:
+    tuned.openshift.io/elasticsearch: ""
+
+###########
+
+# Identity.
+#
+
+# omit the values below if identity.enabled is false
+identity:
+  podSecurityContext:
+    fsGroup: null
+  containerSecurityContext:
+    runAsUser: null
+
+# omit the values below if identityKeycloak.enabled is false
+identityKeycloak:
+  podSecurityContext:
+    fsGroup: null
+  containerSecurityContext:
+    runAsUser: null
+  # omit the values below if identityKeycloak.postgresql.enabled is false
+  postgresql:
+    # omit the values below if identityKeycloak.postgresql.primary.enabled is false
+    primary:
+      podSecurityContext:
+        fsGroup: null
+      containerSecurityContext:
+        runAsUser: null
+    # omit the values below if identityKeycloak.postgresql.readReplicas.enabled is false
+    readReplicas:
+      podSecurityContext:
+        fsGroup: null
+      containerSecurityContext:
+        runAsUser: null
+    # omit the values below if identityKeycloak.postgresql.metrics.enabled is false
+    metrics:
+      podSecurityContext:
+        fsGroup: null
+      containerSecurityContext:
+        runAsUser: null
+
+# omit the values below if identityPostgresql.enabled is false
+identityPostgresql:
+  # omit the values below if identityPostgresql.primary.enabled is false
+  primary:
+    podSecurityContext:
+      fsGroup: null
+    containerSecurityContext:
+      runAsUser: null
+  # omit the values below if identityPostgresql.readReplicas.enabled is false
+  readReplicas:
+    podSecurityContext:
+      fsGroup: null
+    containerSecurityContext:
+      runAsUser: null
+  # omit the values below if identityPostgresql.metrics.enabled is false
+  metrics:
+    podSecurityContext:
+      fsGroup: null
+    containerSecurityContext:
+      runAsUser: null
+
+#############
+
+# Connectors.
+#
+
+# omit the values below if identity.enabled is false
+connectors:
+  podSecurityContext:
+    fsGroup: null
+  containerSecurityContext:
+    runAsUser: null
+  env:
+    - name: JAVA_TOOL_OPTIONS
+      value: >-
+        -Djavax.net.ssl.trustStore=/certificates/tools.jks
+        -Djavax.net.ssl.trustStorePassword=changeit2
+  extraVolumes:
+    - name: root-ca
+      secret:
+        secretName: root-ca
+        defaultMode: 420
+  extraVolumeMounts:
+    - name: root-ca
+      mountPath: /certificates/tools.jks
+      subPath: tools.jks
+
+#############
+
+# Operate.
+#
+
+# omit the values below if operate.enabled is false
+operate:
+  retention:
+    enabled: true
+    minimumAge: 30d
+  configMap:
+    defaultMode: 0444
+  podSecurityContext:
+    fsGroup: null
+  containerSecurityContext:
+    runAsUser: null
+
+#############
+
+# Optimize.
+#
+
+# omit the values below if optimize.enabled is false
+optimize:
+  podSecurityContext:
+    fsGroup: null
+  containerSecurityContext:
+    runAsUser: null
+
+#############
+
+# Tasklist.
+#
+
+# omit the values below if tasklist.enabled is false
+tasklist:
+  retention:
+    enabled: true
+    minimumAge: 30d
+  configMap:
+    defaultMode: 0444
+  podSecurityContext:
+    fsGroup: null
+  containerSecurityContext:
+    runAsUser: null
+
+#############
+
+# Zeebe.
+#
+
+# omit the values below if zeebe.enabled is false
+zeebe:
+  retention:
+    enabled: true
+    minimumAge: 30d
+  configMap:
+    defaultMode: 0555
+  podSecurityContext:
+    fsGroup: null
+  containerSecurityContext:
+    runAsUser: null
+
+# omit the values below if zeebe-gateway.enabled is false
+zeebeGateway:
+  configMap:
+    defaultMode: 0444
+  podSecurityContext:
+    fsGroup: null
+  containerSecurityContext:
+    runAsUser: null
+
+
+#operate:
+#  image:
+#    repository: artifactory.apps.dev-nonpci-shared.npnbank.local/docker/camunda/operate
+#optimize:
+#  image:
+#    repository: artifactory.apps.dev-nonpci-shared.npnbank.local/docker/camunda/optimize
+#retentionPolicy:
+#  enabled: true
+#  schedule: "0 0 * * *"
+#  zeebeIndexTTL: 30
+#  operateIndexTTL: 30
+#  tasklistIndexTTL: 30
+#  image:
+#    repository: artifactory.apps.dev-nonpci-shared.npnbank.local/docker/bitnami/elasticsearch-curator-archived
+#tasklist:
+#  image:
+#    repository: artifactory.apps.dev-nonpci-shared.npnbank.local/docker/camunda/tasklist
+#zeebe:
+#  image:
+#    repository: artifactory.apps.dev-nonpci-shared.npnbank.local/docker/camunda/zeebe
+#zeebe-gateway:
+#  image:
+#    repository: artifactory.apps.dev-nonpci-shared.npnbank.local/docker/camunda/zeebe

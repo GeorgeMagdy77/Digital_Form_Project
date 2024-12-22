@@ -1,0 +1,34 @@
+apiVersion: v1
+data:
+  fluent.conf: |
+    <system>
+       log_level debug
+    </system>
+    <source>
+    @type tail
+    path /vault/audit/vault-audit.log
+    pos_file /vault/audit/vault-audit-log.pos
+    <parse>
+        @type json
+        time_format %iso8601
+    </parse>
+    tag vault_audit
+    </source>
+    <filter vault_audit>
+    type record_transformer
+    <record>
+        cluster v5
+    </record>
+    </filter>
+    <match vault_audit.**>
+    @type splunk_hec
+    hec_host 10.109.198.21
+    hec_endpoint services/collector
+    hec_port 8088
+    insecure_ssl true
+    hec_token 93bc99b1-3860-4218-83c7-60bd01bf2b60
+    </match>
+kind: ConfigMap
+metadata:
+  name: fluentd
+  namespace: vault

@@ -1,0 +1,40 @@
+proxy:
+  type: NodePort
+  http:
+    nodePort: 30080
+  tls:
+    nodePort: 30443
+secretVolumes:
+  - kong-proxy-tls
+env:
+  ssl_cert: /etc/secrets/kong-proxy-tls/tls.crt
+  ssl_cert_key: /etc/secrets/kong-proxy-tls/tls.key
+  proxy_ssl_cert: /etc/secrets/kong-proxy-tls/tls.crt
+  proxy_ssl_cert_key: /etc/secrets/kong-proxy-tls/tls.key
+ingressController:
+  enabled: false
+  installCRDs: false
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - values:
+                - infra
+              key: croatia-role
+              operator: In
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - values:
+                - kong-kong
+              key: app
+              operator: In
+        topologyKey: kubernetes.io/hostname
+tolerations:
+  - effect: NoSchedule
+    key: croatia-role/infra
+    operator: Exists
+dblessConfig:
+  configMap: kong-custom-dbless-config

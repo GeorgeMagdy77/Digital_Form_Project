@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: artifactory
+    release: jfrog-platform
+    role: artifactory
+  name: backup
+  namespace: artifactory
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2.5Ti
+  storageClassName: thin-csi
+  volumeMode: Filesystem

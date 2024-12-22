@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: app-postgres
+  namespace: n8n
+spec:
+  serviceName: app-postgres
+  replicas: 1
+  revisionHistoryLimit: 10
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  selector:
+    matchLabels:
+      app: app-postgres
+  template:
+    metadata:
+      labels:
+        app: app-postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16.4
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: n8n
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-postgres-password
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          value: n8n
+        - name: PGDATA
+          value: /var/lib/postgresql/data
+        volumeMounts:
+          - name: app-n8n-postgres
+            mountPath: /var/lib/postgresql
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: app-n8n-postgres
+        labels:
+          app: app-n8n-postgres
+      spec:
+        storageClassName: thin-csi
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi

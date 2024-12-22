@@ -1,0 +1,59 @@
+---
+elasticsearch:
+  tests:
+    enabled: true
+  securityContext:
+    runAsUser: null
+
+  podSecurityContext:
+    fsGroup: null
+    runAsUser: null
+
+  sysctlInitContainer:
+    enabled: false
+
+identity:
+  keycloak:
+    enabled: true
+    containerSecurityContext:
+      runAsUser: null
+    podSecurityContext:
+      fsGroup: null
+      runAsUser: null
+    postgresql:
+      primary:
+        containerSecurityContext:
+          runAsUser: null
+        podSecurityContext:
+          fsGroup: null
+          runAsUser: null
+      readReplicas:
+        containerSecurityContext:
+          runAsUser: null
+        podSecurityContext:
+          fsGroup: null
+          runAsUser: null
+      metrics:
+        containerSecurityContext:
+          runAsUser: null
+        podSecurityContext:
+          fsGroup: null
+          runAsUser: null
+operate:
+  image:
+    repository: nexus.projectcroatia.cloud:18080/camunda/operate
+optimize:
+  image:
+    repository: nexus.projectcroatia.cloud:18080/camunda/optimize
+retentionPolicy:
+  image:
+    repository: nexus.projectcroatia.cloud:18080/bitnami/elasticsearch-curator
+tasklist:
+  image:
+    repository: nexus.projectcroatia.cloud:18080/camunda/tasklist
+zeebe:
+  image:
+    repository: nexus.projectcroatia.cloud:18080/camunda/zeebe
+zeebe-gateway:
+  image:
+    repository: nexus.projectcroatia.cloud:18080/camunda/zeebe

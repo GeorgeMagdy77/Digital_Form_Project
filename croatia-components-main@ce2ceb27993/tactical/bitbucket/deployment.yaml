@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitbucket
+  namespace: bitbucket
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bitbucket
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bitbucket
+      annotations:
+        argocd.argoproj.io/sync-options: Prune=false
+    spec:
+      volumes:
+        - name: bitbucket-data
+          persistentVolumeClaim:
+            claimName: bitbucket-data
+      containers:
+        - name: server
+          image: "docker.io/atlassian/bitbucket@sha256:d724958cc9c77c6ae42b8ed1b21bdecce1eb43b20c9904796edf4dfc39f3487d"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: JDBC_DRIVER
+              value: org.postgresql.Driver
+            - name: JDBC_USER
+              value: bitbucket
+            - name: JDBC_URL
+              value: "jdbc:postgresql://postgres.bitbucket.svc.cluster.local:5432/bitbucket"
+            - name: JDBC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: POSTGRES_PASSWORD
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: "2"
+              memory: 4Gi
+          ports:
+            - containerPort: 7990
+            - containerPort: 7999
+          volumeMounts:
+            - mountPath: "/var/atlassian/application-data/bitbucket"
+              name: bitbucket-data

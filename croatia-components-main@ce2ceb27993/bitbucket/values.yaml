@@ -1,0 +1,19 @@
+database:
+  url: jdbc:postgresql://postgres.bitbucket.svc.cluster.local:5432/bitbucket
+  driver: org.postgresql.Driver
+  credentials:
+    secretName: postgres
+    usernameSecretKey: POSTGRES_USERNAME
+    passwordSecretKey: POSTGRES_PASSWORD
+ingress:
+  create: false
+volumes:
+  sharedHome:
+    customVolume:
+      persistentVolumeClaim:
+        claimName: bitbucket-data
+  localHome:
+    persistentVolumeClaim:
+      create: true
+serviceAccount:
+  create: true

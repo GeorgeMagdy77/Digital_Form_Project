@@ -1,0 +1,120 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prod-nonpci-appdb-alpha-microservices-values
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  generators:
+    - scmProvider:
+        bitbucketServer:
+          project: ALPHA
+          api: https://bitbucket.nrapp.cloud
+          allBranches: true
+          basicAuth:
+            username: jenkins
+            passwordRef:
+              secretName: bitbucket
+              key: bitbucket-token
+        filters:
+        - pathsExist: ['Dockerfile', 'values.yaml']
+          pathsDoNotExist: ['config']
+          branchMatch: release/1_1_00$
+  template:
+    metadata:
+      name: 'prod-nonpci-appdb-{{repository}}'
+      namespace: argocd
+      labels:
+        environment: prod-nonpci-appdb
+        component: alpha-microservice
+    spec:
+      destination:
+        name: prod-nonpci-appdb
+        namespace: alpha
+      project: alpha
+      syncPolicy:
+        automated:
+          prune: true
+      sources:
+        - chart: alpha-microservice-chart
+          repoURL: https://artifactory.apps.prod-nonpci-shared.nrapp.cloud/artifactory/helm-local
+          targetRevision: '0.1.20'
+          helm:
+            values: |-
+              nameOverride: {{repository}}
+              gateway:
+                port: 443
+                name: https
+                protocol: HTTPS
+                tls:
+                  enabled: true
+              image:
+                repository: nexus-connector.apps.prod-nonpci-shared.nrapp.cloud/{{repository}}:{{branchNormalized}}-{{short_sha}}
+              host: {{repository}}.apps.prod-nonpci-appdb.nrapp.cloud
+              hosts:
+              - {{repository}}.apps.prod-nonpci-appdb.nrapp.cloud
+            valueFiles:
+            - $values/values.yaml
+        - repoURL: '{{url}}'
+          targetRevision: '{{branch}}'
+          ref: values
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prod-nonpci-appdb-alpha-microservices
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  generators:
+    - scmProvider:
+        bitbucketServer:
+          project: ALPHA
+          api: https://bitbucket.nrapp.cloud
+          allBranches: true
+          basicAuth:
+            username: jenkins
+            passwordRef:
+              secretName: bitbucket
+              key: bitbucket-token
+        filters:
+        - pathsExist: ['Dockerfile']
+          branchMatch: release/1_1_00$
+          pathsDoNotExist: ['values.yaml', 'config']
+  template:
+    metadata:
+      name: 'prod-nonpci-appdb-{{repository}}'
+      namespace: argocd
+      labels:
+        environment: prod-nonpci-appdb
+        component: alpha-microservice
+    spec:
+      destination:
+        name: prod-nonpci-appdb
+        namespace: alpha
+      project: alpha
+      syncPolicy:
+        automated:
+          prune: true
+      source:
+        chart: alpha-microservice-chart
+        repoURL: https://artifactory.apps.prod-nonpci-shared.nrapp.cloud/artifactory/helm-local
+        targetRevision: '0.1.20'
+        helm:
+          values: |-
+            nameOverride: {{repository}}
+            gateway:
+              port: 443
+              name: https
+              protocol: HTTPS
+              tls:
+                enabled: true
+            image:
+              repository: nexus-connector.apps.prod-nonpci-shared.nrapp.cloud/{{repository}}:{{branchNormalized}}-{{short_sha}}
+            host: {{repository}}.apps.prod-nonpci-appdb.nrapp.cloud
+            hosts:
+            - {{repository}}.apps.prod-nonpci-appdb.nrapp.cloud
+---

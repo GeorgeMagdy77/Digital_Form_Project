@@ -1,0 +1,2895 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-adhoc-generation-service",
+                          "cluster.local/ns/alpha/sa/alpha-referral-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-open-banking-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-block-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-transaction-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-account-service",
+                          "cluster.local/ns/alpha/sa/alpha-authentication-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-limits-service",
+                          "cluster.local/ns/alpha/sa/alpha-sas-advice-service",
+                          "cluster.local/ns/alpha/sa/alpha-account-service",
+                          "cluster.local/ns/alpha/sa/alpha-transaction-service",
+                          "cluster.local/ns/alpha/sa/alpha-adhoc-request-service",
+                          "cluster.local/ns/alpha/sa/alpha-launch-control-service",
+                          "cluster.local/ns/alpha/sa/alpha-open-banking-ais-service",
+                          "cluster.local/ns/alpha/sa/alpha-account-finder-service",
+                          "cluster.local/ns/alpha/sa/alpha-lifestyle-service",
+                          "cluster.local/ns/alpha/sa/alpha-standing-order-service",
+                          "cluster.local/ns/alpha/sa/alpha-travel-insurance-service",
+                          "cluster.local/ns/alpha/sa/alpha-benefits-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [
+              "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+              "cluster.local/ns/alpha/sa/alpha-onboarding-data-service",
+              "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service",
+              "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service",
+              "cluster.local/ns/alpha/sa/alpha-onboarding-validate-service",
+              "cluster.local/ns/alpha/sa/alpha-onboarding-flow-mng-service",
+              "cluster.local/ns/alpha/sa/alpha-high-risk-service",
+              "cluster.local/ns/alpha/sa/alpha-customer-service",
+              "cluster.local/ns/alpha/sa/alpha-referral-service",
+              "cluster.local/ns/alpha/sa/alpha-sama-customer-service",
+              "cluster.local/ns/alpha/sa/alpha-sama-evidence-code-service",
+              "cluster.local/ns/alpha/sa/alpha-document-service",
+              "cluster.local/ns/alpha/sa/alpha-sama-blacklist-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            # Should this apis be internal as it is an adapter ?
+            paths: [ "/v1/customers/details", "/v1/customers/*", "/v1/customers", "/v1/customers/screening/status", "/v1/customers/screening/case", "/internal/v1/customers/basic/search" ]
+            #Istio is not allowing regex like /v1/customers/*/accounts so therefor we need to add /v1/customer/*
+        - operation:
+            methods: [ "PATCH" ]
+            # Should this apis be internal as it is an adapter ?
+            paths: [ "/v1/customers/*", "/v1/customers", "/v1/customers/screening/status" ]
+        - operation:
+            methods: [ "PUT" ]
+            # Should this apis be internal as it is an adapter ?
+            paths: [ "/v1/customers/*", "/v1/customers" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/missingnafath/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-payments-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-temenos-banking-adapter" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-statement-service",
+                          "cluster.local/ns/alpha/sa/alpha-genesys-service",
+                          "cluster.local/ns/alpha/sa/alpha-mutual-fund-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PUT" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-ips-management-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "PATCH" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-appreciation-service" ]
+      to:
+        - operation:
+            methods: [ "POST", "PATCH", "GET" ]
+            paths: [ "/v1/customers/*" ]
+        - operation:
+            methods: [ "GET"]
+            paths: [ "/v1/customers/appreciations/configuration" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-gold-service",
+                          "cluster.local/ns/alpha/sa/alpha-rtp-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "PATCH", "POST" ]
+            paths: [ "/v1/customers/*", "/v1/aiosubscription/*" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-panic-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sos-service" ]
+      to:
+        - operation:
+            methods: [ "POST", "PATCH" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-salary-flag-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            # Services need to use alpha-eligibility-library
+            principals: [ "cluster.local/ns/alpha/sa/alpha-goal-service",
+                          "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-account-finder-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customers/status" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "PATCH" ]
+            paths: [ "/internal/v1/customers/status", "/internal/v1/customers/status/bulk" ]
+
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-genesys-service" ]
+      to:
+        - operation:
+            methods: [ "POST", "GET"]
+            paths: [ "/internal/v1/genesys/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/genesys/outbound/call/add-beneficiary" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service" ,
+                          "cluster.local/ns/alpha/sa/alpha-aio-card-service" ,
+                          "cluster.local/ns/alpha/sa/alpha-customer-limits-service",
+                          "cluster.local/ns/alpha/sa/alpha-authentication-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/genesys/outbound/call/*" ,"/internal/v1/genesys/outbound/call" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-account-finder-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/genesys/outbound/call" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-nafath-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-nafath-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/verify/nafath" ] #Internal api ?
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/cust-info", "/v1/customers/get-transaction-id",
+                     "/v1/customers/get-transaction-id/protected", "/v1/customers/cust-info/protected" ] #Internal api ?
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/cust-info", "/v1/customers/get-transaction-id" ] #Internal api ?
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-panic-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/get-transaction-id" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-limits-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/get-transaction-id", "/v1/customers/cust-info" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-paymentology-payment-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-paymentology-payment-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards", "/internal/v1/cards/*", "/internal/v1/cards/get-pin", "/internal/v1/cards/set-pit" ]
+            #Istio is not allowing regex like /internal/v1/cards/*/settings so therefor we need to add /internal/v1/cards/*
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards", "/internal/v1/cards/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-payments-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-payments-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-paymentology-payment-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/payments/card-payment" ] # Why would an adapter call a service ?
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-ni-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/payments/card-payment" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-savings-pot-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/payments/internal-payments", "/internal/v1/payments/recurring" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-reward-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/payments/internalPayment" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-screening-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-screening-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-validate-service",
+                          "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-standing-order-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/screening/*" ] # This should be internal
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-configuration-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-configuration-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/notifications/categories", "/v1/mobile/homepage/create-config" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-mobile-homepage-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/mobile/homepage/configuration" ]
+
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-reward-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-reward-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-referral-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customers/rewards",
+                     "/protected/v1/rewards/referral" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/protected/v1/rewards/referrals" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tahaqoq-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tahaqoq-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-kyc-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/mobile/check" ] # This should be internal
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customers/mobile/check", "/internal/v1/customers/mobile/check/cache",
+                     "/internal/v2/customers/mobile", "/internal/v2/customers/mobile/protected" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-temenos-banking-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-temenos-banking-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-account-service",
+                          "cluster.local/ns/alpha/sa/alpha-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service",
+                          "cluster.local/ns/alpha/sa/alpha-savings-pot-service",
+                          "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-mobile-homepage-service",
+                          "cluster.local/ns/alpha/sa/alpha-ips-management-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-sos-service",
+                          "cluster.local/ns/alpha/sa/alpha-standing-order-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/accounts" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-account-service",
+                          "cluster.local/ns/alpha/sa/alpha-savings-pot-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-transaction-service",
+                          "cluster.local/ns/alpha/sa/alpha-mobile-homepage-service",
+                          "cluster.local/ns/alpha/sa/alpha-ips-management-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-adhoc-generation-service",
+                          "cluster.local/ns/alpha/sa/alpha-sos-service",
+                          "cluster.local/ns/alpha/sa/alpha-travel-insurance-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/accounts/*", "/protected/v1/accounts/*", "/protected/v1/customers/accounts/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service",
+                          "cluster.local/ns/alpha/sa/alpha-savings-pot-service",
+                          "cluster.local/ns/alpha/sa/alpha-open-banking-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-account-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/accounts" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-payments-service",
+                          "cluster.local/ns/alpha/sa/alpha-transaction-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/customers/savings-pot/fund/one-time",
+                     "/internal/v1/customers/savings-pot/fund/recurring",
+                     "/internal/v1/domestic-standing-orders",
+                     "/internal/v1/internal-payments",
+                     "/internal/v1/sadad-payments",
+                     "/protected/v1/cards/*",
+                     "/protected/v1/mada-payment-dispute" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/customers/*", "/internal/v1/accounts" ]
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/protected/v1/cards/*" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/protected/v1/payments/*", "/protected/v1/cards/*","/internal/v1/sadad-payments/*" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-savings-pot-service" ]
+      to:
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/internal/v1/domestic-standing-orders", "/internal/v1/domestic-standing-orders/*" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/internal/v1/domestic-standing-orders/*", "/internal/v1/accounts/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-standing-order-service" ]
+      to:
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/internal/v1/domestic-standing-orders", "/internal/v1/domestic-standing-orders/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/domestic-standing-orders", "/internal/v1/domestic-standing-orders/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-reward-service",
+                          "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-goal-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-blacklist-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-block-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-account-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-transaction-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/internal-payments",
+                     "/protected/v1/domestic-payments",
+                     "/internal/v1/domestic-payments",
+                     "/internal/v1/internal-payments/hold"]
+        - operation:
+            methods: [ "DELETE", "PUT" ]
+            paths: [ "/protected/v1/domestic-payments/*",
+                     "/internal/v1/sarie-domestic-payments/*",
+                     "/protected/v1/sarie-domestic-payments/*",
+                     "/internal/v1/crotoarb-domestic-payments/*",
+                     "/protected/v1/crotoarb-domestic-payments/*",
+                     "/internal/v1/internal-payments/auth/*",
+                     "/internal/v1/internal-payments/del/*"]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-goal-service"]
+      to:
+        - operation:
+            methods: [ "POST", "DELETE" ]
+            paths: [ "/internal/v1/accounts/*" , "/internal/v1/mutualFundPayment",
+                     "/internal/v1/mutualFundPayDel/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-customer-service" ]
+      to:
+        - operation:
+            methods: [ "POST"]
+            paths: [ "/internal/v1/sama-book-entry-transactions" ]
+        - operation:
+            methods: [ "GET"]
+            paths: [ "/protected/v1/sama-book-entry-transactions", "/protected/v1/sama-standing-order" ]
+        - operation:
+            methods: [ "PUT", "DELETE" ]
+            paths: [ "/internal/v1/sama-book-entry-transactions/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/daily-transaction" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/accounts"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-gold-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/accounts" ,"/internal/1/accounts/*" ]
+        - operation:
+            methods: [ "PUT", "POST", "DELETE" ]
+            paths: [ "/internal/v1/gold/paymentorder/*" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/protected/v1/payments/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service" ]
+      to:
+        - operation:
+            methods: [ "DELETE", "POST" ]
+            paths: [ "/party/order/cro/*", "/protected/v1/*",
+                     "/internal/v1/cards/*", "/protected/v1/cards/payments/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-standing-order-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/get-client-vat", "/protected/v1/customers/*", "/internal/v1/recurring-payment/sto/PaymentStatus"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-recurring-payment-service",
+                          "cluster.local/ns/alpha/sa/alpha-standing-order-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/standing-orders-crotoarb", "/internal/v1/standing-orders-ips",
+                     "/internal/v1/standing-orders-sarie", "/internal/v1/recurring-payment/sto/*" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/internal/v1/releaseStandingOrder/*", "/internal/v1/recurring-payment/sto/*" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/standing-orders-open-banking",
+                     "/internal/v1/recurring-payment/sto/Inquiry", "/internal/v1/customers/block-inquiry",
+                     "/protected/v1/customers/accounts/*" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-trans-auth-service" ]
+      to:
+        - operation:
+            methods: [ "DELETE", "PUT","PATCH" ]
+            paths: [ "/protected/v1/cards/payments/*",
+                     "/protected/v1/payments/*",
+                     "/protected/v1/cards/withdrawals/*"]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/protected/v1/cards/payments",
+                     "/protected/v1/cards/refunds",
+                     "/protected/v1/cards/withdrawals",
+                     "/internal/v1/sadad-payments",
+                     "/protected/v1/sadad-payments",
+                     "/protected/v1/cards/payments/pos/gcc",
+                     "/protected/v1/cards/payments/reversal",
+                     "/protected/v1/cards/refunds/reversal",
+                     "/protected/v1/cards/withdrawals/reversal"]
+        - operation:
+            methods: ["PUT"]
+            paths: [ "/protected/v1/cards/payments/captures"]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/customers/accounts/*" ,"/protected/v1/mini-statement"]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-panic-service" ]
+      to:
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/protected/v1/customers/accounts/*", "/internal/v1/accounts/*" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/accounts" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-statement-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/accounts/custom-statement" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sas-advice-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/customers/accounts/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-mutual-fund-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PUT", "DELETE" ]
+            paths: [ "/internal/v1/mutualFundPayment", "/internal/v1/mutualFundPayAuth/*",
+                     "/internal/v1/mutualFundPayDel/*", "/internal/v1/mutualFundPayModify/*",
+                     "/protected/v1/recurringPayments/mutual/*", "/protected/v1/payments/*",
+                     "/internal/v1/mutualFundPayment/refund" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transaction-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/transactions/ob/details", "/protected/v1/transactions/ob/basic",
+                     "/internal/v1/customers/block-inquiry", "/protected/v1/customers/accounts/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-account-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customers/block-inquiry", "/protected/v1/customers/accounts/*",
+                     "/internal/v1/recurring-payment/sto/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-block-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-account-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-account-statement-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-transaction-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PUT" ]
+            paths: [ "/protected/v1/sama/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service",
+                          "cluster.local/ns/alpha/sa/alpha-high-risk-service",
+                          "cluster.local/ns/alpha/sa/alpha-sos-service" ]
+      to:
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/internal/v1/customer/block-codes-entry" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-savings-pot-service",
+                          "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customer/account/post-restriction" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/fees/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-exit-deceased-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/protected/v1/sama/customer/block-codes" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-rtp-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/rtp/fees", "/protected/v1/transaction/reverse/*", "/internal/v1/rtp/fees/refund" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/accounts", "/protected/v1/customers/accounts/*", "/internal/v1/fees/*",
+                     "/internal/v1/customer/account/post-restriction" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/protected/v1/payments/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-standing-order-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "DELETE" ]
+            paths: [ "/internal/v1/recurring-payment/sto/*", "/internal/v1/fees/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-account-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-travel-insurance-service" ]
+      to:
+        - operation:
+            methods: [ "PUT", "POST", "DELETE" ]
+            paths: ["/internal/v1/travel-insurance/travel-payment", "/internal/v1/travel-insurance/travel-payment/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-adhoc-generation-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/protected/v1/accounts/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-treasury-service" ]
+      to:
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/protected/v1/cards/payable/fx/result" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/internal/v1/domestic-payments/confirmation-fields/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/ips-domestic-payments/refund", "/internal/v1/sarie-domestic-payments/refund",
+                     "/internal/v1/arb-domestic-payments/refund" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards/delivery-fees", "/internal/v1/cards/delivery-fees/refund" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-workflow-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-workflow-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-data-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-validate-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-flow-mng-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-authentication-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-kyc-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/tasks", "/v1/tasks/*" ]
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/v1/tasks", "/v1/tasks/revert" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/processes/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-data-service" ]
+      to:
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/v1/processes/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-treasury-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/processes/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-lifestyle-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-lifestyle-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-card-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-card-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-payments-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/cards" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards/cardid" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-panic-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards/cardid" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-savings-pot-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-savings-pot-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-mobile-homepage-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/savings-pots" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-goal-service",
+                          "cluster.local/ns/alpha/sa/alpha-transaction-service"]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH", "DELETE", "PUT" ]
+            paths: [ "/v1/customers/savings-pots/*", "/protected/v1/savings-pots/*", "/v1/customers/savings-pots",
+                     "/internal/v1/savings-pots/*", "/internal/v1/customers/savings-pots", "/internal/v1/customers/savings-pots/*"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-actions-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-actions-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-mobile-homepage-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/actions" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service" ]
+      to:
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/v1/actions/completed" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-high-risk-service" ]
+      to:
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/v1/actions/completed", "/v1/actions" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mobile-homepage-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mobile-homepage-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-referral-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-referral-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-customer-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-customer-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-service",
+                          "cluster.local/ns/alpha/sa/alpha-open-banking-ais-service"]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH" ]
+            paths: [ "/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-ais-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/account/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-savings-pot-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "PATCH" ]
+            paths: [ "/v1/customer/notifications" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service",
+                          "cluster.local/ns/alpha/sa/alpha-high-risk-service",
+                          "cluster.local/ns/alpha/sa/alpha-exit-deceased-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-blacklist-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-block-service",
+                          "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-sos-service",
+                          "cluster.local/ns/alpha/sa/alpha-panic-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "PATCH" ]
+            paths: [ "/v1/customers/status", "/v1/customers/status/bulk" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-high-risk-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/occupation" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-blacklist-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v1/customers/status" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-feedback-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-feedback-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-transaction-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-transaction-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-open-banking-service",
+                          "cluster.local/ns/alpha/sa/alpha-open-banking-ais-service",
+                          "cluster.local/ns/alpha/sa/alpha-goal-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/accounts", "/v1/accounts/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-isva-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-isva-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/users/login","/v1/customers/users/jwt/access_token", "/v1/customers/registration",
+                     "/internal/v1/customers/users/authentication/validate", "/internal/v1/*" ,
+                     "/internal/v1/third-part/authentication", "/internal/v1/customers/authentication/refresh" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v1/customers/users/*", "/internal/v1/*" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/customers/verify/users/*", "/v1/customers/get/users", "/internal/v1/*",
+                     "/internal/v3/customer/status" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/v1/customers/auth/sessions" ]
+    - from:
+        - source:
+            # Services need to authenticate using alpha-auth-library
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-trans-auth-service",
+                          "cluster.local/ns/alpha/sa/alpha-client-authorization-service",
+                          "cluster.local/ns/alpha/sa/alpha-aio-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-statement-service",
+                          "cluster.local/ns/alpha/sa/alpha-ips-management-service",
+                          "cluster.local/ns/alpha/sa/alpha-adhoc-request-service",
+                          "cluster.local/ns/alpha/sa/alpha-open-banking-service",
+                          "cluster.local/ns/alpha/sa/alpha-transaction-service",
+                          "cluster.local/ns/alpha/sa/alpha-panic-service",
+                          "cluster.local/ns/alpha/sa/alpha-gold-service",
+                          "cluster.local/ns/alpha/sa/alpha-goal-service",
+                          "cluster.local/ns/alpha/sa/alpha-account-service",
+                          "cluster.local/ns/alpha/sa/alpha-document-service",
+                          "cluster.local/ns/alpha/sa/alpha-appreciation-service",
+                          "cluster.local/ns/alpha/sa/alpha-mobile-homepage-service",
+                          "cluster.local/ns/alpha/sa/alpha-otp-service",
+                          "cluster.local/ns/alpha/sa/alpha-reward-service",
+                          "cluster.local/ns/alpha/sa/alpha-content-service",
+                          "cluster.local/ns/alpha/sa/alpha-genesys-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-feedback-service",
+                          "cluster.local/ns/alpha/sa/alpha-referral-service",
+                          "cluster.local/ns/alpha/sa/alpha-lifestyle-service",
+                          "cluster.local/ns/alpha/sa/alpha-notification-service",
+                          "cluster.local/ns/alpha/sa/alpha-configuration-service",
+                          "cluster.local/ns/alpha/sa/alpha-content-feedback-service",
+                          "cluster.local/ns/alpha/sa/alpha-mutual-fund-service",
+                          "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-rtp-service",
+                          "cluster.local/ns/alpha/sa/alpha-account-finder-service",
+                          "cluster.local/ns/alpha/sa/alpha-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-payments-service",
+                          "cluster.local/ns/alpha/sa/alpha-shahid-adapter",
+                          "cluster.local/ns/alpha/sa/alpha-standing-order-service",
+                          "cluster.local/ns/alpha/sa/alpha-aio-card-statement-service",
+                          "cluster.local/ns/alpha/sa/alpha-benefits-service",
+                          "cluster.local/ns/alpha/sa/alpha-travel-insurance-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/customers/users/authentication/validate", "/internal/v1/third-part/authentication" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-block-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/api/authentication" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-panic-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/customers/authentication", "/internal/v1/api/authentication",
+                     "/internal/v1/customers" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-loyalty-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/customers/users/authentication/validate" ]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-otp-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-otp-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service",
+                          "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-payments-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-goal-service",
+                          "cluster.local/ns/alpha/sa/alpha-gold-service",
+                          "cluster.local/ns/alpha/sa/alpha-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-aio-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-mutual-fund-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service",
+                          "cluster.local/ns/alpha/sa/alpha-account-finder-service",
+                          "cluster.local/ns/alpha/sa/alpha-standing-order-service",
+                          "cluster.local/ns/alpha/sa/alpha-travel-insurance-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/protected/v1/otps","/protected/v1/otps/validations" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-notification-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-notification-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/notifications","/v1/notifications/filter","/v1/notifications/categories", "/v1/notifications/categories/language" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-transfers-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-transfers-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-arb-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/transfers/inbound/sarie/local", "/v1/transfers/outbound/local/confirmation",
+                     "/v1/transfers/outbound/sarie/local/confirmation","/v1/transfers/outbound/cro-to-arb/internal/confirmation",
+                     "/v1/transfers/inbound/sarie/local","/v1/transfers/inbound/cro-to-arb/internal",
+                     "/v1/transfers/inbound/","/v1/transfers/outbound/confirmation",
+                     "/v1/transfers/beneficiaries/verification/notification"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-payments-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/transfers/daily-limit/validation" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/transfers/transaction-limits" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-customer-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/transfers/sama/outbound/sarie/local", "/v1/transfers/sama/outbound/ips/local",
+                     "/v1/transfers/sama/outbound/cro-to-arb/internal", "/v1/transfers/sama/internal-payments"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-ais-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/transfers/open/banking/beneficiaries/basic",
+                     "/v1/transfers/open/banking/beneficiaries/details"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sos-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "PATCH" ]
+            paths: [ "/v1/transfers/beneficiaries", "/v1/transfers/beneficiaries/deactivate",
+                     "/internal/v1/transfers/beneficiaries", "/internal/v1/transfers/beneficiaries/deactivate" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-standing-order-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/transfers/sto/outbound" ]
+        - operation:
+            methods: ["GET"]
+            paths: ["/beneficiary/*", "/v1/transfers/beneficiary/*"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-rtp-service" ]
+      to:
+        - operation:
+            methods: [ "POST" , "GET" ]
+            paths: [ "/v1/transfers/rtp/confirmation" , "/internal/v1/transfers/banks"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-content-feedback-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-content-feedback-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-content-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PUT" ]
+            paths: [ "/v1/customers/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-cms-adapter-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-cms-adapter-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-content-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/contents", "/protected/v1/contents/*", "/v1/cms/contents", "/v1/cms/contents/*"]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/contents/categories", "/v1/cms/contents/categories"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-lifestyle-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/contents/categories", "/v1/cms/contents/categories"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-genesys-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/contents", "/v1/cms/contents" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-ips-management-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/contents/*" ]
+    - from:
+        - source:
+            principals: ["cluster.local/ns/alpha/sa/alpha-adhoc-generation-service",
+                         "cluster.local/ns/alpha/sa/alpha-statement-service",
+                         "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                         "cluster.local/ns/alpha/sa/alpha-payments-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/files/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-goal-service",
+                          "cluster.local/ns/alpha/sa/alpha-appreciation-service"]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PUT" ]
+            paths: [ "/protected/v1/files/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-rtp-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/files/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-dms-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-dms-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-dms-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "DELETE" ]
+            paths: [ "/v1/documents/*", "/v1/documents" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/cicid" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-travel-insurance-service",
+                          "cluster.local/ns/alpha/sa/alpha-gold-service",
+                          "cluster.local/ns/alpha/sa/alpha-mutual-fund-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/arb/fund-movement" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-dms-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-dms-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-statement-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "DELETE" ]
+            paths: [ "/v1/documents/*", "/v1/documents" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-adhoc-request-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/documents/*", "/v1/documents" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-adhoc-generation-service",
+                          "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-payments-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/documents" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-statement-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/v1/documents/*", "/v1/documents" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-dms-reports-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-dms-reports-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-statement-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/reports/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-hijridate-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-hijridate-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-statement-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/hijri", "/v1/hijri/today" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-adhoc-generation-service",
+                          "cluster.local/ns/alpha/sa/alpha-mp-kyc-fob-adapter" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/hijri" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-marketplace-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-marketplace-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-motor-insurance-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/v1/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-mutual-fund-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/mutual-fund/*", "/internal/v1/customers/*", "/internal/v1/products/*",
+                     "/internal/v1/products", "/internal/v1/oauth2security/*",
+                     "/internal/v1/onboarding-account-opening", "/internal/v1/asset-management/*",
+                     "/internal/v1/cash-in/execute", "/internal/v1/cash-out/execute",
+                     "/internal/v1/orders/subscribe" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-gold-service" ]
+      to:
+        - operation:
+            methods: [ "POST", "GET"]
+            paths: [ "/internal/v1/customers/gold-wallet/create", "/internal/v1/customers/gold-wallet",
+                     "/internal/v1/customers/gold-wallet-details",
+                     "/internal/v1/commdities/*",
+                     "/internal/v1/gold-rate-history/rate-history", "/internal/v1/submit",
+                     "/internal/v1/inquire", "/internal/v1/confirmation" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "POST"]
+            paths: [ "/v1/verification", "/v1/verification/transfer" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/arb/beneficiary/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transaction-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/categorization/merchants/categorize", "/v1/categorization/merchants/category-vote" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-travel-insurance-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/travel-insurance/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-notification-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-notification-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-notification-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/notifications/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-appreciation-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-appreciation-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ni-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ni-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-aio-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-sos-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards", "/internal/v1/cards/*", "/internal/v1/cards/get-pin", "/internal/v1/cards/set-pin" ]
+            #Istio is not allowing regex like /internal/v1/cards/*/settings so therefor we need to add /internal/v1/cards/*
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards", "/internal/v1/cards/*" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/cards/client" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-open-banking-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards/details" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-panic-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards", "/internal/v1/cards/details",
+                     "/internal/v1/cards/accounts", "/internal/v1/cards/token" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards/accounts/status" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-customer-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards/card-details" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards/balances",  "/internal/v1/cards" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-block-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards/accounts" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards/accounts/status" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-trans-auth-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards/transaction/balanceupdate" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sos-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/cards/token" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-treasury-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/cards/set-fx-rate" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-customer-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-customer-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST"]
+            paths: [ "/v1/sama/customer/fund/transfer/without/booking",
+                     "/v1/sama/customer/fund/transfer/with/booking",
+                     "/v1/sama/customer/fund/transfer/expropriation",
+                     "/v1/sama/customer/book/entry" ]
+        - operation:
+            methods: [ "PATCH","DELETE" ]
+            paths: [ "/v1/sama/customer/book/entry" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/sama/debit/cards" ,"/v1/sama/customer/book/entries"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-recurring-payment-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/sama/customer/failed/transfer/case" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-customer-service" ]
+      to:
+        - operation:
+            methods: [ "POST"]
+            paths: [ "/internal/v1/samat/sama/fulfil/reserved/notification" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-content-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-content-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-data-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/contents/terms" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-authentication-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-authentication-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v2/customers/*", "/v2/api/authentication" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v2/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-high-risk-service",
+                          "cluster.local/ns/alpha/sa/alpha-sos-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v2/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-exit-deceased-service",
+                          "cluster.local/ns/alpha/sa/alpha-sama-blacklist-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v2/customers/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v2/api/authentication" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-panic-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service"]
+      to:
+        - operation:
+            methods: [ "PATCH", "GET" ]
+            paths: [ "/v2/customers/*", "/internal/v2/customers/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v2/api/authentication", "/v2/customers/passcode/ivr/confirm" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-ips-management-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v2/api/authentication" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-genesys-adapter" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v2/ivr/confirm"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-account-finder-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v2/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ,
+                          "cluster.local/ns/alpha/sa/alpha-sas-advice-service",
+                          "cluster.local/ns/alpha/sa/alpha-sos-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v2/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/ms/session/initiate" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-block-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v2/api/authentication" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v2/customers/*" , "/v2/customers/sign-out" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-panic-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v3/customer/passcode/validate" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-payments-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v2/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sas-advice-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v2/customers/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sos-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v3/customer/status" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-client-authorization-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-client-authorization-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-ni-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/oauth/token", "/internal/v1/oauth/token/validate" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-goal-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-goal-service"
+
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-mutual-fund-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/goals/mutual-fund/*" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-savings-pot-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v1/goals/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-gold-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-gold-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-goal-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" , "PATCH" , "DELETE"]
+            paths: [ "/v1/gold/terms-conditions", "/v1/gold/performance", "/v1/gold/market-price",
+                     "/v1/gold/final-deal", "/v1/gold/final-deal-acceptance" , "/v1/gold/wallet/*" ,
+                     "/v1/gold/otps/validate" , "/v1/gold/otps/send" ,  "/v1/gold/wallet" ,"/v1/gold/*" ,
+                     "/protected/v1/gold/*", "/protected/v1/savings-pots/*", "/v1/goals/mutual-fund/*",
+                     "/protected/v1/mutual-fund/*", "/internal/v1/gold/*"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/gold/wallet" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-aio-card-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-aio-card-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/aio-card/onboarding/activation", "/v1/aio-card/onboarding/issuance" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-ni-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/aio-card/transactions/notifications" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-crm-adapter" ]
+      to:
+        - operation:
+            methods: [ "GET", "PUT", "POST" ]
+            paths: [ "/v1/aio-card/discount", "/v1/aio-card/discount/*" ]
+
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fast-onboarding-mp-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fast-onboarding-mp-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/mp/fob/*", "/internal/v1/arb/customers/info"]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/arb/customers/info" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ips-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ips-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service",
+                          "cluster.local/ns/alpha/sa/alpha-ips-management-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/ips/outbound",
+                     "/internal/v1/ips/aliases/deregister/all-aliases",
+                     "/internal/v1/ips/aliases/deregister",
+                     "/internal/v1/ips/aliases/mobile-registration",
+                     "/internal/v1/ips/aliases/nationalId-registration",
+                     "/internal/v1/ips/aliases/email-registration" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/ips/beneficiary/mobile/*",
+                     "/internal/v1/ips/beneficiary/national-id/*",
+                     "/internal/v1/ips/beneficiary/email/*",
+                     "/internal/v1/ips/participant-banks",
+                     "/internal/v1/ips/customers/*" ]
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/internal/v1/ips/rtp/instant-payment-limits" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-rtp-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/ips/rtp/sent-rtps", "/internal/v1/ips/rtp/sent-rtp/*",
+                     "/internal/v1/ips/rtp/received-rtps", "/internal/v1/ips/rtp/received-rtp/*" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/ips/rtp/initiate", "/internal/v1/ips/rtp/cancel", "/internal/v1/ips/rtp/reject",
+                     "/internal/v1/ips/rtp/accept"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/ips/rtp/accept" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-open-banking-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-open-banking-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/consent-management/account-access-consents",
+                     "/internal/v1/consent-management/account-access-consents/*" ,
+                     "/internal/v1/consent-management/*"]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/consent-management/*" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/consent-management/account-access-consents/tpp/*" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/internal/v1/consent-management/account-access-consents/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mutual-fund-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mutual-fund-service"
+  rules:
+    - from:
+        - source:
+            principals: ["cluster.local/ns/alpha/sa/alpha-goal-service"]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH" ]
+            paths: [ "/v1/mutual-fund/*", "/v1/goals/mutual-fund/*", "/protected/v1/mutual-fund/*",
+                     "/internal/v1/mutual-fund/*"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/mutual-fund/customerInfo" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-account-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-account-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service",
+                          "cluster.local/ns/alpha/sa/alpha-gold-service",
+                          "cluster.local/ns/alpha/sa/alpha-goal-service",
+                          "cluster.local/ns/alpha/sa/alpha-mutual-fund-service",
+                          "cluster.local/ns/alpha/sa/alpha-rtp-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/accounts", "/v1/accounts/*", "/internal/v1/accounts/details", "/protected/v1/accounts" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/accounts", "/v1/accounts/*", "/v1/account" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-ais-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/accounts/*", "/v1/account/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-gold-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/protected/v1/accounts" ]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sas-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sas-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/internal/sas/transfer/local/sarie",
+                     "/v1/internal/sas/transfer/internal",
+                     "/v1/internal/sas/transfer/local/ips",
+                     "/v1/internal/sas/beneficiary",
+                     "/internal/v1/sas/consult"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sas-advice-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/sas/notify" ]
+
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-payments-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/sas/consult" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "ejada-pc-orders-service"
+spec:
+  selector:
+    matchLabels:
+      app: "ejada-pc-orders-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "ejada-pc-catalogues-service"
+spec:
+  selector:
+    matchLabels:
+      app: "ejada-pc-catalogues-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service",
+                          "cluster.local/ns/alpha/sa/ejada-pc-orders-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/price-plans/*","/v1/products/*","/v1/lovs/list" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-recurring-payment-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-recurring-payment-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-customer-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: ["/v1/recurring/standing/order/permanent/instructions", "/v1/recurring/standing/order/goal/based" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/v1/recurring/standing/order" ]
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/recurring/standing/order"]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-ais-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/recurring/open/banking/standing/orders/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-card-trans-auth-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-card-trans-auth-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-card-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/card-tran-auth/balanceupdate" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-focal-blacklist-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-focal-blacklist-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-sama-blacklist-service"]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/focal/blacklist/add", "/internal/v1/focal/blacklist/remove" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sadad-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sadad-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-payments-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/sadad/customers/*", "/internal/v1/sadad/bill/details", "/internal/v1/sadad/billers" ]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/sadad/bill/associate", "/internal/v1/sadad/bill/payment" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/internal/v1/sadad/bill/dissociate" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sarie-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sarie-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/arb/wallet-to-local-account-transfers"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-panic-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-panic-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-customer-limits-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-customer-limits-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-genesys-adapter" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/limit/ivr/confirmation" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transfers-service" ,
+                          "cluster.local/ns/alpha/sa/alpha-payments-service"]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v1/limit/customer" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-account-finder-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/limit/actions" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-vat-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-vat-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-adhoc-request-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/arb/tax-invoices" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-adhoc-request-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-adhoc-request-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-document-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/adhoc-documents/*", "/v1/adhoc-documents/verify/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-statement-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-statement-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-document-service"]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/v1/statements/download/*", "/v1/statements/verify/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-shahid-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-shahid-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/subscriptions","/internal/v1/subscriptions/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-benefits-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/subscriptions","/internal/v1/subscriptions/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-rtp-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-rtp-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-anghami-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-anghami-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/subscriptions","/internal/v1/subscriptions/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-benefits-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/subscriptions","/internal/v1/subscriptions/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-auth-fob-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-auth-fob-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-data-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-authentication-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-kyc-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/mp/fob/*", "/internal/v1/customers/fob/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-account-finder-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-authentication-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-kyc-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/mp/fob/auth/partner/token" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-authentication-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-kyc-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/mp/fob/*", "/internal/v1/customers/fob/*" ]
+
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-kyc-fob-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-kyc-fob-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-data-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-kyc-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/mp/fob/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-customer-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-customer-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-data-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-high-risk-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH" ]
+            paths: [ "/internal/v1/customers/arb/*", "/internal/v1/onboarding/customers/arb/*",
+                     "/internal/v1/customers/arb-mp/*", "/internal/v1/onboarding/customers/arb-mp/*"]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/internal/v1/arb/customers/info" ]
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/internal/v1/arb/customers/info","/internal/v1/arb/customers/profile" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-account-finder-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-account-finder-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-account-finder-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-account-finder-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-account-finder-service" ]
+      to:
+        - operation:
+            methods: [ "POST","GET" ]
+            paths: [ "/internal/v1/mp/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-transfer-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-transfer-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-open-banking-ais-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "v1/transfers/open/banking/beneficiaries/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-open-banking-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-open-banking-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-authentication-service" ]
+      to:
+        - operation:
+            methods: [ "POST"]
+            paths: [ "/protected/v1/open-banking/generate/error-token" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-drahim-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-drahim-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-transaction-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/drahim/merchants/categorize", "/v1/drahim/merchants/category-vote" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-treasury-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-treasury-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/treasury","/internal/v1/treasury/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-treasury-service" ]
+      to:
+        - operation:
+            methods: [ "POST", "GET"]
+            paths: [ "/internal/v1/treasury/currencies-rates",
+                     "/internal/v1/treasury/online-exchange-rates/customers",
+                     "/internal/v1/treasury/rate-deal"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-data-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-data-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-validate-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-flow-mng-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-kyc-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v2/customers/onboarding/data" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service" ]
+      to:
+        - operation:
+            methods: [ "PATCH" ]
+            paths: [ "/v2/customers/nafath-counter" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-onboarding-flow-mng-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-onboarding-flow-mng-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-data-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-completion-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-identify-service",
+                          "cluster.local/ns/alpha/sa/alpha-onboarding-validate-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/customers/onboarding/init", "/v1/customers/termination/expiry", "/v1/customers/termination/cancel",
+                     "/v1/onboarding/cancel-event", "/v1/onboarding/event" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-high-risk-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-high-risk-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-onboarding-validate-service",
+                          "cluster.local/ns/alpha/sa/alpha-customer-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/high-risk/customers/check", "/v1/high-risk/customers/create-case" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-spl-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-spl-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-customer-service",
+                          "cluster.local/ns/alpha/sa/alpha-fob-kyc-service" ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/internal/v1/arb/customers/spl/national-address" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mp-loyalty-adapter"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mp-loyalty-adapter"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-loyalty-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST" ]
+            paths: [ "/internal/v1/loyalty/customers/*","/internal/v1/loyalty/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-recurring-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-recurring-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-gold-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH", "PUT", "DELETE" ]
+            paths: [ "/v1/recurring/product", "/v1/recurring/product/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-savings-pot-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH", "PUT", "DELETE" ]
+            paths: [ "/v1/recurring/product", "/v1/recurring/product/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-mutual-fund-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH", "PUT", "DELETE" ]
+            paths: [ "/v1/recurring/product", "/v1/recurring/product/*" ]
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-goal-service" ]
+      to:
+        - operation:
+            methods: [ "GET", "POST", "PATCH", "PUT", "DELETE" ]
+            paths: [ "/v1/recurring/product", "/v1/recurring/product/*" ]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-aio-card-statement-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-aio-card-statement-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-mock-api-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-mock-api-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-nafath-adapter", "cluster.local/ns/alpha/sa/alpha-tahaqoq-adapter","cluster.local/ns/alpha/sa/alpha-arb-customer-adapter","cluster.local/ns/alpha/sa/alpha-mp-kyc-fob-adapter",
+                          "cluster.local/ns/alpha/sa/alpha-shahid-adapter","cluster.local/ns/alpha/sa/alpha-ips-adapter" ,"cluster.local/ns/alpha/sa/alpha-sarie-adapter"  ]
+      to:
+        - operation:
+            methods: [ "GET" ]
+            paths: [ "/login", "/mock-server/*"]
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/login", "/mock-server/*"]
+        - operation:
+            methods: [ "PUT" ]
+            paths: [ "/mock-server/*" ]
+        - operation:
+            methods: [ "DELETE" ]
+            paths: [ "/login", "/mock-server/*"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-benefits-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-benefits-service"
+  rules:
+    - from:
+        - source:
+            principals: [ "cluster.local/ns/alpha/sa/alpha-aio-card-service" ]
+      to:
+        - operation:
+            methods: [ "POST" ]
+            paths: [ "/v1/benefits/*" , "/protected/v1/benefits/*"]
+---

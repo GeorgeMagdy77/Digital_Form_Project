@@ -1,0 +1,26 @@
+namespaced: false
+podSecurity:
+  enabled: false
+  securityContext:
+    readOnlyRootFilesystem: true
+    fsGroup: 1001
+
+containerSecurity:
+  enabled: true
+  securityContext:
+    readOnlyRootFilesystem: true
+    runAsUser: 1000980010
+    runAsGroup: 1000980010
+
+image:
+  pullPolicy: Always
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+    ephemeral-storage: "5Gi"
+  requests:
+    cpu: 100m
+    memory: 256Mi
+    ephemeral-storage: "5Gi"

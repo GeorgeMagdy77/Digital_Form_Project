@@ -1,0 +1,17 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: redis-rules-external
+  namespace: redis
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: ["alpha", "alpha-eit"]
+      to:
+        - operation:
+            ports: ["6379","6380"]

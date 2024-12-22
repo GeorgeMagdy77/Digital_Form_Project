@@ -1,0 +1,60 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  annotations:
+    machine.openshift.io/memoryMb: '16384'
+    machine.openshift.io/vCPU: '4'
+    argocd.argoproj.io/sync-wave: "-1"
+  name: jenkins-workers
+  namespace: openshift-machine-api
+  labels:
+    machine.openshift.io/cluster-api-cluster: san-sandbox
+    service: jenkins-agents
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: san-sandbox
+      machine.openshift.io/cluster-api-machineset: san-sandbox-jenkins
+  template:
+    metadata:
+      labels:
+        croatia-role: jenkins
+        machine.openshift.io/cluster-api-cluster: san-sandbox
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: san-sandbox-jenkins
+    spec:
+      lifecycleHooks: {}
+      metadata:
+        labels:
+          croatia-role: jenkins
+      providerSpec:
+        value:
+          numCoresPerSocket: 1
+          diskGiB: 120
+          snapshot: ''
+          userDataSecret:
+            name: worker-user-data
+          memoryMiB: 16384
+          credentialsSecret:
+            name: vsphere-cloud-credentials
+          network:
+            devices:
+              - networkName: san-sandbox
+          metadata:
+            creationTimestamp: null
+          numCPUs: 4
+          kind: VSphereMachineProviderSpec
+          workspace:
+            datacenter: oci-w01dc
+            datastore: vsanDatastore
+            folder: /oci-w01dc/vm/san-sandbox-gbp2k
+            resourcePool: /oci-w01dc/host/oci01-w01-consolidated01/Resources
+            server: vcenter-sandbox.sddc.jed.oci.oraclecloud.com
+          template: san-sandbox-gbp2k-rhcos
+          apiVersion: machine.openshift.io/v1beta1
+      taints:
+      - effect: NoSchedule
+        key: service
+        value: jenkins-agents

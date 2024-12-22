@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexus3-connector-ai
+spec:
+  selector:
+    app.kubernetes.io/instance: dev-nonpci-shared-nexus-repository
+    app.kubernetes.io/name: nexus3
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4042
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexus3-connector
+spec:
+  selector:
+    app.kubernetes.io/instance: dev-nonpci-shared-nexus-repository
+    app.kubernetes.io/name: nexus3
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5051
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexus3-proxy
+spec:
+  selector:
+    app.kubernetes.io/instance: dev-nonpci-shared-nexus-repository
+    app.kubernetes.io/name: nexus3
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5052

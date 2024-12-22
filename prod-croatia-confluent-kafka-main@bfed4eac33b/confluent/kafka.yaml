@@ -1,0 +1,52 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: '1'
+  labels:
+    app.kubernetes.io/instance: prod-confluent-kafka-nonpci-appdb
+  name: kafka
+  namespace: confluent-kafka
+spec:
+  dataVolumeCapacity: 100Gi
+  image:
+    application: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/confluentinc/cp-server:7.4.0
+    init: artifactory.apps.prod-nonpci-shared.nrapp.cloud/docker/confluentinc/confluent-init-container:2.6.0
+  listeners:
+    custom:
+    - externalAccess:
+        route:
+          bootstrapPrefix: kafka
+          domain: apps.prod-nonpci-appdb.nrapp.cloud
+        type: route
+      name: ext-route
+      port: 9093
+      tls:
+        enabled: true
+  metricReporter:
+    enabled: true
+  podTemplate:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: platform.confluent.io/type
+                    operator: In
+                    values:
+                      - kafka
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+    podSecurityContext: {}
+    resources:
+      requests:
+        cpu: '1'
+        memory: 4Gi
+      limits:
+        cpu: '1'
+        memory: 16Gi
+  replicas: 3
+  tls:
+    ignoreTrustStoreConfig: true
+    secretRef: kafka-tls

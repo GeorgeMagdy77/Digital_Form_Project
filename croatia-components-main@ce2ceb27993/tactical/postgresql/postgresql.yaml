@@ -1,0 +1,176 @@
+apiVersion: pg.percona.com/v1
+kind: PerconaPGCluster
+metadata:
+  name: shared-services
+  namespace: postgresql
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  port: '5432'
+  upgradeOptions:
+    apply: disabled
+    schedule: 0 4 * * *
+    versionServiceEndpoint: 'https://check.percona.com'
+  backup:
+    resources:
+      limits: null
+      requests:
+        cpu: 200m
+        memory: 48Mi
+    affinity:
+      nodeAffinityType: required
+      antiAffinityType: preferred
+      nodeLabel: 
+        croatia-role: postgresql
+    backrestRepoImage: 'percona/percona-postgresql-operator:1.3.0-ppg14-pgbackrest-repo'
+    imagePullPolicy: IfNotPresent
+    customConfig: null
+    volumeSpec:
+      accessmode: ReadWriteOnce
+      matchLabels: ''
+      name: ''
+      size: 30G
+      storageclass: ''
+      storagetype: dynamic
+      supplementalgroups: ''
+    schedule:
+      - keep: 3
+        name: sat-night-backup
+        schedule: 0 0 * * 6
+        storage: local
+        type: full
+    repoPath: ''
+    storages: null
+    serviceAccount: ''
+    image: 'percona/percona-postgresql-operator:1.3.0-ppg14-pgbackrest'
+    storageTypes: null
+  pgBadger:
+    enabled: false
+    image: 'percona/percona-postgresql-operator:1.3.0-ppg14-pgbadger'
+    imagePullPolicy: IfNotPresent
+    port: 10000
+  sslSecretName: ''
+  tlsOnly: false
+  sslCA: ''
+  userLabels: null
+  pgPrimary:
+    nodeSelector: ''
+    annotations: null
+    expose:
+      annotations: null
+      labels: null
+      loadBalancerSourceRanges: null
+      serviceType: ClusterIP
+    nodeAffinitySpec: {}
+    resources:
+      limits: null
+      requests:
+        cpu: 500m
+        memory: 256Mi
+    affinity:
+      nodeAffinityType: required
+      antiAffinityType: preferred
+      nodeLabel: 
+        croatia-role: postgresql
+    podSecurityContext: ''
+    runtimeClassName: ''
+    imagePullPolicy: IfNotPresent
+    customconfig: ''
+    volumeSpec:
+      accessmode: ReadWriteOnce
+      matchLabels: ''
+      name: ''
+      size: 50G
+      storageclass: ''
+      storagetype: dynamic
+      supplementalgroups: ''
+    image: 'percona/percona-postgresql-operator:1.3.0-ppg14-postgres-ha'
+    tolerations:
+      - effect: NoSchedule
+        key: croatia-role/postgresql
+        operator: Exists
+    labels: null
+  user: pguser
+  keepBackups: true
+  standby: false
+  secretsName: shared-services-users
+  keepData: true
+  securityContext: null
+  pmm:
+    enabled: false
+    image: 'percona/pmm-client:2.29.1'
+    imagePullPolicy: IfNotPresent
+    pmmSecret: cluster1-pmm-secret
+    resources:
+      limits: null
+      requests:
+        cpu: 500m
+        memory: 200M
+    serverHost: monitoring-service
+    serverUser: admin
+  tablespaceStorages: null
+  pgReplicas:
+    hotStandby:
+      annotations: null
+      enableSyncStandby: false
+      expose:
+        annotations: null
+        labels: null
+        loadBalancerSourceRanges: null
+        serviceType: ClusterIP
+      imagePullPolicy: IfNotPresent
+      labels: null
+      resources:
+        limits: null
+        requests:
+          cpu: 500m
+          memory: 256Mi
+      size: 2
+      volumeSpec:
+        accessmode: ReadWriteOnce
+        matchLabels: ''
+        name: ''
+        size: 30G
+        storageclass: ''
+        storagetype: dynamic
+        supplementalgroups: ''
+  pgBouncer:
+    affinity:
+      nodeAffinityType: required
+      antiAffinityType: preferred
+      nodeLabel: 
+        croatia-role: postgresql
+    expose:
+      annotations: null
+      labels: null
+      loadBalancerSourceRanges: null
+      serviceType: ClusterIP
+    image: 'percona/percona-postgresql-operator:1.3.0-ppg14-pgbouncer'
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits: null
+      requests:
+        cpu: '1'
+        memory: 128Mi
+    size: 3
+    tlsSecret: ''
+  disableAutofail: false
+  pause: false
+  walStorage:
+    volumeSpec:
+      accessmode: ''
+      matchLabels: ''
+      name: ''
+      size: ''
+      storageclass: ''
+      storagetype: ''
+      supplementalgroups: ''
+  namespace: ''
+  database: pgdb
+  sslReplicationSecretName: ''
+  pgDataSource:
+    namespace: ''
+    restoreFrom: ''
+    restoreOpts: ''

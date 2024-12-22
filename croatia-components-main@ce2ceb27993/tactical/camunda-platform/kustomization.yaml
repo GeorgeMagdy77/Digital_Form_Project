@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- namespace.yaml
+- machineset.yaml
+- connectors-svc.yaml
+- connectors-cm.yaml
+- connectors-deployment.yaml
+helmCharts:
+- name: camunda-platform
+  repo: https://helm.camunda.io
+  version: 8.1.6
+  releaseName: camunda-platform
+  namespace: camunda
+  valuesFile: values.yaml
+patchesStrategicMerge:
+- es-statefulset.yaml
+- key-statefulset.yaml
+- pg-statefulset.yaml

@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- alpha.yaml
+- alpha-apigateway.yaml
+- alpha-configuration.yaml
+- alpha-microservices.yaml
+- operators.yaml
+- configuration.yaml
+- confluent.yaml
+- camunda.yaml
+- vault-client.yaml
+- service-mesh.yaml
+- logging.yaml
+- redis.yaml

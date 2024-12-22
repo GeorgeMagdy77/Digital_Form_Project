@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sonarqube-sonarqube
+spec:
+  template:
+    metadata:
+      labels:
+        app: sonarqube
+        release: sonarqube
+    spec:
+      containers:
+        - name: sonarqube
+          livenessProbe:
+            timeoutSeconds: 5
+          readinessProbe:
+            timeoutSeconds: 5
+          startupProbe:
+            timeoutSeconds: 5

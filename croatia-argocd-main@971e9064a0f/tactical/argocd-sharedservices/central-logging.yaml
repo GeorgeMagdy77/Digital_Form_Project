@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: san-sandbox-central-logging
+  namespace: argocd
+  labels:
+    environment: san-sandbox
+    component: sharedservices
+spec:
+  destination:
+    name: |
+      san-sandbox
+    namespace: openshift-logging
+  project: croatia-digital-platform
+  source:
+    path: tactical/central-logging
+    repoURL: ssh://git@bitbucket.projectcroatia.cloud/dig/croatia-components.git
+    targetRevision: HEAD
+  syncPolicy: {}

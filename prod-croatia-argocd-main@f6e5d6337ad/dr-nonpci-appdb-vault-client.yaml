@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dr-nonpci-appdb-vault-client
+  namespace: argocd
+spec:
+  project: dr-croatia-digital-platform
+  source:
+    repoURL: 'ssh://git@bitbucket.nrapp.cloud/dig/dr-croatia-components.git'
+    path: vault-client
+    targetRevision: HEAD
+  destination:
+    server: 'https://api.dr-nonpci-appdb.nbank.local:6443'
+    namespace: vault-client

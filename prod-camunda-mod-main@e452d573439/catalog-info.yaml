@@ -1,0 +1,36 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  title: Croatia Components
+  name: croatia-components
+spec:
+  owner: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  title: Croatia Shared Services
+  name: croatia-shared-services
+spec:
+  owner: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  title: Croatia Alpha Platform
+  name: croatia-alpha-platform
+spec:
+  owner: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:./camunda-platform
+  title: Camunda Platform
+  name: camunda-platform
+spec:
+  lifecycle: experimental
+  owner: platform
+  type: service
+  system: croatia-alpha-platform

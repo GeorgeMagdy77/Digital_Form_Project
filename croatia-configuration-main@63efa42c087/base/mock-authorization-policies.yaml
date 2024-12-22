@@ -1,0 +1,189 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-crm-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-crm-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-cbs-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-cbs-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-focal-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-focal-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-nafath-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-nafath-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tahaqoq-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tahaqoq-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-tier-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-tier-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-development-simulator-service"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-development-simulator-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-isva-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-isva-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-paymentology-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-paymentology-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "superior-lifestyle-stub-service"
+spec:
+  selector:
+    matchLabels:
+      app: "superior-lifestyle-stub-service"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-genesys-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-genesys-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-marketplace-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-marketplace-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ips-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ips-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-temenos-transct-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-temenos-transct-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-arb-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-arb-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-ni-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-ni-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-fob-mp-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-fob-mp-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-customer-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-customer-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-neotek-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-neotek-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sas-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sas-mock-framework"
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "alpha-sama-tanfeeth-mock-framework"
+spec:
+  selector:
+    matchLabels:
+      app: "alpha-sama-tanfeeth-mock-framework"
+---

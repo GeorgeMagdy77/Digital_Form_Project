@@ -1,0 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+- ../../base
+- ../primary
+patchesStrategicMerge:
+- ../mocks/mock-authorization-policies.yaml
+- ../swagger/swagger-authorization-policies.yaml
+- ../ingress/ingress-authorization-policies.yaml
+- configmap.yaml
+- externalsecrets.yaml
+- externalsecrets-otp.yaml
+- externalsecrets-focal.yaml
+- externalsecrets-crm.yaml
+- externalsecrets-isva.yaml
+- externalsecrets-nafath.yaml
+- externalsecrets-camunda.yaml
+- externalsecrets-temenos.yaml
+- externalsecrets-t2.yaml
+- externalsecrets-ibmisva.yaml
+- externalsecrets-fobmp.yaml
+- externalsecrets-arb.yaml
+- externalsecrets-ips.yaml
+- externalsecrets-amq.yaml
+- externalsecrets-ni.yaml
+- externalsecrets-marketplace.yaml
+- externalsecrets-ais.yaml
+- externalsecrets-ob.yaml
+- externalsecrets-cms.yaml
+- externalsecrets-authentication.yaml
+- externalsecrets-drahim.yaml
+- externalsecrets-neotek.yaml
+- externalsecrets-treasury.yaml
+- externalsecrets-apple.yaml
+- externalsecrets-shahid.yaml
+- externalsecrets-anghami.yaml
+- externalsecrets-complaint.yaml

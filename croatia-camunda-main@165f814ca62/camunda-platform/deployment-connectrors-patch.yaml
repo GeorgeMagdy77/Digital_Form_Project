@@ -1,0 +1,49 @@
+# Source: camunda-platform/charts/connectors/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: camunda-platform
+    app.kubernetes.io/component: connectors
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: camunda-platform
+    app.kubernetes.io/part-of: camunda-platform
+  name: camunda-platform-connectors
+  namespace: camunda
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: camunda-platform
+      app.kubernetes.io/component: connectors
+      app.kubernetes.io/instance: camunda-platform
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: camunda-platform
+      app.kubernetes.io/part-of: camunda-platform
+  template:
+    metadata:
+      labels:
+        app: camunda-platform
+        app.kubernetes.io/component: connectors
+        app.kubernetes.io/instance: camunda-platform
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: camunda-platform
+        app.kubernetes.io/part-of: camunda-platform
+    spec:
+      containers:
+      - name: connectors
+        imagePullPolicy: Always
+        env:
+          - name: JAVA_TOOL_OPTIONS
+            value: >-
+              -Djavax.net.ssl.trustStore=/certificates/tools.jks
+              -Djavax.net.ssl.trustStorePassword=changeit2
+        volumeMounts:
+        - name: root-ca
+          mountPath: /certificates/tools.jks
+          subPath: tools.jks
+      volumes:
+      - name: root-ca
+        secret:
+          secretName: root-ca
+          defaultMode: 420

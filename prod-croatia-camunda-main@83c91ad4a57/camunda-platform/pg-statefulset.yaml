@@ -1,0 +1,33 @@
+# Source: camunda-platform/charts/identity/charts/keycloak/charts/postgresql/templates/primary/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+  labels:
+    app.kubernetes.io/component: primary
+    app.kubernetes.io/instance: camunda-latest
+    app.kubernetes.io/name: postgresql
+  name: camunda-platform-postgresql
+  namespace: camunda
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: camunda-platform
+      app.kubernetes.io/name: postgresql
+  serviceName: camunda-platform-postgresql-hl
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: camunda-platform
+        app.kubernetes.io/name: postgresql
+      name: camunda-platform-postgresql
+    spec:        
+      securityContext:
+        fsGroup: null
+        runAsUser: null
+      containers:
+        - name: postgresql
+          securityContext:
+            runAsUser: null

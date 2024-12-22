@@ -1,0 +1,29 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: camunda-rules-internal
+  namespace: camunda
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: ["camunda"]
+      to:
+        - operation:
+            ports: ["8080", "80", "5432", "82", "443", "9200", "9600", "26500", "9300", "8090", "8092"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: camunda-rules-external
+  namespace: camunda
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            namespaces: ["alpha"]
+      to:
+        - operation:
+            ports: ["80","26500"]
